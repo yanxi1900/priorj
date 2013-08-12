@@ -1,5 +1,23 @@
 package main;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +47,7 @@ import util.TestResult;
 import controller.RBAController;
 import coverage.TestCase;
 import coverage.TestSuite;
+import coverage.ClassCode;
 
 import apfd.GenerateAPFD;
 
@@ -59,7 +78,11 @@ public class PriorJImpl implements PriorJ {
 	private List<TechniquesEnum> techniques;
 
 	private boolean isPrioritized, isInit;
-
+	
+	/**
+	 * Constant to indicate test case not found!
+	 */
+	private final int TEST_NOT_FOUND = -1;
 
 	/**
 	 * Default Constructor.
@@ -339,8 +362,7 @@ public class PriorJImpl implements PriorJ {
 	public String openPrioritizationOrder(TechniquesEnum technique) {
 
 		String local = Settings.ORDER + Settings.SEPARATOR;
-		String fileName = local + ManagerFiles.alias(technique.getId())
-				+ ".txt";
+		String fileName = local + ManagerFiles.alias(technique.getId())+ ".txt";
 
 		try {
 			String content = ReadFile.read(fileName);
@@ -383,8 +405,7 @@ public class PriorJImpl implements PriorJ {
 		return report.toString();
 	}
 
-	public float calculateAPFD(List<String> tests,
-			List<List<String>> testCaseCombination) {
+	public float calculateAPFD(List<String> tests,	List<List<String>> testCaseCombination) {
 
 		GenerateAPFD apfdGenerate = new GenerateAPFD();
 
@@ -532,12 +553,9 @@ public class PriorJImpl implements PriorJ {
 			return new ArrayList<String>();
 		}
 	}
-
-
-/*	
+	
 	@Override
-	public void runRenameMethod(String pathApp, String className,
-			String methodName, String newMethodName) {
+	public List<String> runRenameMethod(String pathApp, String className, String methodName, String newMethodName) {
 		// create the controller
 		RBAController controller = new RBAController();
 
@@ -553,15 +571,15 @@ public class PriorJImpl implements PriorJ {
 		// get result.
 		List<String> methodNames = controller.getMethods();
 
-		List<String> signatures = controller.getSignatures();
+		//List<String> signatures = controller.getSignatures();
 
-		controller.save(methodNames);
+		return methodNames;
 	}
 
 	@Override
-	public void runExtractMethod(String pathApp, String originMethodName,
-			String className, String methodName, String newMethodName,
-			int beginLine, int endLine) {
+	public List<String> runExtractMethod(String pathApp, String originMethodName,
+                   String className, String methodName, String newMethodName,
+			        int beginLine, int endLine) {
 		// create the controller
 		RBAController controller = new RBAController();
 		// set values
@@ -577,14 +595,13 @@ public class PriorJImpl implements PriorJ {
 
 		List<String> methodNames = controller.getMethods();
 
-		List<String> signatures = controller.getSignatures();
+		//List<String> signatures = controller.getSignatures();
 
-		controller.save(methodNames);
+		return methodNames;
 	}
 
 	@Override
-	public void runMoveMethod(String pathApp, String classOneName,
-			String classTwoName, String methodName) {
+	public List<String> runMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName) {
 		// create the controller
 		RBAController controller = new RBAController();
 		// set values
@@ -598,12 +615,11 @@ public class PriorJImpl implements PriorJ {
 		List<String> methodNames = controller.getMethods();
 
 		List<String> signatures = controller.getSignatures();
-
-		controller.save(methodNames);
+		return signatures;
+		//return methodNames;
 	}
 
-	public void runAddParameter(String pathApp, String className,
-			String methodName) {
+	public List<String> runAddParameter(String pathApp, String className, String methodName) {
 
 		// create the controller
 		RBAController controller = new RBAController();
@@ -618,13 +634,12 @@ public class PriorJImpl implements PriorJ {
 		// get result.
 		List<String> methodNames = controller.getMethods();
 
-		List<String> signatures = controller.getSignatures();
+		//List<String> signatures = controller.getSignatures();
 
-		controller.save(methodNames);
+		return methodNames;
 	}
 
-	public void runPullUpField(String pathApp, String classOneName,
-			String classTwoName, String fieldName) {
+	public List<String> runPullUpField(String pathApp, String classOneName, String classTwoName, String fieldName) {
 		// create the controller
 		RBAController controller = new RBAController();
 		// set values
@@ -639,12 +654,12 @@ public class PriorJImpl implements PriorJ {
 		// get result.
 		List<String> methodNames = controller.getMethods();
 
-		List<String> signatures = controller.getSignatures();
+		//List<String> signatures = controller.getSignatures();
 
-		controller.save(methodNames);
+		return methodNames;
 	}
 
-	public void runPullUpMethod(String pathApp, String classOneName,
+	public List<String> runPullUpMethod(String pathApp, String classOneName,
 			String classTwoName, String methodName) {
 		// create the controller
 		RBAController controller = new RBAController();
@@ -658,11 +673,11 @@ public class PriorJImpl implements PriorJ {
 
 		List<String> methodNames = controller.getMethods();
 
-		List<String> signatures = controller.getSignatures();
+		//List<String> signatures = controller.getSignatures();
 
-		controller.save(methodNames);
+		return methodNames;
 	}
-*/
+
 	
 	public boolean isInstrumented() {
 		return system.isInstrumented();
@@ -679,6 +694,11 @@ public class PriorJImpl implements PriorJ {
 	public boolean isPrioritized() {
 		return isPrioritized;
 	}
+	
+	public void setIsPrioritized(){
+		isPrioritized = true;
+	}
+	
 	/**
 	 * This method say if the system is initialized.
 	 * 
@@ -728,40 +748,40 @@ public class PriorJImpl implements PriorJ {
     	return techniques.size() != 0;
     }
 
-	public void runRenameMethod(String pathApp, String className,
-			String methodName, String newMethodName) {
+	@Override
+	public int getNumberOfTechniques() {
 		// TODO Auto-generated method stub
-		
+		return techniques.size();
 	}
 
-	public void runExtractMethod(String pathApp, String originMethodName,
-			String className, String methodName, String newMethodName,
-			int beginLine, int endLine) {
-		// TODO Auto-generated method stub
+	@Override
+	public String getCodeTree() {
+		CoverageReport report = getCoverageReport();
 		
+		TreeBuilder tree = new TreeBuilder();
+		tree.buildTree(report.getSuites());
+		
+		return tree.toString();
 	}
 
-	public void runMoveMethod(String pathApp, String classOneName,
-			String classTwoName, String methodName) {
-		// TODO Auto-generated method stub
+	@Override
+	public int getPrioritizedTestPositionByTechnique(String localPath, String testCaseName, TechniquesEnum technique) {
 		
+		String filename = ManagerFiles.alias(technique.getId()) + ".txt";
+		String path = localPath + Settings.SEPARATOR + filename;
+		
+		List<String> testsList = ReadFile.readFileAndReturnList(path);
+		
+		if (testsList.contains(testCaseName))
+			return testsList.indexOf(testCaseName) + 1;
+		
+		return TEST_NOT_FOUND;
 	}
 
-	public void runPullUpMethod(String pathApp, String classOneName,
-			String classTwoName, String methodName) {
+	@Override
+	public int fMeasure(String techniqueName) {
 		// TODO Auto-generated method stub
+		return 0;
+	}
 		
-	}
-
-	public void runPullUpField(String pathApp, String classOneName,
-			String classTwoName, String fieldName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void runAddParameter(String pathApp, String className,
-			String methodName) {
-		// TODO Auto-generated method stub
-	}
-	
 }

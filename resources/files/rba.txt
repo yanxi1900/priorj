@@ -1,0 +1,6 @@
+#Rename Method
+- method div (app)
+- method division(appnew)
+
+#Extract method
+- 

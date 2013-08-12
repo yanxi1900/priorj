@@ -1,5 +1,23 @@
 package core;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Julio Henrique Rocha
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import japa.parser.ASTHelper;
 import japa.parser.JavaParser;
 import japa.parser.ast.CompilationUnit;
@@ -31,6 +49,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>
+ * 		This class instrument a class code to count the line number
+ * 		to found the statement line number.
+ * </p>
+ * @author Samuel T. C. Santos
+ * 		   Julio H. Rocha
+ * @version 1.0
+ *
+ */
 public class InstrumentClass {
 
     private String nameField = "watchPriorJApp";
@@ -39,41 +67,76 @@ public class InstrumentClass {
 
     private String nameFile;
 
+    /**
+     * Constructor
+     * @param pathFile
+     * 		path to file.
+     * @param nameFile
+     * 		file name.
+     */
     public InstrumentClass(String pathFile, String nameFile) {
         this.pathFile = pathFile;
         this.nameFile = nameFile;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getPathFile() {
         
         return pathFile;
     }
 
+    /**
+     * 
+     * @param pathFile
+     */
     public void setPathFile(String pathFile) {
         
         this.pathFile = pathFile;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getNameFile() {
         
         return nameFile;
     }
 
+    /**
+     * 
+     * @param nameFile
+     */
     public void setNameFile(String nameFile) {
         
         this.nameFile = nameFile;
     }
 
+    /**
+     * 
+     * @param nameField
+     */
     public void setNameField(String nameField) {
         
-        nameField = nameField;
+        this.nameField = nameField;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getNameField() {
         
         return nameField;
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     public void instrumentationRun() throws Exception {
         
         FileInputStream in = new FileInputStream(getPathFile() + getNameFile());
@@ -89,6 +152,10 @@ public class InstrumentClass {
         writeFile(getPathFile(), getNameFile(), compilation.toString());
     }
 
+    /**
+     * 
+     * @param compilation
+     */
     private void instrumentarClasse(CompilationUnit compilation) {
         
         FieldDeclaration vigia = ASTHelper.createFieldDeclaration(ModifierSet.STATIC, ASTHelper.BOOLEAN_TYPE, getNameField());
@@ -140,7 +207,10 @@ public class InstrumentClass {
         
         ASTHelper.addMember(classe, vigia);
     }
-
+    /**
+     * 
+     * @param contrutor
+     */
    private void instrumentaConstrututor(ConstructorDeclaration contrutor) {
         
         BlockStmt linhas = contrutor.getBlock();
@@ -172,7 +242,10 @@ public class InstrumentClass {
             linhas.setStmts(novaLista);
         }
     }
-    
+    /**
+     * 
+     * @param metodo
+     */
     private void instrumentaMetodo(MethodDeclaration metodo) {
         
         BlockStmt linhas = metodo.getBody();
@@ -204,6 +277,12 @@ public class InstrumentClass {
         }
     }
 
+    /**
+     * 
+     * @param stm
+     * @param watch
+     * @return
+     */
     private Statement instrumentarBody(Statement stm, Statement watch) {
         
         if (stm == null) {
@@ -263,12 +342,18 @@ public class InstrumentClass {
             state.setFinallyBlock((BlockStmt) instrumentarBody(state.getFinallyBlock(), watch));
             
             return state;
-        } else {
-            
+        } else {     
             return stm;
         }
     }
 
+    /**
+     * 
+     * @param dir
+     * @param nameFile
+     * @param data
+     * @throws IOException
+     */
     private void writeFile(String dir, String nameFile, String data) throws IOException {
         
         File path = new File(dir);

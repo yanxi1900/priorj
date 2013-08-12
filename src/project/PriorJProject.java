@@ -1,5 +1,23 @@
 package project;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -55,7 +73,15 @@ public class PriorJProject {
      * Default constructor.
      */
     public PriorJProject(){
-    	//empty
+      	this.name = "";
+        this.date = Calendar.getInstance();
+        this.version = JUnitVersionEnum.JUNIT3;
+        isOpen = true;
+        this.pathApp="";
+        this.pathCode="";
+        this.pathLib="";
+        this.pathTest="";
+        this.pathCodeNew="";
     }
 
     /**
@@ -222,14 +248,14 @@ public class PriorJProject {
      * @param code path code.
      * @param lib path the libraries.
      * @param test path the tests
-     * @param old path old application.
+     * @param newcode path old application.
      */
-    public void setPaths(String app, String code, String lib, String test, String old){
+    public void setPaths(String app, String code, String lib, String test, String newcode){
         this.setPathApp(app);
         this.setPathCode(code);
         this.setPathLib(lib);
         this.setPathTest(test);
-        this.setPathCodeNew(old);
+        this.setPathCodeNew(newcode);
     }
 
     public boolean equals(Object obj){
@@ -249,8 +275,7 @@ public class PriorJProject {
     public String toString() {
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         
-        return "PriorJProject{" + "name=" + name + ", date=" + formatDate.format(date.getTime())
-                + ", version=" + version + '}';
+        return "PriorJProject{" + "name=" + name + ", date=" + formatDate.format(date.getTime()) + ", version=" + version + '}';
     }
             
 }

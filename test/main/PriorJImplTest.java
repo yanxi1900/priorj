@@ -1,11 +1,43 @@
 package main;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import coverage.TestCase;
+
+import project.JUnitVersionEnum;
+
+import exception.CannotReadLogFileException;
+import exception.CoverageUnrealizedException;
+import exception.EmptySetOfTestCaseException;
+import exception.InstrumentationUnrealizedException;
+
+import technique.TechniquesEnum;
+import util.Settings;
 
 
 /**
@@ -26,6 +58,7 @@ public class PriorJImplTest {
 	private String codeNew = "";
 	
 	private final String separator = System.getProperty("file.separator");
+	
 		
 	@Before
 	public void setUp(){
@@ -128,6 +161,177 @@ public class PriorJImplTest {
 		
 		assertEquals("myappnewcode" + separator + "src", priorj.getPathCodeNew());
 	}
+	
+	
+	@Test
+	public void testPriorJRunInstrumentation() throws InstrumentationUnrealizedException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		
+		priorj.runInstrumentation();
+		
+		assertTrue(priorj.isInstrumented());
+	}
+	
+	@Test
+	public void testPriorJRunCoverage() throws InstrumentationUnrealizedException, CoverageUnrealizedException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		
+		assertTrue(priorj.isCovered());
+	}
+	
+	@Test
+	public void testPriorJRunReadLog() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		assertTrue(priorj.isReadLog());
+	}
+	
+	@Test
+	public void testPriorJRunPrioritizationTMC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		List<TestCase> tests = priorj.getTestCases();
+		
+		List<String> prioritizedList = priorj.runPrioritizationTMC(tests);
+		
+		
+		assertTrue(priorj.isReadLog());
+		assertFalse(prioritizedList.isEmpty());
+	}
+	
+	@Test
+	public void testPriorJRunPrioritizationTSC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		List<TestCase> tests = priorj.getTestCases();
+		
+		List<String> prioritizedList = priorj.runPrioritizationTSC(tests);
+		
+		
+		assertTrue(priorj.isReadLog());
+		assertFalse(prioritizedList.isEmpty());
+	}
+	
+	@Test
+	public void testPriorJRunPrioritizationAMC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		List<TestCase> tests = priorj.getTestCases();
+		
+		List<String> prioritizedList = priorj.runPrioritizationAMC(tests);
+		
+		
+		assertTrue(priorj.isReadLog());
+		assertFalse(prioritizedList.isEmpty());
+	}
+
+	@Test
+	public void testPriorJRunPrioritizationASC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		List<TestCase> tests = priorj.getTestCases();
+		
+		List<String> prioritizedList = priorj.runPrioritizationASC(tests);
+		
+		
+		assertTrue(priorj.isReadLog());
+		assertFalse(prioritizedList.isEmpty());
+	}
+	
+	@Test
+	public void testPriorJRunPrioritizationRND() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
+		priorj.setPathApplication(Settings.APP);
+		priorj.setPathCode(Settings.APP_CODE);
+		priorj.setPathLibraries(Settings.APP_LIB);
+		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
+		
+		priorj.runInstrumentation();
+		priorj.runCoverage();
+		priorj.runReadLog();
+		
+		List<TestCase> tests = priorj.getTestCases();
+		
+		List<String> prioritizedList = priorj.runPrioritizationRD(tests);
+				
+		assertTrue(priorj.isReadLog());
+		assertFalse(prioritizedList.isEmpty());
+	}
+
+
+	@Test
+	public void testPrioritizedTestPositionByTechnique(){
+		String filename = "TMC.txt";
+		
+		String path = Settings.RESOURCES_FILES + Settings.SEPARATOR + filename;
+		String localPath = Settings.ORDER;
+		
+		String testCaseName = "tests.AVLTest.testEstadoInicial";
+		
+		TechniquesEnum technique = TechniquesEnum.TOTAL_METHOD_COVERAGE;
+		
+		int position = priorj.getPrioritizedTestPositionByTechnique(localPath,testCaseName, technique);
+		
+		assertTrue(position == 6);
+		
+		testCaseName = "tests.AVLTest.testAnyThing";
+		
+		position = priorj.getPrioritizedTestPositionByTechnique(localPath,testCaseName, technique);
+		
+		assertTrue(position == -1);
+				
+	}
+	
 	
 	
 }

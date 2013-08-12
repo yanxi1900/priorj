@@ -1,14 +1,39 @@
 package controller;
-
-
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.JUnitVersionEnum;
+
+import util.Settings;
+
 import controller.PriorJController;
+import exception.CannotReadLogFileException;
+import exception.CoverageUnrealizedException;
+import exception.InstrumentationUnrealizedException;
 
 public class PriorJControllerTest {
 	
@@ -18,6 +43,12 @@ public class PriorJControllerTest {
 	@Before
 	public void setUp(){
 		controller = new PriorJController();
+		
+		controller.setPathApp(Settings.APP);
+		controller.setPathCode(Settings.APP_CODE);
+		controller.setPathLib(Settings.APP_LIB);
+		controller.setPathTests(Settings.APP_TEST);
+		controller.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 	}
 	
 	@After
@@ -32,7 +63,7 @@ public class PriorJControllerTest {
 		assertEquals(false, controller.isCovered());
 		assertEquals(false, controller.isReadLog());
 		assertEquals(false, controller.isPrioritized());
-		assertEquals(false, controller.hasPaths());
+		assertEquals(true, controller.hasPaths());
 		assertEquals(false, controller.isNull());
 	}
 
@@ -81,5 +112,157 @@ public class PriorJControllerTest {
 		
 		assertTrue(controller.hasPaths());
 	}
+	
+	@Test
+	public void testAddTechniques(){
+		controller.addTechnique("TMC");
+		controller.addTechnique("TSC");
+		controller.addTechnique("AMC");
+		controller.addTechnique("ASC");
+		controller.addTechnique("RBA");
+		
+		assertEquals(5, controller.getNumberOfTechniques());
+	}
+	
+	@Test
+	public void testRemoveTechniques(){
+		controller.addTechnique("TMC");
+		controller.addTechnique("TSC");
+		controller.addTechnique("AMC");
+		controller.addTechnique("ASC");
+		controller.addTechnique("RBA");
+		
+		controller.removeTechnique("RBA");
+		controller.removeTechnique("TMC");
+		
+		assertEquals(3, controller.getNumberOfTechniques());
+	}
+	
+	
+	@Test
+	public void testControllerRunInstrumentation() throws InstrumentationUnrealizedException{
+		
+		controller.runInstrumentation();
+		
+		assertTrue(controller.isInstrumented());
+	}
+	
+	@Test 
+	public void testControllerRunCoverage() throws InstrumentationUnrealizedException, CoverageUnrealizedException{
+				
+		controller.runInstrumentation();
+		controller.runCoverage();
+		
+		assertTrue(controller.isCovered());
+	}
+	
+	@Test
+	public void testControllerRunReadLog() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+	
+		assertTrue(controller.isReadLog());
+	}
+	
+	@Test
+	public void testControllerAddTechniqueAndRunPrioritization() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		controller.addTechnique("TMC");
+		
+		controller.runPrioritization();
+		
+		assertTrue(controller.isPrioritized());		
+	}
+	
+
+	@Test
+	public void testControllerRunPrioritizationTMC() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		List<String> tests = controller.runPrioritizationTMC();
+		
+		assertTrue(controller.isPrioritized());	
+		assertFalse(tests.isEmpty());
+	}
+	
+	
+	@Test
+	public void testControllerRunPrioritizationTSC() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		List<String> tests = controller.runPrioritizationTSC();
+		
+		assertTrue(controller.isPrioritized());	
+		assertFalse(tests.isEmpty());
+	}
+	
+	@Test
+	public void testControllerRunPrioritizationAMC() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		List<String> tests = controller.runPrioritizationAMC();
+		
+		assertTrue(controller.isPrioritized());	
+		assertFalse(tests.isEmpty());
+	}
+	
+	@Test
+	public void testControllerRunPrioritizationASC() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		List<String> tests = controller.runPrioritizationASC();
+		
+		assertTrue(controller.isPrioritized());	
+		assertFalse(tests.isEmpty());
+	}
+	
+	@Test
+	public void testControllerRunPrioritizationRND() throws Exception{
+		
+		controller.runInstrumentation();
+		controller.runCoverage();
+		controller.runReadLog();
+		
+		List<String> tests = controller.runPrioritizationRND();
+		
+		assertTrue(controller.isPrioritized());	
+		assertFalse(tests.isEmpty());
+	}
+	
+	@Test
+	public void testPrioritizedTestCasePosition(){
+		
+	}
+	
+	//tests changed blocks and RBA
+	
+	@Test
+	public void testControllerRunPrioritizationCB() throws Exception{
+		//not implemented
+	}
+	
+	@Test
+	public void testControllerRunPrioritizationRBA() throws Exception{
+		//not implemented
+	}
+	
 	
 }

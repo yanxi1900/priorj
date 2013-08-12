@@ -1,5 +1,24 @@
 package controller;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 import exception.DuplicateProjectNameException;
 import exception.EmptyPriorJProjectNameException;
 
@@ -87,9 +106,9 @@ public class ProjectController {
      * @throws Exception
      */
     public void createNewProject(String name , String version) throws EmptyPriorJProjectNameException, DuplicateProjectNameException {
-    	if (version.equals("JUnit3"))
+    	if (version.toLowerCase().equals("junit3"))
     		projectManager.createNewProject(name, JUnitVersionEnum.JUNIT3);
-    	else if (version.equals("JUnit4")){
+    	else if (version.toLowerCase().equals("junit4")){
     		projectManager.createNewProject(name, JUnitVersionEnum.JUNIT4);
     	}
     }

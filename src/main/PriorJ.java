@@ -1,5 +1,23 @@
 package main;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.util.List;
 
 import project.JUnitVersionEnum;
@@ -456,7 +474,7 @@ public interface PriorJ {
     * @param newMethodName 
     *       the new method name.
     */
-   public void runRenameMethod(String pathApp, String className, String methodName, String newMethodName);
+   public List<String> runRenameMethod(String pathApp, String className, String methodName, String newMethodName);
 
    /**
     * This method used by Refactoring based approach technique to extract method.
@@ -476,7 +494,7 @@ public interface PriorJ {
     * @param endLine 
     *       The end line.
     */
-   public void runExtractMethod(String pathApp, String originMethodName, String className,
+   public List<String> runExtractMethod(String pathApp, String originMethodName, String className,
                             String methodName, String newMethodName, int beginLine, int endLine);
    
    /**
@@ -491,7 +509,7 @@ public interface PriorJ {
     * @param methodName 
     *       The method name.
     */
-   public void runMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName);
+   public List<String> runMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName);
  
    /**
     * This method used by Refactoring based approach technique to Pull Up Method refactoring.
@@ -505,7 +523,7 @@ public interface PriorJ {
     * @param methodName 
     *       The method name.
     */
-   public void runPullUpMethod(String pathApp, String classOneName, String classTwoName, String methodName);
+   public List<String> runPullUpMethod(String pathApp, String classOneName, String classTwoName, String methodName);
    
    /**
     * This method used by Refactoring based approach technique to Pull Up field refactoring.
@@ -519,7 +537,7 @@ public interface PriorJ {
     * @param fieldName 
     *       The field name.
     */
-   public void runPullUpField(String pathApp, String classOneName, String classTwoName, String fieldName);
+   public List<String> runPullUpField(String pathApp, String classOneName, String classTwoName, String fieldName);
    
    /**
     * This method used by Refactoring based approach technique to add parameter refactoring.
@@ -531,7 +549,7 @@ public interface PriorJ {
     * @param methodName 
     *       The method name.
     */
-   public void runAddParameter(String pathApp, String className, String methodName);
+   public List<String> runAddParameter(String pathApp, String className, String methodName);
    
    /**
     * This method say if the instrumentation is done.
@@ -613,5 +631,39 @@ public interface PriorJ {
     * Start the system initialization.
     */
    public void initPriorJ();
+
+   /**
+    * The number of selected techniques.
+    * @return
+    */
+   public int getNumberOfTechniques();
+  
+   /**
+    * This method confirm prioritization process done.
+    */
+   public void setIsPrioritized();
+
+   /**
+    * This method get the coverage log trace.
+    * 
+    * @return
+    * 	A string with the coverage log trace.
+    */
+   public String getCodeTree();
+   
+   /**
+    * This method get the prioritized position to a test case.
+    * 
+    * @param technique
+    */
+   public int getPrioritizedTestPositionByTechnique(String localPath, String testCaseName, TechniquesEnum technique);
+   
+   /**
+    * This method calculate the F-measure to a given technique.
+    * 
+    * @param techniqueName
+    * @return
+    */
+   public int fMeasure(String techniqueName); 
    
 }

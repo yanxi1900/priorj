@@ -1,5 +1,23 @@
 package main;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +33,13 @@ import javax.swing.JScrollPane;
 import project.JUnitVersionEnum;
 import project.PriorJProject;
 
+import technique.RefactoringEnum;
 import technique.TechniquesEnum;
 import util.Settings;
 
 import controller.PriorJController;
 import controller.ProjectController;
+import controller.RBAController;
 
 
 /**
@@ -32,12 +52,12 @@ public class PriorJFacade {
 
 	private ProjectController controllerProject;
 	private PriorJController controllerPriorj;
-	//private RBAController controllerRBA;
+	private RBAController controllerRBA;
 		
 	public PriorJFacade(){
 		controllerProject = new ProjectController();
 		controllerPriorj = new PriorJController();
-	//	controllerRBA = new RBAController();
+		controllerRBA = new RBAController();
 	}
 	
 	/**
@@ -360,7 +380,7 @@ public class PriorJFacade {
          * 1. "TMC" - Total Method Coverage
          * 2. "TSC" - Total Statement Coverage
          * 3. ...
-         * 7. "RBA" - Refatoring Based Approach
+         * 7. "RBA" - Refactoring Based Approach
          * 
          * @param techniqueName 
          *      The technique name
@@ -488,6 +508,17 @@ public class PriorJFacade {
     public ScrollPane getPanelTree(){
         return controllerPriorj.getTestCoverageTree().getTreePanel();
     }
+    
+    /**
+     * This method get the code tree log trace.
+     * 
+     * @return
+     * 		A string with code tree trace.
+     */
+    public String getCodeTree(){
+    	return controllerPriorj.getCodeTree();
+    }
+    
     /**
      * Open all java prioritized suites, to last prioritization.
      * 
@@ -602,7 +633,7 @@ public class PriorJFacade {
         }
         
         public boolean isInstrumented(){
-            return false;
+            return controllerPriorj.isInstrumented();
         }
         
         
@@ -647,201 +678,183 @@ public class PriorJFacade {
     }
             
         
-//	/**
-//	 * This method run the RBA with Renamed Method.
-//	 * 
-//	 * @param pathApp
-//	 * 		Path application.
-//	 * @param className
-//	 * 		The classe name.
-//	 * @param methodName
-//	 * 		The method name.
-//	 * @param newMethodName
-//	 * 		The new method name.
-//	 * @return
-//	 */
-//	public List<String> runRBARenameMethod(String pathApp, String className, String methodName, String newMethodName){
-//		
-//        controllerRBA.setPathApp(pathApp);
-//        controllerRBA.setClassName(className);
-//        controllerRBA.setMethodName(methodName);
-//        controllerRBA.setNewMethodName(newMethodName);
-//        controllerRBA.run(RefactoringEnum.RENAME_METHOD);
-//        
-//        List<String> methodNames = controllerRBA.getMethods();
-//        controllerRBA.save(methodNames);
-//        
-//        List<String> signatures = controllerRBA.getSignatures();
-//        
-//        return signatures;
-//	}
-//	
-//	/**
-//	 *  This method run the RBA with extract method.
-//	 *  
-//	 * @param pathApp
-//	 * 		The path application.
-//	 * @param originMethodName
-//	 * 		The original method name.
-//	 * @param className
-//	 * 		The class name.
-//	 * @param newMethodName
-//	 * 		The new method name.
-//	 * @param beginLine
-//	 * 		The begin line.
-//	 * @param endLine
-//	 * 		The end line.
-//	 * 
-//	 * @return
-//	 * 		A list of method impacted.
-//	 */
-//	public List<String> runRBAExtractMethod(String pathApp, String originMethodName
-//			, String className, String newMethodName, int beginLine, int endLine){
-//		
-//		controllerRBA.setPathApp(pathApp);
-//        controllerRBA.setOriginMethodName(originMethodName);
-//        controllerRBA.setClassName(className);
-//
-//        controllerRBA.setNewMethodName(newMethodName);
-//        controllerRBA.setBeginLine(beginLine);
-//        controllerRBA.setEndLine(endLine);
-//
-//        controllerRBA.run(RefactoringEnum.EXTRAT_METHOD);
-//
-//        List<String> methodNames = controllerRBA.getMethods();
-//
-//        controllerRBA.save(methodNames); 
-//
-//        List<String> signatures = controllerRBA.getSignatures();
-//        
-//        return signatures;
-//	}
-//	
-//	/**
-//	 * This method run the RBA with Move method.
-//	 * 
-//	 * @param pathApp
-//	 * 		The path application.
-//	 * @param classOneName
-//	 * 		The class one name.
-//	 * @param classTwoName
-//	 * 		The class two name.
-//	 * @param methodName
-//	 * 		The method name.
-//	 * @return
-//	 * 		A list of strings.
-//	 */
-//	public List<String> runRBAMoveMethod(String pathApp, String classOneName,
-//			String classTwoName, String methodName){
-//		
-//        controllerRBA.setPathApp(pathApp);
-//        controllerRBA.setClassOneName(classOneName);
-//        controllerRBA.setClassTwoName(classTwoName);
-//        controllerRBA.setMethodName(methodName);
-//
-//        controllerRBA.run(RefactoringEnum.MOVE_METHOD);
-//        
-//        List<String> methodNames = controllerRBA.getMethods();
-//        controllerRBA.save(methodNames);
-//        
-//        List<String> signatures = controllerRBA.getSignatures();
-//                
-//        return signatures;
-//	}
-//	
-//	/**
-//	 * This method run the RBA with Pull Up Method.
-//	 * 
-//	 * @param pathApp
-//	 * 		The path application
-//	 * @param classOneName
-//	 * 		The class one name
-//	 * @param classTwoName
-//	 * 		The class two name
-//	 * @param methodName
-//	 * 		The method name
-//	 * @return
-//	 * 		A list of String
-//	 */
-//	public List<String> runRBAPullUpMethod(String pathApp, String classOneName,
-//			String classTwoName, String methodName){
-//		
-//        controllerRBA.setPathApp(pathApp);
-//        controllerRBA.setClassOneName(classOneName);
-//        controllerRBA.setClassTwoName(classTwoName);
-//        controllerRBA.setMethodName(methodName);
-//
-//        controllerRBA.run(RefactoringEnum.PULL_UP_METHOD);
-//
-//        List<String> methodNames = controllerRBA.getMethods();
-//        controllerRBA.save(methodNames);
-//        
-//        List<String> signatures = controllerRBA.getSignatures();
-//
-//        return signatures;
-//    }
-//	
-//	/**
-//	 * This method run the RBA with Pull Up Field.
-//	 * 
-//	 * @param pathApp
-//	 * 		The path application
-//	 * @param classOneName
-//	 * 		The class one name.
-//	 * @param classTwoName
-//	 * 		The class two name
-//	 * @param fieldName
-//	 * 		The field name
-//	 * @return
-//	 * 		A list of string
-//	 */
-//	public List<String> runRBAPullUpField(String pathApp, String classOneName,
-//			String classTwoName, String fieldName){
-//		
-//        controllerRBA.setPathApp(pathApp);
-//        controllerRBA.setClassOneName(classOneName);
-//        controllerRBA.setClassTwoName(classTwoName);
-//        controllerRBA.setFieldName(fieldName);
-//
-//        controllerRBA.run(RefactoringEnum.PULL_UP_FIELD);
-//        
-//        List<String> methodNames = controllerRBA.getMethods();
-//
-//        controllerRBA.save(methodNames);
-//        
-//        List<String> signatures = controllerRBA.getSignatures();
-//
-//        return signatures;
-//    }
-//	
-//	/**
-//	 * This method run the RBA with Add Parameter.
-//	 * 
-//	 * @param pathApp
-//	 * 		The path application
-//	 * @param className
-//	 * 		The class name
-//	 * @param methodName
-//	 * 		The method name.
-//	 * @return
-//	 * 		A list of string.
-//	 */
-//	 public List<String> runRBAAddParameter(String pathApp, String className,
-//			 String methodName){
-//	        
-//	        controllerRBA.setPathApp(pathApp);
-//	        controllerRBA.setClassName(className);
-//	        controllerRBA.setMethodName(methodName);
-//	        controllerRBA.run(RefactoringEnum.ADD_PARAMETER);
-//
-//	        List<String> methodNames = controllerRBA.getMethods();
-//
-//	        controllerRBA.save(methodNames);
-//	        
-//	        List<String> signatures = controllerRBA.getSignatures();
-//	        
-//	        return signatures;
-//	 }
+	/**
+	 * This method run the RBA with Renamed Method.
+	 * 
+	 * @param pathApp
+	 * 		Path application.
+	 * @param className
+	 * 		The class name.
+	 * @param methodName
+	 * 		The method name.
+	 * @param newMethodName
+	 * 		The new method name.
+	 * @return
+	 */
+	public List<String> runRBARenameMethod(String pathApp, String className, String methodName, String newMethodName){
+		
+        controllerRBA.setPathApp(pathApp);
+        controllerRBA.setClassName(className);
+        controllerRBA.setMethodName(methodName);
+        controllerRBA.setNewMethodName(newMethodName);
+        controllerRBA.run(RefactoringEnum.RENAME_METHOD);
+        
+        List<String> methodNames = controllerRBA.getMethods();
+        
+        return methodNames;
+	}
+	
+	/**
+	 *  This method run the RBA with extract method.
+	 *  
+	 * @param pathApp
+	 * 		The path application.
+	 * @param originMethodName
+	 * 		The original method name.
+	 * @param className
+	 * 		The class name.
+	 * @param newMethodName
+	 * 		The new method name.
+	 * @param beginLine
+	 * 		The begin line.
+	 * @param endLine
+	 * 		The end line.
+	 * 
+	 * @return
+	 * 		A list of method impacted.
+	 */
+	public List<String> runRBAExtractMethod(String pathApp, String originMethodName, String className, String newMethodName, int beginLine, int endLine){
+		
+		controllerRBA.setPathApp(pathApp);
+        controllerRBA.setOriginMethodName(originMethodName);
+        controllerRBA.setClassName(className);
+
+        controllerRBA.setNewMethodName(newMethodName);
+        controllerRBA.setBeginLine(beginLine);
+        controllerRBA.setEndLine(endLine);
+
+        controllerRBA.run(RefactoringEnum.EXTRAT_METHOD);
+
+        List<String> methodNames = controllerRBA.getMethods();
+
+        List<String> signatures = controllerRBA.getSignatures();
+        
+        return signatures;
+	}
+	
+	/**
+	 * This method run the RBA with Move method.
+	 * 
+	 * @param pathApp
+	 * 		The path application.
+	 * @param classOneName
+	 * 		The class one name.
+	 * @param classTwoName
+	 * 		The class two name.
+	 * @param methodName
+	 * 		The method name.
+	 * @return
+	 * 		A list of strings.
+	 */
+	public List<String> runRBAMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName){
+		
+        controllerRBA.setPathApp(pathApp);
+        controllerRBA.setClassOneName(classOneName);
+        controllerRBA.setClassTwoName(classTwoName);
+        controllerRBA.setMethodName(methodName);
+
+        controllerRBA.run(RefactoringEnum.MOVE_METHOD);
+        
+        List<String> methodNames = controllerRBA.getMethods();
+        
+        return methodNames;
+	}
+	
+	/**
+	 * This method run the RBA with Pull Up Method.
+	 * 
+	 * @param pathApp
+	 * 		The path application
+	 * @param classOneName
+	 * 		The class one name
+	 * @param classTwoName
+	 * 		The class two name
+	 * @param methodName
+	 * 		The method name
+	 * @return
+	 * 		A list of String
+	 */
+	public List<String> runRBAPullUpMethod(String pathApp, String classOneName, String classTwoName, String methodName){
+		
+        controllerRBA.setPathApp(pathApp);
+        controllerRBA.setClassOneName(classOneName);
+        controllerRBA.setClassTwoName(classTwoName);
+        controllerRBA.setMethodName(methodName);
+
+        controllerRBA.run(RefactoringEnum.PULL_UP_METHOD);
+
+        List<String> methodNames = controllerRBA.getMethods();
+        List<String> signatures = controllerRBA.getSignatures();
+
+        return signatures;
+    }
+	
+	/**
+	 * This method run the RBA with Pull Up Field.
+	 * 
+	 * @param pathApp
+	 * 		The path application
+	 * @param classOneName
+	 * 		The class one name.
+	 * @param classTwoName
+	 * 		The class two name
+	 * @param fieldName
+	 * 		The field name
+	 * @return
+	 * 		A list of string
+	 */
+	public List<String> runRBAPullUpField(String pathApp, String classOneName,String classTwoName, String fieldName){
+		
+        controllerRBA.setPathApp(pathApp);
+        controllerRBA.setClassOneName(classOneName);
+        controllerRBA.setClassTwoName(classTwoName);
+        controllerRBA.setFieldName(fieldName);
+
+        controllerRBA.run(RefactoringEnum.PULL_UP_FIELD);
+        
+        List<String> methodNames = controllerRBA.getMethods();
+        
+        List<String> signatures = controllerRBA.getSignatures();
+
+        return signatures;
+    }
+	
+	/**
+	 * This method run the RBA with Add Parameter.
+	 * 
+	 * @param pathApp
+	 * 		The path application
+	 * @param className
+	 * 		The class name
+	 * @param methodName
+	 * 		The method name.
+	 * @return
+	 * 		A list of string.
+	 */
+	 public List<String> runRBAAddParameter(String pathApp, String className,
+			 String methodName){
+	        
+	        controllerRBA.setPathApp(pathApp);
+	        controllerRBA.setClassName(className);
+	        controllerRBA.setMethodName(methodName);
+	        controllerRBA.run(RefactoringEnum.ADD_PARAMETER);
+
+	        List<String> methodNames = controllerRBA.getMethods();
+	        
+	        List<String> signatures = controllerRBA.getSignatures();
+	        
+	        return signatures;
+	 }
     
     /**
 	 * This method do a replace in the "/" or "\\" to

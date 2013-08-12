@@ -1,5 +1,24 @@
 package controller;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -136,8 +155,7 @@ public class PriorJController {
                 for (int j=0; j < testsFailed.size(); j++){
                     values[i][j] = findIndex(orderList.get(i), testsFailed.get(j));
                    
-                }
-                
+                } 
             }
           
             //number of tests in the test suite
@@ -180,8 +198,7 @@ public class PriorJController {
         try {
             orders = ManagerFiles.listFilesNames(Settings.ORDER);
            
-            List<String> tests = ReadFile.readFileAndReturnList(Settings.ORDER +
-                    Settings.SEPARATOR + orders.get(0));
+            List<String> tests = ReadFile.readFileAndReturnList(Settings.ORDER + Settings.SEPARATOR + orders.get(0));
 
             return priorj.calculateAPFD(tests, combinations);
         } catch (Exception ex) {
@@ -198,7 +215,6 @@ public class PriorJController {
     private void setCombinations(List<List<String>> combinations){
         this.combinations = combinations;
     }
-    
     
     public void setJUnitVersion(JUnitVersionEnum version){
         //priorj.setJUnitVersion(version);
@@ -264,9 +280,8 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationTMC(tests);
-                        
-			
 		} catch (EmptySetOfTestCaseException e) {
 			System.err.println(e.getMessage());
 			return new ArrayList<String>();
@@ -278,6 +293,7 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationTSC(tests);
 			
 		} catch (EmptySetOfTestCaseException e) {
@@ -291,6 +307,7 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationASC(tests);
 			
 		} catch (EmptySetOfTestCaseException e) {
@@ -304,6 +321,7 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationAMC(tests);
 			
 		} catch (EmptySetOfTestCaseException e) {
@@ -317,6 +335,7 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationRD(tests);
 			
 		} catch (EmptySetOfTestCaseException e) {
@@ -330,6 +349,7 @@ public class PriorJController {
     	try {
     		List<TestCase> tests = priorj.getCoverageReport().getTests();
         	setIsChanged();
+        	priorj.setIsPrioritized();
 			return priorj.runPrioritizationCB(tests, pathNewCode, pathCodeOld);
 			
 		} catch (EmptySetOfTestCaseException e) {
@@ -371,7 +391,6 @@ public class PriorJController {
 
     public void setPathApp(String pathApp) {
         this.pathApp = pathApp;
-        //priorj.setPathApplication(pathApp);
     }
 
     public String getPathCode() {
@@ -380,7 +399,6 @@ public class PriorJController {
 
     public void setPathCode(String pathCode) {
         this.pathCode = pathCode;
-        //priorj.setPathCode(pathCode);
     }
 
     public String getPathNew() {
@@ -389,7 +407,6 @@ public class PriorJController {
 
     public void setPathNew(String pathNew) {
         this.pathNew = pathNew;
-        //priorj.setPathCodeNew(pathNew);
     }
 
     public String getPathTests() {
@@ -398,7 +415,6 @@ public class PriorJController {
 
     public void setPathTests(String pathTests) {
         this.pathTests = pathTests;
-        //priorj.setPathTests(pathTests);
     }
 
     public String getPathLib() {
@@ -407,7 +423,6 @@ public class PriorJController {
 
     public void setPathLib(String pathLib) {
         this.pathLib = pathLib;
-        //priorj.setPathLibraries(pathLib);
     }
 
     public  String openCoverageReport(){
@@ -420,59 +435,112 @@ public class PriorJController {
     
     public void addTechnique(String technique){
         
-        if (technique.equals("TMC"))
+        if (technique.toLowerCase().equals("tmc"))
             addTechnique(TechniquesEnum.TOTAL_METHOD_COVERAGE);
-        else if (technique.equals("TSC"))
+        else if (technique.toLowerCase().equals("tsc"))
             addTechnique(TechniquesEnum.TOTAL_STATEMENT_COVERAGE);
-        else if (technique.equals("AMC"))
+        else if (technique.toLowerCase().equals("amc"))
             addTechnique(TechniquesEnum.ADDITIONAL_METHOD_COVERAGE);
-        else if (technique.equals("ASC"))
+        else if (technique.toLowerCase().equals("asc"))
             addTechnique(TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE);
-        else if (technique.equals("CB"))
+        else if (technique.toLowerCase().equals("cb"))
             addTechnique(TechniquesEnum.CHANGED_BLOCKS_TOTAL);
-        else if (technique.equals("RND"))
+        else if (technique.toLowerCase().equals("rnd"))
             addTechnique(TechniquesEnum.Random);
-        else if (technique.equals("RBA"))
+        else if (technique.toLowerCase().equals("rba"))
             addTechnique(TechniquesEnum.REFACTORING_BASED_APPROACH);
         
     }
     
     public void removeTechnique(String technique){
-        if (technique.equals("TMC"))
+        if (technique.toLowerCase().equals("tmc"))
             removeTechnique(TechniquesEnum.TOTAL_METHOD_COVERAGE);
-        else if (technique.equals("TSC"))
+        else if (technique.toLowerCase().equals("tsc"))
             removeTechnique(TechniquesEnum.TOTAL_STATEMENT_COVERAGE);
-        else if (technique.equals("AMC"))
+        else if (technique.toLowerCase().equals("amc"))
             removeTechnique(TechniquesEnum.ADDITIONAL_METHOD_COVERAGE);
-        else if (technique.equals("ASC"))
+        else if (technique.toLowerCase().equals("asc"))
             removeTechnique(TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE);
-        else if (technique.equals("CB"))
+        else if (technique.toLowerCase().equals("cb"))
             removeTechnique(TechniquesEnum.CHANGED_BLOCKS_TOTAL);
-        else if (technique.equals("RND"))
+        else if (technique.toLowerCase().equals("rnd"))
             removeTechnique(TechniquesEnum.Random);
-        else if (technique.equals("RBA"))
+        else if (technique.toLowerCase().equals("rba"))
             removeTechnique(TechniquesEnum.REFACTORING_BASED_APPROACH);
     }
+    /**
+     * This method do a parse from a string with technique name to a Technique Object.
+     * 
+     * @param technique
+     * @return
+     */
+    public TechniquesEnum parseTechnique(String technique){
+        
+    	TechniquesEnum techniqueObject = null;
+        
+        if (technique.toLowerCase().equals("tmc"))
+        	techniqueObject = TechniquesEnum.TOTAL_METHOD_COVERAGE;
+        else if (technique.toLowerCase().equals("tsc"))
+        	techniqueObject = TechniquesEnum.TOTAL_STATEMENT_COVERAGE;
+        else if (technique.toLowerCase().equals("amc"))
+        	techniqueObject = TechniquesEnum.ADDITIONAL_METHOD_COVERAGE;
+        else if (technique.toLowerCase().equals("asc"))
+        	techniqueObject = TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE;
+        else if (technique.toLowerCase().equals("cb"))
+        	techniqueObject = TechniquesEnum.CHANGED_BLOCKS_TOTAL;
+        else if (technique.toLowerCase().equals("rnd"))
+        	techniqueObject = TechniquesEnum.Random;
+        else if (technique.toLowerCase().equals("rba"))
+        	techniqueObject = TechniquesEnum.REFACTORING_BASED_APPROACH;
+        
+        return techniqueObject;
+    }
     
+    /**
+     * This method generate a suite selection.
+     * 
+     * @param suiteName
+     * @param suites
+     * @param suiteNames
+     * @param packageName
+     * @param size
+     * @return
+     */
     public List<String> generateSuiteSelection(String suiteName, List<List<String>> suites, List<String> suiteNames, String packageName, int size){
     	List<String> suiteCodeList = priorj.generateSuiteSelection(suiteName, suites, suiteNames, packageName, size);
     	
     	return suiteCodeList;
     }
     
+    /**
+     * This method save a prioritized test suite.
+     * @param path
+     * @param suiteCodes
+     * @param suiteNames
+     * @param userSuiteName
+     */
     public void saveSuiteSelection(String path, List<String> suiteCodes, List<String> suiteNames, String userSuiteName ){
     	priorj.saveSuiteSelection(path, suiteCodes, suiteNames, userSuiteName);
     }
     
+    /**
+     * This method add a new technique.
+     * 
+     * @param technique
+     */
     public void addTechnique(TechniquesEnum technique){
         priorj.addPrioritizationTechnique(technique);
     }
-    
+    /**
+     * This method remove a technique.
+     * 
+     * @param technique
+     */
     public void removeTechnique(TechniquesEnum technique){
         priorj.removePrioritizationTechnique(technique);
     }
     /**
-     * This method say if the priorj is null.
+     * This method say if the PriorJ is null.
      * 
      * @return
      * 		true or false.
@@ -492,7 +560,6 @@ public class PriorJController {
      * 		true or false.
      */
     public boolean hasPaths(){
-    	System.out.println(pathApp + " " + pathCode + " " + pathLib );
         return !pathApp.equals("") && !pathCode.equals("") && !pathTests.equals("");
     }
     
@@ -585,7 +652,32 @@ public class PriorJController {
      */
 	public boolean exist(String path) {
 		// TODO Auto-generated method stub
-		return ManagerFiles.existsDirectory(path);
+		return ManagerFiles.existFileOrDirectory(path);
+	}
+	
+	public Object getNumberOfTechniques() {
+		// TODO Auto-generated method stub
+		return priorj.getNumberOfTechniques();
+	}
+	public String getCodeTree() {
+		// TODO Auto-generated method stub
+		return priorj.getCodeTree();
+	}
+	
+	/**
+	 * This method get the prioritized position to a test case by technique name.
+	 * 
+	 * @param tests
+	 * @param technique
+	 * @return
+	 */
+	public int getPrioritizedTestCasePosition(String testCaseName, String technique){
+		
+		String localPath = Settings.ORDER;
+		TechniquesEnum techniqueObject = parseTechnique(technique);
+		
+		return priorj.getPrioritizedTestPositionByTechnique(localPath, testCaseName, techniqueObject);
+		
 	}
 }
 

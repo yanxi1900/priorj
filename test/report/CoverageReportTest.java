@@ -1,5 +1,25 @@
 package report;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
@@ -11,6 +31,14 @@ import org.junit.Test;
 import coverage.TestCase;
 import coverage.TestSuite;
 
+/**
+ * This class is a test to  CoverageReport class.
+ * 
+ * 
+ * @author Samuel T. C. Santos
+ * @version 1.0
+ *
+ */
 public class CoverageReportTest {
 
 	private CoverageReport coverageReport;
@@ -32,31 +60,16 @@ public class CoverageReportTest {
 	@Test
 	public void testRemoveRepetedTestCase() {
 		
-		TestSuite suite1 = new TestSuite("pkg1", "A");
-		TestSuite suite2 = new TestSuite("pkg1", "A");
-		
-		String [] testsSuite1 = {"testA", "testB", "testB", "testC", "testD"};
-		String [] testsSuite2 = {"testA", "testD", "testC", "testC", "testD"};
-		
-		for (String testName: testsSuite1){
-			suite1.addTestCase(new TestCase(testName));
-		}
-		
-		for (String testName: testsSuite2){
-			suite2.addTestCase(new TestCase(testName));
-		}
-		
-		//suite1 has 4 tests distinct: testA, testB, testB, testC, testD
-		suites.add(suite1);
-		
-		//suite2 has 3 tests distinct: testA, testC, testD
-		suites.add(suite2);
-		
-		coverageReport = new CoverageReport(suites);
-		
-		List<TestCase> tests = coverageReport.getTests();
-		
-		assertTrue(tests.size() == 7);
 	}
+	
+	@Test
+	public void testCreatingEmptyCodeTreeCoverage(){
+		CoverageReport report = new CoverageReport();
+		
+		String coverageReportStr = report.toString();
+		
+		assertEquals("", coverageReportStr);
+	}
+	
 
 }

@@ -1,0 +1,134 @@
+package lp2.lab06;
+
+/**
+ * Classe que serve para a criacao de uma sala.
+ * 
+ * @author Igor de Araujo Meira
+ * @version 1.0 - 12/07/2013
+ *
+ */
+public class Sala {
+
+    private int linha;
+
+    private int coluna;
+
+    private int[][] sala;
+
+    public static final int OCUPADO = 0;
+
+    public static final int LIVRE = 1;
+
+    /**
+	 * Construtor de uma sala.
+	 * 
+	 * @param linha - Numeros de linhas que a sala possui.
+	 * @param coluna - Numeros de colunas que a sala possui.
+	 * @throws Exception - Mensagem caso ocorra excecao.
+	 */
+    public Sala(int linha, int coluna) throws Exception {
+        watchPriorJApp = watchPriorJApp;
+        if (linha <= 0 || coluna <= 0) {
+            watchPriorJApp = watchPriorJApp;
+            throw new Exception("Parâmetros incorretos para a criação da sala.");
+        }
+        watchPriorJApp = watchPriorJApp;
+        this.linha = linha;
+        watchPriorJApp = watchPriorJApp;
+        this.coluna = coluna;
+        watchPriorJApp = watchPriorJApp;
+        iniciarSala();
+    }
+
+    private void iniciarSala() {
+        watchPriorJApp = watchPriorJApp;
+        sala = new int[linha][coluna];
+        watchPriorJApp = watchPriorJApp;
+        for (int i = 0; i < linha; i++) {
+            watchPriorJApp = watchPriorJApp;
+            for (int j = 0; j < coluna; j++) {
+                sala[i][j] = LIVRE;
+            }
+        }
+    }
+
+    /**
+	 * Checa se a posicao informada eh valida.
+	 * 
+	 * @param i - Linha da sala.
+	 * @param j - Coluna da sala.
+	 * @return true se a posicao for valida, false se nao for.
+	 */
+    public boolean posicaoValida(int i, int j) {
+        watchPriorJApp = watchPriorJApp;
+        if (i < 0 || j < 0) {
+            watchPriorJApp = watchPriorJApp;
+            return false;
+        }
+        watchPriorJApp = watchPriorJApp;
+        if (i >= linha || j >= coluna) {
+            watchPriorJApp = watchPriorJApp;
+            return false;
+        }
+        watchPriorJApp = watchPriorJApp;
+        return true;
+    }
+
+    /**
+	 * Insere obstaculos dentro da sala.
+	 * 
+	 * @param i - Linha da sala.
+	 * @param j - Coluna da sala.
+	 * @return true se puder colocar o obstaculo na posicao, false caso contrario.
+	 */
+    public boolean inserirObstaculo(int i, int j) {
+        watchPriorJApp = watchPriorJApp;
+        if (verificarPosicaoLivre(i, j)) {
+            watchPriorJApp = watchPriorJApp;
+            sala[i][j] = OCUPADO;
+            watchPriorJApp = watchPriorJApp;
+            return true;
+        }
+        watchPriorJApp = watchPriorJApp;
+        return false;
+    }
+
+    /**
+	 * Verifica se uma posicao da sala esta livre.
+	 * 
+	 * @param i - Linha da sala.
+	 * @param j - Coluna da sala.
+	 * @return true se a posicao estiver livre e for valida, false se nao estiver livre ou nao for valida.
+	 */
+    public boolean verificarPosicaoLivre(int i, int j) {
+        watchPriorJApp = watchPriorJApp;
+        if (posicaoValida(i, j) && sala[i][j] == LIVRE) {
+            watchPriorJApp = watchPriorJApp;
+            return true;
+        }
+        watchPriorJApp = watchPriorJApp;
+        return false;
+    }
+
+    /**
+	 * Torna um posicao livre ou ocupada.
+	 * 
+	 * @param i - Linha da sala.
+	 * @param j - Coluna da sala.
+	 * @param status - Qual o estado em que posicao deve ficar, livre ou ocupado.
+	 * @return true se a modificacao puder ser feita, false caso nao.
+	 */
+    public boolean setPosicao(int i, int j, int status) {
+        watchPriorJApp = watchPriorJApp;
+        if (posicaoValida(i, j)) {
+            watchPriorJApp = watchPriorJApp;
+            sala[i][j] = status;
+            watchPriorJApp = watchPriorJApp;
+            return true;
+        }
+        watchPriorJApp = watchPriorJApp;
+        return false;
+    }
+
+    static boolean watchPriorJApp;
+}

@@ -1,5 +1,24 @@
 package project;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 import exception.DuplicateProjectNameException;
 import exception.EmptyPriorJProjectNameException;
 
@@ -65,7 +84,7 @@ public class PriorJProjectManager implements ProjectManager  {
         String local  = System.getProperty("user.dir");
         String directory = separator+"report"+separator;
         
-        if (!ManagerFiles.existsDirectory(local+directory)){
+        if (!ManagerFiles.existFileOrDirectory(local+directory)){
             ManagerFiles.createDirectory(local+directory);
         }
        
@@ -171,8 +190,7 @@ public class PriorJProjectManager implements ProjectManager  {
         repository.writeFile(projects);
         
         //do backup files
-        String localOrigem = Settings.PRIORJ_PROJECT + Settings.SEPARATOR
-                + projectName + Settings.SEPARATOR + version;
+        String localOrigem = Settings.PRIORJ_PROJECT + Settings.SEPARATOR+ projectName + Settings.SEPARATOR + version;
         
         String localDestination = Settings.REPORT;
         
@@ -380,11 +398,11 @@ public class PriorJProjectManager implements ProjectManager  {
         return getOpenProject().getPathTest();
     }
     
-    public String getPathOld(String pathOld) throws Exception{
+    public String getPathNewCode() throws Exception{
         return getOpenProject().getPathCodeNew();
     }
         
-    public void setPaths(String app, String code, String lib, String test, String old) throws Exception{
+    public void setPaths(String app, String code, String lib, String test, String codenew) throws Exception{
     
          PriorJProject p = getOpenProject();
          
@@ -392,7 +410,7 @@ public class PriorJProjectManager implements ProjectManager  {
          p.setPathCode(code);
          p.setPathLib(lib);
          p.setPathTest(test);
-         p.setPathCodeNew(old);
+         p.setPathCodeNew(codenew);
          
          updateProject(p);
     }
@@ -408,6 +426,5 @@ public class PriorJProjectManager implements ProjectManager  {
      public List<List<String>> openAllPrioritizedTestSuites(String path){
     	return repository.openAllPrioritizedTestSuites(path);
     }
-    
     
 }

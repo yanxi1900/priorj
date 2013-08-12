@@ -1,5 +1,23 @@
 package ui;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +70,7 @@ public class TreeBuilder {
         for (TestSuite testSuite : suites) {
 
             DefaultMutableTreeNode newSuite = new DefaultMutableTreeNode(testSuite.getName());
-            builder.append("\t");
+            builder.append(" ");
             builder.append(testSuite.getName());
             builder.append("\n");
            
@@ -60,7 +78,7 @@ public class TreeBuilder {
             for (TestCase testCase : testSuite.getTestCases()) {
 
                 DefaultMutableTreeNode newTestCase = new DefaultMutableTreeNode(testCase.getName());
-                builder.append("\t\t");
+                builder.append("  ");
                 builder.append(testCase.getName());
                 builder.append("\n");
                 
@@ -93,7 +111,7 @@ public class TreeBuilder {
 
                 for (String k : keys) {
                     newMethodCoverage.add(new DefaultMutableTreeNode(k + " - [" + map.get(k) + "]"));
-                    builder.append("\t\t\t");
+                    builder.append("   ");
                     builder.append(k);
                     builder.append(" - [");
                     builder.append(map.get(k));

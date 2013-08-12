@@ -1,7 +1,7 @@
 package calc;
 
 
-public class Calculator {
+public class Calculator implements ICalc {
 
 	public void Calculator(){
 		

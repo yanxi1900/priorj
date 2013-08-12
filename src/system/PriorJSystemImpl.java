@@ -1,5 +1,23 @@
 package system;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -122,7 +140,7 @@ public class PriorJSystemImpl implements PriorJSystem {
     }
     
     public void instrumentCode(String path) throws Exception {
-        InstrumentApp inst = new InstrumentApp(path);
+        InstrumentApp inst = new InstrumentApp(path, pathTests);
         inst.run();
         
     }
@@ -166,7 +184,7 @@ public class PriorJSystemImpl implements PriorJSystem {
         
         File origem = new File(Settings.ASPECT_FILE + Settings.SEPARATOR );
      
-        File destino = new File(getTotalPathCode()+ /*Settings.SEPARATOR+"aspectfiles" + */ Settings.SEPARATOR);
+        File destino = new File(getPathApp()+ Settings.SEPARATOR);
         CopyFile.copyAll(origem, destino, true);
 
         File ori = new File(Settings.EXTERNAL +Settings.SEPARATOR+"lib"+Settings.SEPARATOR);
@@ -176,7 +194,7 @@ public class PriorJSystemImpl implements PriorJSystem {
     
     public void setPathAspectFile(JUnitVersionEnum version) {
     	
-        File arquivo = new File(getTotalPathCode() + /*Settings.SEPARATOR +"aspectfiles"+ */ Settings.SEPARATOR+"AspectCoverage.aj");
+        File arquivo = new File(getPathApp() + Settings.SEPARATOR+"AspectCoverage.aj");
         
         try {
         	String testPath = getPathTests();
@@ -202,9 +220,9 @@ public class PriorJSystemImpl implements PriorJSystem {
 
  
     public void deleteAspectosFile() {
-        String path = getTotalPathCode() + Settings.SEPARATOR+"aspectfiles";
+        String path = getPathApp() + Settings.SEPARATOR+"AspectCoverage.aj";
         
-        ManagerFiles.deleteAll(path);
+        ManagerFiles.deleteFile(path);
     }
     
     public void executaAnt(String pathApp, String pathCode, String pathTest, String pathLib) {

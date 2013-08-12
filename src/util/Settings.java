@@ -1,9 +1,29 @@
 package util;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 /**
  * Class with paths e constants to system.
  * 
  * @author Samuel Santos
+ * @version 1.0
  */
 public class Settings {
     
@@ -38,11 +58,19 @@ public class Settings {
     
     public static final String ASPECT_FILE = EXTERNAL + SEPARATOR + "aspectfiles";
     
-    public static final String APP = USER_DIR + SEPARATOR + "resources" + SEPARATOR + "app";
+    public static final String RESOURCES = USER_DIR + SEPARATOR + "resources";
+    
+    public static final String RESOURCES_FILES = RESOURCES + SEPARATOR + "files";
+    
+    public static final String APP = RESOURCES + SEPARATOR + "app";
     
     public static final String APP_CODE = APP + SEPARATOR + "src";
     
     public static final String APP_LIB = APP + SEPARATOR + "lib";
     
-    public static final String APP_TEST = APP + SEPARATOR + "test" + SEPARATOR + "calctest";
+    public static final String APP_TEST = APP + SEPARATOR + "test" + SEPARATOR + "calc";
+
+    public static final String APP_CODE_NEW = RESOURCES + SEPARATOR + "appnew" + SEPARATOR + "src";
+
+    
 }

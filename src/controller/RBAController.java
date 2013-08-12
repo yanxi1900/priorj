@@ -1,8 +1,29 @@
 package controller;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 /**
- *
+ * This class is a controller to RBA application.
+ * 
  * @author Samuel T. C.Santos
+ * @version 1.0
  */
 
 import japa.parser.ast.CompilationUnit;
@@ -14,39 +35,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import main.FacadeRBA;
+
 import technique.RefactoringEnum;
 import util.Settings;
 
 import dao.XStreamWrite;
+import exceptions.DBException;
 
-
+/**
+ * <p>
+ * 		This class is a controller to RBA API.
+ * </p>
+ * @author Samuel T. C. Santos
+ * @version 1.0
+ *
+ */
 public class RBAController {
-/*
-	private List<RefactoringEnum> refatoring;
+
 	private ArrayList<CompilationUnit> compilation;
 	private List<String> methodNames;
-	private String pathApp;
-	private String className;
-	private String methodName;
-	private String classOneName;
-	private String classTwoName;
-	private String originMethodName;
-	private String newMethodName;
+	private String pathApp = "";
+	private String className = "";
+	private String methodName = "";
+	private String classOneName = "";
+	private String classTwoName = "";
+	private String originMethodName = "";
+	private String newMethodName = "";
 	private FacadeRBA facade;
 	private int beginLine;
 	private int endLine;
-	private String fieldName;
-
+	private String fieldName = "";
 	private List<String> signatures;
-	private Map<String, Double> mapWeight;
 
+	/**
+	 * <p>
+	 * Constructor.
+	 * </p>
+	 */
 	public RBAController() {
 		facade = new FacadeRBA();
-
 		signatures = new ArrayList<String>();
-		mapWeight = new HashMap<String, Double>();
+		methodNames = new ArrayList<String>();
 	}
 
+	/**
+	 * <p>
+	 * 	This method run the process.
+	 * </p>
+	 * @param refactoring
+	 * 		Refactor type.
+	 */
 	public void run(RefactoringEnum refactoring) {
 
 		switch (refactoring.getId()) {
@@ -75,67 +114,88 @@ public class RBAController {
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		This method run the refactoring to rename method.
+	 * </p>
+	 */
 	public void runRenameMethod() {
 		try {
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade.getImpactedElementsRenameMethod(
-					compilation, className, methodName, newMethodName));
+			methodNames = handlerMethod(facade.getImpactedElementsRenameMethod(	compilation, className, methodName, newMethodName));
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		Run the extract method.
+	 * </p>
+	 */
 	public void runExtractMethod() {
 		try {
-
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade
-					.getImpactedElementsExtractMethod(compilation, className,
-							originMethodName, newMethodName, beginLine, endLine));
-
+			methodNames = handlerMethod(facade.getImpactedElementsExtractMethod(compilation, className,originMethodName, newMethodName, beginLine, endLine));
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		This method run the move method.
+	 * </p>
+	 */
 	public void runMoveMethod() {
 		try {
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade.getImpactedElementsMoveMethod(
-					compilation, classOneName, classTwoName, methodName));
+			methodNames = handlerMethod(facade.getImpactedElementsMoveMethod(compilation, classOneName, classTwoName, methodName));
 
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		this method run the pull up method.
+	 * </p>
+	 */
 	public void runPullUpMethod() {
 		try {
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade.getImpactedElementsPullUpMethod(
-					compilation, classOneName, classTwoName, methodName));
+			methodNames = handlerMethod(facade.getImpactedElementsPullUpMethod(	compilation, classOneName, classTwoName, methodName));
 
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		This method run the pull up field.
+	 * </p>
+	 */
 	public void runPullUpField() {
 		try {
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade.getImpactedElementsPullUpField(
-					compilation, classOneName, classTwoName, fieldName));
+			methodNames = handlerMethod(facade.getImpactedElementsPullUpField(compilation, classOneName, classTwoName, fieldName));
 
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * <p>
+	 * 		This method run the add parameter.
+	 * </p>
+	 */
 	public void runAddParameter() {
 		try {
 			compilation = facade.parse(pathApp);
-			methodNames = handlerMethod(facade.getImpactedElementsAddParameter(
-					compilation, className, methodName));
+			methodNames = handlerMethod(facade.getImpactedElementsAddParameter(	compilation, className, methodName));
 
 		} catch (DBException e) {
 			e.printStackTrace();
@@ -194,7 +254,66 @@ public class RBAController {
 		this.signatures = sig;
 	}
 
-	private List<String> handlerMethod(List<String> methods) {
+	public ArrayList<CompilationUnit> getCompilation() {
+		return compilation;
+	}
+
+	public List<String> getMethodNames() {
+		return methodNames;
+	}
+
+	public String getPathApp() {
+		return pathApp;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+	public String getClassOneName() {
+		return classOneName;
+	}
+
+	public String getClassTwoName() {
+		return classTwoName;
+	}
+
+	public String getOriginMethodName() {
+		return originMethodName;
+	}
+
+	public String getNewMethodName() {
+		return newMethodName;
+	}
+
+	public FacadeRBA getFacade() {
+		return facade;
+	}
+
+	public int getBeginLine() {
+		return beginLine;
+	}
+
+	public int getEndLine() {
+		return endLine;
+	}
+
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	/**
+	 * <p>
+	 * 		This method handler a string and return a list.
+	 * </p>
+	 * @param methods
+	 * @return
+	 */
+	public List<String> handlerMethod(List<String> methods) {
 
 		setSignatures(methods);
 
@@ -231,24 +350,5 @@ public class RBAController {
 		return names;
 	}
 
-	public void save(List<String> methods) {
-
-		String local = System.getProperty("user.dir");
-		String directory = Settings.SEPARATOR + "priorjtmp"+ Settings.SEPARATOR;
-		String file = "methods";
-
-		File f = new File(local + directory);
-
-		if (!f.exists()) {
-			File createFile = new File(local + directory);
-
-			createFile.mkdir();
-
-		}
-		XStreamWrite writer = new XStreamWrite(local + directory + file);
-		writer.write(methods);
-
-	}
-*/
 }
 

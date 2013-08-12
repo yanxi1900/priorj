@@ -1,5 +1,23 @@
 package system;
 
+/*
+* PriorJ: JUnit Test Case Prioritization.
+* 
+* Copyright (C) 2012-2013  Samuel T. C. Santos
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+* 
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +30,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.JUnitVersionEnum;
+import util.ManagerFiles;
 import util.Settings;
+import exception.CannotReadLogFileException;
 import exception.CoverageUnrealizedException;
 import exception.InstrumentationUnrealizedException;
 
@@ -30,7 +50,6 @@ public class PriorJSystemTest {
 	@After
 	public void setDown(){
 		system = null;
-		
 	}
 
 	@Test
@@ -103,7 +122,7 @@ public class PriorJSystemTest {
 			
 		system.copyFiles();
 		
-		String path = Settings.APP_CODE + separator + "AspectCoverage.aj";
+		String path = Settings.APP + separator + "AspectCoverage.aj";
 		
 		File f = new File(path);
 		
@@ -115,7 +134,7 @@ public class PriorJSystemTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testRemoveAspectFile() throws IOException{
 		String app = Settings.APP;
 		String code = Settings.APP_CODE.replace(app + separator, "");
@@ -126,7 +145,7 @@ public class PriorJSystemTest {
 			
 		system.copyFiles();
 		
-		String path = Settings.APP_CODE + separator +  "AspectCoverage.aj";
+		String path = Settings.APP + separator +  "AspectCoverage.aj";
 		
 		system.deleteAspectosFile();
 		
@@ -151,7 +170,21 @@ public class PriorJSystemTest {
 		assertTrue(system.isCovered());
 	}
 
-	
+	@Test
+	public void testRunReadLogFile() throws CannotReadLogFileException, CoverageUnrealizedException, InstrumentationUnrealizedException{
+		String app = Settings.APP;
+		String code = Settings.APP_CODE.replace(app + Settings.SEPARATOR, "");
+		String lib = Settings.APP_LIB.replace(app + Settings.SEPARATOR, "");
+		String test = Settings.APP_TEST.replace(app + Settings.SEPARATOR, "");
+		
+		system = new PriorJSystemImpl(app, code, test, lib);
+		system.runInstrumentation();
+		system.runCoverage(JUnitVersionEnum.JUNIT4);
+		
+		system.readLogFile();
+		
+		assertTrue(system.isLog());
+	}
 	
 }
 
