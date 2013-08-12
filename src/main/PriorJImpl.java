@@ -249,7 +249,8 @@ public class PriorJImpl implements PriorJ {
 			throws EmptySetOfTestCaseException {
 		prior = new Prioritization(tests,
 				TechniquesEnum.ADDITIONAL_METHOD_COVERAGE.getId(), "", "");
-
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();
@@ -259,7 +260,8 @@ public class PriorJImpl implements PriorJ {
 			throws EmptySetOfTestCaseException {
 		prior = new Prioritization(tests,
 				TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE.getId(), "", "");
-
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();
@@ -269,7 +271,8 @@ public class PriorJImpl implements PriorJ {
 			throws EmptySetOfTestCaseException {
 		prior = new Prioritization(tests,
 				TechniquesEnum.TOTAL_METHOD_COVERAGE.getId(), "", "");
-
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();
@@ -277,9 +280,10 @@ public class PriorJImpl implements PriorJ {
 
 	public List<String> runPrioritizationTSC(List<TestCase> tests)
 			throws EmptySetOfTestCaseException {
-		Prioritization prior = new Prioritization(tests,
-				TechniquesEnum.TOTAL_STATEMENT_COVERAGE.getId(), "", "");
-
+		Prioritization prior = new Prioritization(tests,TechniquesEnum.TOTAL_STATEMENT_COVERAGE.getId(), "", "");
+		
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();
@@ -288,7 +292,9 @@ public class PriorJImpl implements PriorJ {
 	public List<String> runPrioritizationRD(List<TestCase> tests)
 			throws EmptySetOfTestCaseException {
 		prior = new Prioritization(tests, TechniquesEnum.Random.getId(), "", "");
-
+		
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();
@@ -298,7 +304,9 @@ public class PriorJImpl implements PriorJ {
 			throws EmptySetOfTestCaseException {
 
 		Prioritization prior = new Prioritization(tests,TechniquesEnum.CHANGED_BLOCKS_TOTAL.getId(), pathNewCode,pathCodeOld);
-
+		
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		this.blockAffected = prior.getBlockAffected();
@@ -310,6 +318,9 @@ public class PriorJImpl implements PriorJ {
 			throws EmptySetOfTestCaseException {
 		Prioritization prior = new Prioritization(tests,
 				TechniquesEnum.REFACTORING_BASED_APPROACH.getId(), "", "");
+		
+		prior.setPathTest(pathTest);
+		
 		prior.prioritize();
 
 		return prior.assignWeight();

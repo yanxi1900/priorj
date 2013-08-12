@@ -108,13 +108,13 @@ public class ControllerRBATest {
 		assertTrue( controller.getEndLine() == endLine);
 		
 		
-//		List<String> methods = controller.getMethods();
-//		
-//		for (String s  : methods){
-//			System.out.println(s);
-//		}
-//			
-//		assertFalse(methods.isEmpty());
+		List<String> methods = controller.getMethods();
+		
+		for (String s  : methods){
+			System.out.println(s);
+		}
+			
+		assertFalse(methods.isEmpty());
 	}
 	
 	@Test //ok

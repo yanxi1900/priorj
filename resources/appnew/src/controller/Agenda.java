@@ -100,7 +100,7 @@ public class Agenda implements Serializable {
 	 * 		uma lista de contatos.
 	 */
 	public List<Contato> listarContatos(){
-		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		CatalogoContatos catalogoContatos = getCatalogoContatos();
 		
 		return catalogoContatos.getContatos();
 	}
@@ -112,9 +112,14 @@ public class Agenda implements Serializable {
 	 * @return
 	 */
 	public List<Telefone> getTelefonesDoContatoAtivo(){
-		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		CatalogoContatos catalogoContatos = getCatalogoContatos();
 	
 		return catalogoContatos.getTelefones();
+	}
+
+	private CatalogoContatos getCatalogoContatos() {
+		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		return catalogoContatos;
 	}
 	
 	
@@ -209,7 +214,7 @@ public class Agenda implements Serializable {
 	public void adicionarContato(String nome, int idade, String descricao){
 		Contato contato = new Contato(nome, idade, descricao);
 		
-		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		CatalogoContatos catalogoContatos = getCatalogoContatos();
 		
 		catalogoContatos.addContato(contato, new ArrayList<Telefone>(), new ArrayList<String>());
 		
@@ -234,7 +239,7 @@ public class Agenda implements Serializable {
 	public void adicionarTelefone(String codPais, String codRegional, String codOperadora, String numero, String operadora, String operadoraLigar){
 		Telefone telefone = new Telefone(codPais, codRegional,codOperadora, numero,operadora, operadoraLigar);
 		
-		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		CatalogoContatos catalogoContatos = getCatalogoContatos();
 		
 		MapEntry entrada = catalogoContatos.getEntry(ativo);
 		
@@ -255,7 +260,7 @@ public class Agenda implements Serializable {
 	 */
 	public void adicionarEmail(String email){
 		
-		CatalogoContatos catalogoContatos = catalogo.getCatalogoContatos(logado);
+		CatalogoContatos catalogoContatos = getCatalogoContatos();
 		
 		MapEntry entrada = catalogoContatos.getEntry(ativo);
 		

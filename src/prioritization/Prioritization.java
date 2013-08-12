@@ -59,6 +59,14 @@ public class Prioritization {
     private int techniqueId;
     Technique technique = null;
     
+    /**
+     * <p>
+     * 		The test path should be informed, to be excluded in the
+     * 		instrumentation process.
+     * </p>
+     */
+    private String pathTest="";
+    
     public Prioritization(List<TestCase> tests, int technique , String pathCodeNew, String totalPathCode){
         suiteList = new ArrayList<String>();
         this.tests = tests;
@@ -228,7 +236,7 @@ public class Prioritization {
      * @throws Exception internal problem instrumentation.
      */
     private void instrumentaCodigo(String path)  {
-        InstrumentApp inst = new InstrumentApp(path);
+        InstrumentApp inst = new InstrumentApp(path,pathTest);
         try {
             inst.run();
         } catch (Exception ex) {
@@ -300,6 +308,14 @@ public class Prioritization {
      */
 	public List<String> getImpacted() {
 		return impacted;
+	}
+
+	public String getPathTest() {
+		return pathTest;
+	}
+
+	public void setPathTest(String pathTest) {
+		this.pathTest = pathTest;
 	}
 	
 	
