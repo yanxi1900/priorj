@@ -83,7 +83,7 @@ public class ControllerRBATest {
 		String pathApp = Settings.APP_CODE_NEW;
 		
 		String className="controller.Agenda";
-		String originMethodName = "getTelefonesDoContatoAtivo()";
+		String originMethodName = "getTelefonesDoContatoAtivo";
 		String newMethodName="getCatalogoContatos";
 		
 		int beginLine = 115;

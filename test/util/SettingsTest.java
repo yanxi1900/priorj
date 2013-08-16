@@ -73,6 +73,28 @@ public class SettingsTest {
 		
 		assertTrue(file.exists());
 		
+		
+		file = new File(Settings.APP_AVL);
+		
+		assertTrue(file.exists());
+		
+		file = new File(Settings.APP_AVL_CODE);
+		
+		assertTrue(file.exists());
+		
+		file = new File(Settings.APP_AVL_TEST);
+		
+		assertTrue(file.exists());
+
+		file = new File(Settings.INSTRUMENT_TESTS);
+		
+		assertTrue(file.exists());
+		
+		file = new File(Settings.INSTRUMENT_BLOCKS);
+		
+		assertTrue(file.exists());
+		
+		
 	}
 	
 	@Test

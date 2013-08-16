@@ -24,6 +24,8 @@ import input.InputPriorJ;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JPopupMenu.Separator;
+
 import exception.CannotReadLogFileException;
 import exception.CoverageUnrealizedException;
 import exception.InstrumentationUnrealizedException;
@@ -63,23 +65,34 @@ public class AutoRunConsole {
 
 	private static void showReports(PriorJFacade facade, InputPriorJ input) {
 		if (input.coverageReport().toLowerCase().equals("yes")){
-			String report = facade.getCoverageReport();
-			print(report);
+			print("See coverage Report:");
+			print(Settings.REPORT + Settings.SEPARATOR);
 		}
 		
-		if(input.codeTree().toLowerCase().equals("yes"))
-			print(facade.getCodeTree());
+		if(input.codeTree().toLowerCase().equals("yes")){
+			//print(facade.getCodeTree());
+			print("See code Tree:");
+			print(Settings.REPORT + Settings.SEPARATOR+ "coverageReport.xml");
+		}
 		
-		if(input.jUnitReport().toLowerCase().equals("yes"))
-			print(facade.getSimpleJUnitReport());
+		if(input.jUnitReport().toLowerCase().equals("yes")){
+			//print(facade.getSimpleJUnitReport());
+			print("See JUnit Report:");
+			print(Settings.REPORT + Settings.SEPARATOR + "html");
+		}
 		
 		if(input.executionOrder().toLowerCase().equals("yes")){
-			List<String> listOrder = facade.getOrder();
-			
-			for (String order : listOrder){
-				print(order);
-			}
+			//print(Settings.ORDER + Settings.SEPARATOR);
+			print("See execution order:");
+			print(Settings.ORDER + Settings.SEPARATOR);
 		}
+		
+		if(input.hasSuite()){
+			//print(Settings.ORDER + Settings.SEPARATOR);
+			print("See Prioritized Suites:");
+			print(Settings.SUITES + Settings.SEPARATOR);
+		}
+		
 	}
 
 	private static void run(PriorJFacade facade) {

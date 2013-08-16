@@ -34,6 +34,7 @@ import report.CodeTree;
 import report.CoverageReport;
 
 import technique.TechniquesEnum;
+import util.ManagerFiles;
 import util.Settings;
 
 import main.PriorJ;
@@ -66,19 +67,34 @@ public class Console {
 	public void run(){
 		PriorJFacade facade = new PriorJFacade();
 		
-		readPathApp(facade);
-		
-		readPathCode(facade);
-		
-		readPathLib(facade);
-		
-		readPathTest(facade);
+		readPaths(facade);
 		
 		readJUnitVersion(facade);
 		
 		readMultipleTechniques(facade);
 		
 		executeRun(facade);
+	}
+
+	/**
+	 * This method read and validate the input paths.
+	 * 
+	 * @param facade
+	 */
+	private void readPaths(PriorJFacade facade) {
+		
+		String pathApp = readPathApp();
+		
+		facade.setPathApp(pathApp);
+		
+		String pathCode = readPathCode();
+		facade.setPathCode(pathCode);
+		
+		String pathLib = readPathLib();
+		facade.setPathLib(pathLib);
+		
+		String pathTest = readPathTest();
+		facade.setPathTest(pathTest);
 	}
 
 	/**
@@ -428,78 +444,6 @@ public class Console {
 	}
 	
 	/**
-	 * Read the application path.
-	 * 
-	 * @param facade
-	 */
-	private void readPathApp(PriorJFacade facade){
-		try {
-			String path = readPathApp();
-			facade.setPathApp(path);
-		} catch (Exception e) {
-			printerr("\n" + e.getMessage());
-			readPathApp();
-		}
-	}
-	/**
-	 * Read the code path.
-	 * 
-	 * @param facade
-	 */
-	private void readPathCode(PriorJFacade facade){
-		try {
-			String path = readPathCode();
-			facade.setPathCode(path);
-		} catch (Exception e) {
-			printerr("\n" + e.getMessage());
-			readPathCode();
-		}
-	}
-	/**
-	 * Read the libraries path.
-	 * 
-	 * @param facade
-	 */
-	private void readPathLib(PriorJFacade facade){
-		try {
-			String path = readPathLib();
-			facade.setPathLib(path);
-		} catch (Exception e) {
-			printerr("\n" + e.getMessage());
-			readPathApp();
-		}
-	}
-	
-	/**
-	 * This method read the path test.
-	 * 
-	 * @param facade
-	 */
-	private void readPathTest(PriorJFacade facade){
-		try {
-			String path = readPathTest();
-			facade.setPathTest(path);
-		} catch (Exception e) {
-			printerr("\n" + e.getMessage());
-			readPathApp();
-		}
-	}
-	
-	/**
-	 * Read from input the path to new code.
-	 * 
-	 * @param facade
-	 */
-	private void readPathCodeNew(PriorJFacade facade){
-		try {
-			String path = readPathNewCode();
-			facade.setPathCodeNew(path);
-		} catch (Exception e) {
-			printerr("\n" + e.getMessage());
-			readPathCodeNew();
-		}
-	}
-	/**
 	 * Read from input the JUnit version.
 	 * 
 	 * @param facade
@@ -541,15 +485,15 @@ public class Console {
 	 * @return
 	 */
 	private String readPathCodeNew(){
-		try{
-			print("Path code new: ");
-			String path = input.nextLine();
+	
+		print("Path code new: ");
+		String path = input.nextLine();
+		
+		if(validate(path))
 			return path;
-		}
-		catch(Exception e){
-			printerr("\n" +e.getMessage());
+		else
 			return readPathCodeNew();
-		}
+	
 	}
 	
 	/**
@@ -558,18 +502,17 @@ public class Console {
 	 * @return
 	 * 		path application.
 	 */
-	public String readPathApp(){
-		try{
-			print("\nPath application: ");
-			String path = input.nextLine();
+	public String readPathApp(){		
+		print("\nPath application: ");
+		String path = input.nextLine();
+		if (validate(path))
 			return path;
-		}
-		catch(IllegalArgumentException iae){
-			printerr("\n" + iae.getMessage());
+		else
 			return readPathApp();
-		}
 
 	}
+	
+
 	/**
 	 * This method read the path libraries.
 	 * 
@@ -577,17 +520,18 @@ public class Console {
 	 * 		the path libraries.
 	 */
 	public String readPathLib(){
-		try{
-			print("Path Libraries: ");
-			String path = input.nextLine();
+	
+		print("Path Libraries: ");
+		String path = input.nextLine();
+		
+		if (path.isEmpty())
 			return path;
-		}
-		catch(IllegalArgumentException iae){
-			printerr("\n" + iae.getMessage());
+		else if (validate(path))
+			return path;
+		else
 			return readPathLib();
-		}
-
 	}
+	
 	/**
 	 * This method read the path to tests.
 	 * 
@@ -595,16 +539,12 @@ public class Console {
 	 * 		the path to tests.
 	 */
 	public String readPathTest(){
-		try{
-			print("Path Test: ");
-			String path = input.nextLine();
+		print("Path Test: ");
+		String path = input.nextLine();
+		if (validate(path))	
 			return path;
-		}
-		catch(IllegalArgumentException iae){
-			printerr("\n" + iae.getMessage());
+		else
 			return readPathTest();
-		}
-
 	}
 	
 	/**
@@ -614,16 +554,24 @@ public class Console {
 	 * 		the path to new code version.
 	 */
 	public String readPathNewCode(){
-		try{
-			print("Path new code: ");
-			String path = input.nextLine();
+		print("Path new code: ");
+		String path = input.nextLine();
+		if (validate(path))
 			return path;
-		}
-		catch(IllegalArgumentException iae){
-			printerr("\n" + iae.getMessage());
+		else
 			return readPathNewCode();
-		}
 
+	}
+	
+	/**
+	 * This method verify if the file exist.
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public boolean validate(String path){
+		path = pathParse(path);
+		return ManagerFiles.existFileOrDirectory(path);
 	}
 	
 	
@@ -634,14 +582,15 @@ public class Console {
 	 * 		the path code.
 	 */
 	public String readPathCode(){
-		try {
-			print("Path code: ");
-			String pathCode = input.nextLine();
+		
+		print("Path code: ");
+		String pathCode = input.nextLine();
+		
+		if (validate(pathCode))
 			return pathCode;
-		} catch (IllegalArgumentException iae) {
-			printerr("\n" + iae.getMessage());
+		else
 			return readPathCode();
-		}
+	
 	}
 	/**
 	 * Read the JUnit version.
@@ -823,8 +772,21 @@ public class Console {
 	public static void newLine(){
 		System.out.println("");
 	}
-
 	
+	/**
+	 * This method do a parse in the path.
+	 * 
+	 * @param path
+	 * @return
+	 */
+	private static String pathParse(String path) {
+		if (path.contains("\\"))
+			path = path.replace("\\", Settings.SEPARATOR);
+		else if (path.contains("/"))
+			path = path.replace("/",Settings.SEPARATOR);
+		return path;
+	}
+
 	/**
 	 * Run the application on command line mode.
 	 * 

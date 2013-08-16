@@ -72,5 +72,17 @@ public class Settings {
 
     public static final String APP_CODE_NEW = RESOURCES + SEPARATOR + "appnew" + SEPARATOR + "src";
 
+    public static final String APP_AVL = RESOURCES + SEPARATOR + "AVL";
     
+    public static final String APP_AVL_CODE = APP_AVL + SEPARATOR + "src";
+    
+    public static final String APP_AVL_LIB = "";
+    
+    public static final String APP_AVL_TEST = APP_AVL_CODE + SEPARATOR + "tests";
+   
+    // test to instrument class and instrument app
+    public static final String INSTRUMENT_TESTS = RESOURCES_FILES + SEPARATOR + "InstrumentTests";
+    
+    //tests to instrument blocks for, if
+    public static final String INSTRUMENT_BLOCKS = INSTRUMENT_TESTS + SEPARATOR + "blocks";
 }

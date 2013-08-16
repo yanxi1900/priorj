@@ -78,9 +78,11 @@ public class InstrumentApp {
         
         if(children != null){
         	for (File arq : children) {
-        		if (arq.isDirectory() && !arq.getPath().equals(pathTest)) {
+        		System.out.println("path test:" + pathTest);
+        		System.out.println("arquivo: " + arq.getPath());
+        		if (arq.isDirectory()) {
         			instrumentClassOfPath(arq);
-        		} else if (arq.getName().endsWith(".java")) {
+        		} else if (arq.getName().endsWith(".java") && !arq.getPath().contains(pathTest)) {
         			InstrumentClass instrumenta = new InstrumentClass(path.toString() + "/", arq.getName());
         			instrumenta.instrumentationRun();
         		}

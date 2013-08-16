@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
 	 * 		senha do usuario.
 	 */
 	public Usuario(String nomeUsuario, String senha) {
-		super();
+		this();
 		this.nomeUsuario = nomeUsuario;
 		this.senha = senha;
 	}

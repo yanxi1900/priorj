@@ -142,6 +142,16 @@ public class InputPriorJ {
 		return parse.getValue(Property.SUITE_RBA);
 	}
 	
+	public boolean hasSuite(){
+		return suiteAMC().toLowerCase().equals("yes") ||
+		suiteASC().toLowerCase().equals("yes") ||
+		suiteCB().toLowerCase().equals("yes") ||
+		suiteRBA().toLowerCase().equals("yes") ||
+		suiteRND().toLowerCase().equals("yes") ||
+		suiteTMC().toLowerCase().equals("yess") ||
+		suiteTSC().toLowerCase().equals("yes");
+	}
+	
 	public String rmPathApp() {
 		return parse.getValue(Property.RM_PATH_APP);
 	}

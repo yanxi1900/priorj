@@ -66,6 +66,8 @@ public class InstrumentClass {
     private String pathFile;
 
     private String nameFile;
+    
+    private int watchNumber;
 
     /**
      * Constructor
@@ -77,6 +79,7 @@ public class InstrumentClass {
     public InstrumentClass(String pathFile, String nameFile) {
         this.pathFile = pathFile;
         this.nameFile = nameFile;
+        watchNumber = 0;
     }
 
     /**
@@ -156,7 +159,7 @@ public class InstrumentClass {
      * 
      * @param compilation
      */
-    private void instrumentarClasse(CompilationUnit compilation) {
+    public void instrumentarClasse(CompilationUnit compilation) {
         
         FieldDeclaration vigia = ASTHelper.createFieldDeclaration(ModifierSet.STATIC, ASTHelper.BOOLEAN_TYPE, getNameField());
         
@@ -211,7 +214,7 @@ public class InstrumentClass {
      * 
      * @param contrutor
      */
-   private void instrumentaConstrututor(ConstructorDeclaration contrutor) {
+   public void instrumentaConstrututor(ConstructorDeclaration contrutor) {
         
         BlockStmt linhas = contrutor.getBlock();
         
@@ -230,13 +233,14 @@ public class InstrumentClass {
         List<Statement> novaLista = new ArrayList<Statement>();
         
         if (stmts != null) {
-            
             for (int i = 0; i < stmts.size(); i++) {
                 Statement stm = stmts.get(i);
-                if(i != 0 || !(stmts.get(i).toString().contains("super") || stmts.get(i).toString().contains("this")))
+              
+                if(i != 0 || !(stmts.get(i).toString().contains("super") || stmts.get(i).toString().contains("this")) )
                 	novaLista.add(watchStatement);
                 stm = instrumentarBody(stm, watchStatement);
                 novaLista.add(stm);
+                incrementWatch();
             }
             
             linhas.setStmts(novaLista);
@@ -246,7 +250,7 @@ public class InstrumentClass {
      * 
      * @param metodo
      */
-    private void instrumentaMetodo(MethodDeclaration metodo) {
+    public void instrumentaMetodo(MethodDeclaration metodo) {
         
         BlockStmt linhas = metodo.getBody();
         
@@ -271,11 +275,20 @@ public class InstrumentClass {
                 novaLista.add(watchStatement);
                 stm = instrumentarBody(stm, watchStatement);
                 novaLista.add(stm);
+                incrementWatch();
             }
+            
             
             linhas.setStmts(novaLista);
         }
     }
+
+    /**
+     * Increment the total number line covered.
+     */
+	private void incrementWatch() {
+		watchNumber++;
+	}
 
     /**
      * 
@@ -283,25 +296,26 @@ public class InstrumentClass {
      * @param watch
      * @return
      */
-    private Statement instrumentarBody(Statement stm, Statement watch) {
+    public Statement instrumentarBody(Statement stm, Statement watch) {
         
         if (stm == null) {
-            
             return null;
         } else if (stm instanceof BlockStmt) {
             
             List<Statement> novaLista = new ArrayList<Statement>();
             
             BlockStmt novoBloco = (BlockStmt) stm;
+            
             if(novoBloco.getStmts() != null){
             	for (Statement stat : novoBloco.getStmts()) {
             		novaLista.add(watch);
-            		novaLista.add(stat);
+            		incrementWatch();
+            		novaLista.add(instrumentarBody(stat, watch)); 
             	}          	
+            	
             }
-            
             novoBloco.setStmts(novaLista);
-            
+      
             return novoBloco;
         } else if (stm instanceof IfStmt) {
             
@@ -310,6 +324,7 @@ public class InstrumentClass {
             state.setThenStmt(instrumentarBody(state.getThenStmt(), watch));
             
             state.setElseStmt(instrumentarBody(state.getElseStmt(), watch));
+            
             
             return state;
         } else if (stm instanceof WhileStmt) {
@@ -342,10 +357,13 @@ public class InstrumentClass {
             state.setFinallyBlock((BlockStmt) instrumentarBody(state.getFinallyBlock(), watch));
             
             return state;
-        } else {     
+        }
+        else {     
             return stm;
         }
     }
+    
+
 
     /**
      * 
@@ -354,7 +372,7 @@ public class InstrumentClass {
      * @param data
      * @throws IOException
      */
-    private void writeFile(String dir, String nameFile, String data) throws IOException {
+    public void writeFile(String dir, String nameFile, String data) throws IOException {
         
         File path = new File(dir);
         
@@ -366,5 +384,15 @@ public class InstrumentClass {
         
         out.close();
     }
+
+    /**
+     * This method get the number of line founded in the file.
+     * 
+     * @return
+     * 		Number of statements.
+     */
+	public int getWatchNumber() {
+		return watchNumber;
+	}
 
 }
