@@ -1,13 +1,13 @@
-package aspectfiles;
-
 import org.junit.Test;
-import edu.ufcg.splab.priorj.dao.Repository;
+import dao.Repository;
 
 public aspect AspectCoverage {
 
 	private Repository repository;
 		
-	pointcut callTestCase() : execution([parameter])  && (within(*[pathTest].*));
+	//pointcut callTestCase() : execution([parameter])  && (within(* [pathTest]*[pathTest].*));
+
+	pointcut callTestCase() : execution([parameter])  && !within(AspectCoverage);
 		
     pointcut callMethod() : execution(* *(..)) && !execution(* [pathTest]*..*.*(..)) 
 	&& !execution(* junit..*..*.*(..)) && !execution(* java..*..*.*(..)) && !within(AspectCoverage);

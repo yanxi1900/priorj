@@ -235,9 +235,8 @@ public class InstrumentClass {
         if (stmts != null) {
             for (int i = 0; i < stmts.size(); i++) {
                 Statement stm = stmts.get(i);
-
-                if(i != 0 || (stmts.get(i).toString().contains("super") || stmts.get(i).toString().contains("this")))
-
+              
+                if(i != 0 || !(stmts.get(i).toString().contains("super") || stmts.get(i).toString().contains("this")) )
                 	novaLista.add(watchStatement);
                 stm = instrumentarBody(stm, watchStatement);
                 novaLista.add(stm);

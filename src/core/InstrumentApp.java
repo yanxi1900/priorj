@@ -21,6 +21,8 @@ package core;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import util.Settings;
+
 /**
  * <p>
  * 		This class instrument an entire application.
@@ -78,12 +80,10 @@ public class InstrumentApp {
         
         if(children != null){
         	for (File arq : children) {
-        		System.out.println("path test:" + pathTest);
-        		System.out.println("arquivo: " + arq.getPath());
         		if (arq.isDirectory()) {
         			instrumentClassOfPath(arq);
         		} else if (arq.getName().endsWith(".java") && !arq.getPath().contains(pathTest)) {
-        			InstrumentClass instrumenta = new InstrumentClass(path.toString() + "/", arq.getName());
+        			InstrumentClass instrumenta = new InstrumentClass(path.toString() + Settings.SEPARATOR, arq.getName());
         			instrumenta.instrumentationRun();
         		}
         	}

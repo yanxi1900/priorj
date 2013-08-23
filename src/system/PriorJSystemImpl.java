@@ -201,7 +201,7 @@ public class PriorJSystemImpl implements PriorJSystem {
         	
         	if (testPath.contains(Settings.SEPARATOR))
         		testPath = getPathTests().substring(getPathTests().lastIndexOf(Settings.SEPARATOR), getPathTests().length()).replace(Settings.SEPARATOR, "");
-            
+                    	
             String pointcutAspect = "";
             
             if (version==JUnitVersionEnum.JUNIT3){
