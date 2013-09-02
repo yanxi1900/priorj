@@ -59,7 +59,10 @@ public class Settings {
     public static final String ASPECT_FILE = EXTERNAL + SEPARATOR + "aspectfiles";
     
     public static final String RESOURCES = USER_DIR + SEPARATOR + "resources";
-    
+    /**
+     * Path to resources directory.
+     * USER.DIR/resources/files
+     */
     public static final String RESOURCES_FILES = RESOURCES + SEPARATOR + "files";
     
     public static final String APP = RESOURCES + SEPARATOR + "app";

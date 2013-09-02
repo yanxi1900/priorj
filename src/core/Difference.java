@@ -22,6 +22,7 @@ import japa.parser.JavaParser;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.BodyDeclaration;
 import japa.parser.ast.body.ClassOrInterfaceDeclaration;
+import japa.parser.ast.body.ConstructorDeclaration;
 import japa.parser.ast.body.FieldDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.Parameter;
@@ -104,6 +105,42 @@ public class Difference {
         
         List<MethodDeclaration> modMethods = new ArrayList<MethodDeclaration>();
         
+        /**
+         * List to constructor normal in the old version
+         */
+        List<ConstructorDeclaration> normalConstructor = new ArrayList<ConstructorDeclaration>();
+        /**
+         * List to constructor modified in the new version
+         */
+        List<ConstructorDeclaration> modConstructor = new ArrayList<ConstructorDeclaration>();
+        
+        
+        //handler the constructor
+
+        for (TypeDeclaration typeDeclaration : compNormal.getTypes()) {
+            setClassName(compNormal.getPackage().getName() +"."+typeDeclaration.getName());
+            List<BodyDeclaration> body = typeDeclaration.getMembers();
+            for (BodyDeclaration bodyDeclaration : body) {
+                if (bodyDeclaration instanceof FieldDeclaration)
+                	normalFields.add(bodyDeclaration); 
+                else if (bodyDeclaration instanceof ConstructorDeclaration) {
+                    normalConstructor.add((ConstructorDeclaration) bodyDeclaration);
+                }
+            }
+        }
+        
+        for (TypeDeclaration typeDeclaration : compOld.getTypes()) {
+            
+            List<BodyDeclaration> body = typeDeclaration.getMembers();
+            
+            for (BodyDeclaration bodyDeclaration : body) {
+                if (bodyDeclaration instanceof FieldDeclaration)
+                	modFields.add(bodyDeclaration);
+                else if (bodyDeclaration instanceof ConstructorDeclaration)
+                	modConstructor.add((ConstructorDeclaration) bodyDeclaration);
+            }
+        }
+        
         for (TypeDeclaration typeDeclaration : compNormal.getTypes()) {
             setClassName(compNormal.getPackage().getName() +"."+typeDeclaration.getName());
             List<BodyDeclaration> body = typeDeclaration.getMembers();
@@ -122,10 +159,51 @@ public class Difference {
                 if (bodyDeclaration instanceof FieldDeclaration) modFields.add(bodyDeclaration); else if (bodyDeclaration instanceof MethodDeclaration) modMethods.add((MethodDeclaration) bodyDeclaration);
             }
         }
-        
+
+        // verify the constructor differences
+        diffConstructors(normalConstructor, modConstructor);
         diffMethods(normalMethods, modMethods);
     }
 
+    private void diffConstructors(List<ConstructorDeclaration> normal, List<ConstructorDeclaration> mod) {
+        
+        for (ConstructorDeclaration constructorDeclaration : normal) {
+            
+            checkConstructors(constructorDeclaration, mod);
+        }
+    }
+    
+  private void checkConstructors(ConstructorDeclaration constructor, List<ConstructorDeclaration> lista) {
+        
+    	boolean encontrou = false;
+        for (ConstructorDeclaration constr : lista) {
+            String assinaturaMethod = generateAssignatureConstructor(constructor);
+            
+            String assinaturaConstr = generateAssignatureConstructor(constr);
+            
+            if (assinaturaMethod.equals(assinaturaConstr)) {
+            	encontrou = true;
+                boolean isDiff = isDiffConstructors(constructor.getBlock(), constr.getBlock());
+                if (isDiff) {
+                    List<String> lines = new ArrayList<String>();
+                    for (Statement stt : constructor.getBlock().getStmts()) {
+                        lines.addAll(getAllLineStatementsMethod(stt, constructor.getName()));
+                    }
+                    statementsDiff.addAll(lines);
+                }
+            }
+        }
+        if(!encontrou){
+        	List<String> lines = new ArrayList<String>();
+            for (Statement stt : constructor.getBlock().getStmts()) {
+                lines.addAll(getAllLineStatementsMethod(stt, constructor.getName()));
+            }
+            statementsDiff.addAll(lines);
+        }
+    }
+    
+
+    
     private void diffMethods(List<MethodDeclaration> normal, List<MethodDeclaration> mod) {
         
         for (MethodDeclaration methodDeclaration : normal) {
@@ -163,6 +241,21 @@ public class Difference {
         }
     }
     
+  private String generateAssignatureConstructor(ConstructorDeclaration constructor) {
+    
+        String assignature = constructor.getName();;
+        
+        List<Parameter> parametros = constructor.getParameters();
+        
+        if (parametros != null) {
+            
+            for (Parameter param : constructor.getParameters()) {
+                assignature += param.getType();
+            }
+        }
+        
+        return assignature;
+    }
 
     private String generateAssignature(MethodDeclaration method) {
         
@@ -251,6 +344,11 @@ public class Difference {
         return stmts;
     }
 
+    private boolean isDiffConstructors(BlockStmt blockNormal, BlockStmt blockMod) {
+    	return isDiffMethods(blockNormal, blockMod);
+    }
+
+    
     private boolean isDiffMethods(BlockStmt blockNormal, BlockStmt blockMod) {
         
         List<Statement> stNormal = null;

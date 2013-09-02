@@ -298,7 +298,7 @@ public class InstrumentClassTest {
 	 *	    public void methodA() {
 	 *	    }
 	 *	
-	 *	    public vodi methodB() {
+	 *	    public void methodB() {
 	 *	    }
 	 *	
 	 *	    public void methodC() {

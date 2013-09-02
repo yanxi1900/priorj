@@ -19,10 +19,11 @@ package util;
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * Essa classe representa as informações
- * sibre o resultado de execução de um Test.
- *
- * @author Samuel Santos
+ * 
+ * This class recovery informations about the JUnit execution.
+ *  
+ * @author Samuel T. C.  Santos
+ * @version 1.0
  */
 public class TestResult {
 
