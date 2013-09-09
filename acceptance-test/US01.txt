@@ -1,0 +1,26 @@
+# (US01.txt) User Story 01  - Create and remove a simple Project
+
+resetSystem
+
+# valid input
+createProject name="AVL-01" version="junit4"
+createProject name="AVL-02" version="junit3"
+createProject name="AVL-03" version="junit4"
+
+#invalid conditions
+expectError "Invalid input" createProject name= version="junit4"
+expectError "Invalid input" createProject name="xpto" version=
+
+expectError "Project name can not be empty" createProject name="" version="junit3"
+expectError "Empty version name" createProject name="xpto" version=""
+#expectError "Invalid JUnit version name" createProject name="xpto" version="xpto"
+
+
+
+expect 3 numberOfProjects
+
+removeProject name"AVL-01"
+removeProject name"AVL-02"
+removeProject name"AVL-03"
+
+expect 0 numberOfProjects

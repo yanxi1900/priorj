@@ -12,6 +12,4 @@ public class InstrumentationUnrealized extends Exception {
     public InstrumentationUnrealizedException(String errorMessage) {
         super("Instrumentation Unrealized: " + errorMessage);
     }
-
-    static boolean watchPriorJApp;
 }

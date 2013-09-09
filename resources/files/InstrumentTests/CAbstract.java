@@ -21,12 +21,9 @@ public abstract class Rodoviario extends Contribuinte {
 	 */
     public Rodoviario(String nome, String numero, double valorDosBens, double kmRodados) throws Exception {
         super(nome, numero, valorDosBens);
-        watchPriorJApp = watchPriorJApp;
         if (kmRodados < 0.0) {
-            watchPriorJApp = watchPriorJApp;
             throw new Exception("Kilometragem nao pode ser negativa.");
         }
-        watchPriorJApp = watchPriorJApp;
         this.kmRodados = kmRodados;
     }
 
@@ -36,13 +33,8 @@ public abstract class Rodoviario extends Contribuinte {
 	 */
     @Override
     public double calculaDescontos() {
-        watchPriorJApp = watchPriorJApp;
         descontos = 0.0;
-        watchPriorJApp = watchPriorJApp;
         descontos += (kmRodados * 0.01);
-        watchPriorJApp = watchPriorJApp;
         return descontos;
     }
-
-    static boolean watchPriorJApp;
 }

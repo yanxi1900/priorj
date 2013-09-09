@@ -43,16 +43,16 @@ import util.SubstituiStringArquivo;
  * This class is a test class to class InstrumentClass.
  * 
  * @author Samuel T. C. Santos
- * 		   Igor Meira
+ * 		   Igor de Araujo Meira
  * 
  * @version 1.0 2013
  *
  */
 public class InstrumentClassTest {
 	
-	private InstrumentClass ic, ic2, ic3, ic4, ic5, ic6, ic7;
-	private List<String> list;
-	private int contaWPAs;
+	private InstrumentClass ic;
+	
+	private final String folderInstrumentTests = Settings.INSTRUMENT_TESTS;
 	
 	private final String separator = Settings.SEPARATOR;
 	private final String folderBlocks = Settings.INSTRUMENT_BLOCKS;
@@ -60,13 +60,7 @@ public class InstrumentClassTest {
 	@Before
 	public void createObject() {
 		ic = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CDteca1.java");
-		ic2 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CDteca2.java");
-		ic3 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CDteca3.java");
-		ic4 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CAbstract.java");
-		ic5 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  +"CEmpty.java");
-		ic6 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CInterface.java");
-		ic7 = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CConstrutor.java");
-	}
+		}
 	
 	@Test
 	public void testInstrumentClassInitialization(){
@@ -298,7 +292,7 @@ public class InstrumentClassTest {
 	 *	    public void methodA() {
 	 *	    }
 	 *	
-	 *	    public void methodB() {
+	 *	    public vodi methodB() {
 	 *	    }
 	 *	
 	 *	    public void methodC() {
@@ -595,89 +589,187 @@ public class InstrumentClassTest {
 		
 		assertEquals("watchPriorJApp", ic.getNameField());
 		ic.setNameField("viewPriorJApp");
-		//assertEquals("watchPriorJApp", ic.getNameField());
 		assertEquals("viewPriorJApp", ic.getNameField());
 	}
 	//Normal class
 	@Test
 	public void testCDteca1() throws Exception {
-		ic.instrumentationRun();
-		FoundWPA(ic.getPathFile() + ic.getNameFile(), ic.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 26);
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CDteca1.java");
+		
+		classPath = classPath + "CDteca1.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 28);
 	}
 	
 	//Classes with "watchPriorJApp = watchPriorJApp;" or "static "static boolean watchPriorJApp;"
 	@Test
-	public void testCDteca2_3() throws Exception {		
+	public void testCDteca3() throws Exception {		
 		/*CDteca3
-		 * "static "static boolean watchPriorJApp;"
-		 */
-		ic3.instrumentationRun();
-		FoundWPA(ic3.getPathFile() + ic3.getNameFile(), ic3.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 1);
+		 * Contain "static boolean watchPriorJApp;"
+		 */		 
+
+		String classPath = folderInstrumentTests + separator;
 		
-		/*CDteca2
-		 * "watchPriorJApp = watchPriorJApp;"
-		 */
-		ic2.instrumentationRun();
-		FoundWPA(ic2.getPathFile() + ic2.getNameFile(), ic2.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 26);
+		ic = new InstrumentClass(classPath, "CDteca3java");
+		
+		classPath = classPath + "CDteca3.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		//assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 0);
 	}
 	
 	//Empty class
 	@Test
 	public void testCEmpty() throws Exception {
-		try {
-
-			ic5.instrumentationRun();
-			fail();
-			
-			FoundWPA(ic5.getPathFile() + ic5.getNameFile(), ic5.getNameField());
-			ContaWPAs();
-			assertTrue(contaWPAs == 0);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			
-		}
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CEmpty.java");
+		
+		classPath = classPath + "CEmpty.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		//assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 0);
 		
 	}
 	
 	//Abstract class
 	@Test
 	public void testCAbstract() throws Exception {
-		ic4.instrumentationRun();
-		FoundWPA(ic4.getPathFile() + ic4.getNameFile(), ic4.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 7);
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CAbstract.java");
+		
+		classPath = classPath + "CAbstract.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 7);
 	}
 	
 	//Interface class
 	@Test
 	public void testCInterface() throws Exception {
-		ic6.instrumentationRun();
-		FoundWPA(ic6.getPathFile() + ic6.getNameFile(), ic6.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 0);
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CInterface.java");
+		
+		classPath = classPath + "CInterface.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		assertFalse(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 0);
 	}
 	
 	//Class contructor
 	@Test
 	public void testCConstrutor() throws Exception {
-		ic7.instrumentationRun();
-		FoundWPA(ic7.getPathFile() + ic7.getNameFile(), ic7.getNameField());
-		ContaWPAs();
-		assertTrue(contaWPAs == 4);
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CConstrutor.java");
+		
+		classPath = classPath + "CConstrutor.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 3);
+	}
+	
+	//Class do-while
+	@Test
+	public void testCDoWhile() throws Exception {
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CDoWhile.java");
+		
+		classPath = classPath + "CDoWhile.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentarClasse(cu);
+		
+		assertTrue(cu.toString().contains("watchPriorJApp"));
+		//System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 56);
+	}
+	
+	//Class Switch
+	@Test
+	public void testCSwitch() throws Exception {
+		String classPath = folderInstrumentTests + separator;
+		
+		ic = new InstrumentClass(classPath, "CSwitch.java");
+		
+		classPath = classPath + "CSwitch.java";
+    
+		FileInputStream in = new FileInputStream(classPath);
+		CompilationUnit cu = new CompilationUnit();
+		cu = JavaParser.parse(in);
+		in.close();
+		
+		ic.instrumentationRun();
+		//ic.instrumentarClasse(cu);
+		
+		assertTrue(cu.toString().contains("watchPriorJApp"));
+		System.out.println(ic.getWatchNumber());
+		assertTrue(ic.getWatchNumber() == 23);
 	}
 
-	private void ContaWPAs() {
+	/*private void ContaWPAs() {
 		contaWPAs = list.size();
-	}
+	}*/
 
-	private void FoundWPA(String fileName, String nameField) {
+	/*private void FoundWPA(String fileName, String nameField) {
 		String nameFile = fileName;
 		list = new LinkedList<String>();	        
 	    try {
@@ -693,5 +785,5 @@ public class InstrumentClassTest {
 	    } catch (IOException e) {
 	    System.out.println("Read file and return list error: " + e.getMessage());
 	    }	
-	}
+	}*/
 }

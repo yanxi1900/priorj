@@ -26,9 +26,7 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    */
     public ProgressaoAritmetica(int primeiro, int razao) {
         this.primeiro = primeiro;
-        watchPriorJApp = watchPriorJApp;
         this.razao = razao;
-        watchPriorJApp = watchPriorJApp;
         this.atual = primeiro;
     }
 
@@ -38,7 +36,6 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    * @return A razao da progressao aritmetica.
 	    */
     public int getRazao() {
-        watchPriorJApp = watchPriorJApp;
         return razao;
     }
 
@@ -48,9 +45,7 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    * @return O proximo termo da progessao aritmetica.
 	    */
     public int proximo() {
-        watchPriorJApp = watchPriorJApp;
         atual = (atual + razao);
-        watchPriorJApp = watchPriorJApp;
         return atual;
     }
 
@@ -60,9 +55,7 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    * @return O primeiro termo da progressao aritmetica.
 	    */
     public int primeiro() {
-        watchPriorJApp = watchPriorJApp;
         atual = primeiro;
-        watchPriorJApp = watchPriorJApp;
         return primeiro;
     }
 
@@ -74,14 +67,10 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    * @return O n-esimo termo calculado, ou o primeiro termo, se n <= 0.
 	    */
     public int termo(int n) {
-        watchPriorJApp = watchPriorJApp;
         if (n <= 0) {
-            watchPriorJApp = watchPriorJApp;
             return primeiro;
         } else {
-            watchPriorJApp = watchPriorJApp;
             atual = (primeiro + ((n - 1) * razao));
-            watchPriorJApp = watchPriorJApp;
             return atual;
         }
     }
@@ -94,26 +83,17 @@ public class ProgressaoAritmetica extends java.lang.Object {
 	    * @return A string (formato: [termo1, termo2, ..., termon] representando os termos gerados da progressao.
 	    */
     public java.lang.String geraTermos(int n) {
-        watchPriorJApp = watchPriorJApp;
         ArrayList<Integer> termosDaPA = new ArrayList<Integer>();
-        watchPriorJApp = watchPriorJApp;
         if (n <= 0) {
-            watchPriorJApp = watchPriorJApp;
             termosDaPA.add(primeiro);
-            watchPriorJApp = watchPriorJApp;
             return termosDaPA.toString();
         } else {
-            watchPriorJApp = watchPriorJApp;
             atual = primeiro;
-            watchPriorJApp = watchPriorJApp;
             for (int i = 1; i <= n; i++) {
                 termosDaPA.add(atual);
                 atual += razao;
             }
-            watchPriorJApp = watchPriorJApp;
             return termosDaPA.toString();
         }
     }
-
-    static boolean watchPriorJApp;
 }

@@ -215,7 +215,7 @@ public class PriorJFacadeTest {
 	}
 	
 	@Test
-	public void testFacadeCreateProject() throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
+	public void testFacadeCreateProject() throws Exception{
 		if ( facade.searchProject("console"))
 			facade.removeProject("console");
 		
@@ -226,7 +226,7 @@ public class PriorJFacadeTest {
 	}
 	
 	@Test
-	public void testFacadeSearchProject() throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
+	public void testFacadeSearchProject() throws Exception{
 		if ( facade.searchProject("a"))
 			facade.removeProject("a");
 		
@@ -249,7 +249,7 @@ public class PriorJFacadeTest {
 	
 	
 	@Test
-	public void testFacadeRemoveProject() throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
+	public void testFacadeRemoveProject() throws Exception{
 		if ( facade.searchProject("a"))
 			facade.removeProject("a");
 		
@@ -279,7 +279,7 @@ public class PriorJFacadeTest {
 	
 	
 	@Test
-	public void testFacadeListAllProjects() throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
+	public void testFacadeListAllProjects() throws Exception{
 		if ( facade.searchProject("a"))
 			facade.removeProject("a");
 		

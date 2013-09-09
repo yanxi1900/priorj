@@ -8,6 +8,4 @@ public class EmptyPathExcecao {
     public EmptyPathException() {
         super("Paths empty not permited!");
     }
-
-    static boolean watchPriorJApp;
 }

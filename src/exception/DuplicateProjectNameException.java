@@ -36,6 +36,6 @@ public class DuplicateProjectNameException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public DuplicateProjectNameException(){
-		super("There is a project with that name!");
+		super("There is a project with that name");
 	}
 }

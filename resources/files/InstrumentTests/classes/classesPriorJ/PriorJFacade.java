@@ -1,46 +1,21 @@
 package main;
 
-/*
-* PriorJ: JUnit Test Case Prioritization.
-* 
-* Copyright (C) 2012-2013  Samuel T. C. Santos
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 import java.util.ArrayList;
 import java.util.List;
-
-
 import exception.*;
-
 import java.awt.ScrollPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import project.JUnitVersionEnum;
 import project.PriorJProject;
-
 import technique.RefactoringEnum;
 import technique.TechniquesEnum;
 import util.Settings;
-
 import controller.PriorJController;
 import controller.ProjectController;
 import controller.RBAController;
-
 
 /**
  * This is is a facade to connect GUI with controller.
@@ -50,17 +25,21 @@ import controller.RBAController;
  */
 public class PriorJFacade {
 
-	private ProjectController controllerProject;
-	private PriorJController controllerPriorj;
-	private RBAController controllerRBA;
-		
-	public PriorJFacade(){
-		controllerProject = new ProjectController();
-		controllerPriorj = new PriorJController();
-		controllerRBA = new RBAController();
-	}
-	
-	/**
+    private ProjectController controllerProject;
+
+    private PriorJController controllerPriorj;
+
+    private RBAController controllerRBA;
+
+    public PriorJFacade() {
+        controllerProject = new ProjectController();
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj = new PriorJController();
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA = new RBAController();
+    }
+
+    /**
 	 * Create a new Project with name and JUnit version.
 	 * 
 	 * @param name
@@ -68,10 +47,12 @@ public class PriorJFacade {
 	 * @param version
 	 * 		The project version, example: JUnit3 or JUnit4
 	 */
-	public void createProject(String name, String version) throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
-            controllerProject.createNewProject(name, version);	
-	}
-	/**
+    public void createProject(String name, String version) throws EmptyPriorJProjectNameException, DuplicateProjectNameException {
+        watchPriorJApp = watchPriorJApp;
+        controllerProject.createNewProject(name, version);
+    }
+
+    /**
 	 * Say if a project with informed name exist.
 	 * 
 	 * @param projectName
@@ -80,36 +61,34 @@ public class PriorJFacade {
 	 * @return
 	 * 		True or false
 	 */
-	public boolean searchProject(String projectName){
-		return controllerProject.searchProject(projectName);
-	}
-	
-	/**
+    public boolean searchProject(String projectName) {
+        watchPriorJApp = watchPriorJApp;
+        return controllerProject.searchProject(projectName);
+    }
+
+    /**
 	 * Remove a project by name.
 	 * 
 	 * @param projectName
 	 * 		the project name.
 	 */
-	public void removeProject(String projectName){
-		controllerProject.removeProject(projectName);
-	}
-	
-	/**
+    public void removeProject(String projectName) {
+        watchPriorJApp = watchPriorJApp;
+        controllerProject.removeProject(projectName);
+    }
+
+    /**
 	 * This method save to priorj project directory all information about project opened.
 	 * 
 	 */
-	public void commitProject() throws Exception{
-            
-            setProjectPathToOpenProject();
-            if (!isSubversion())
-                controllerProject.commitProject();
-            else
-                controllerProject.commitVersion();
-        
-	}
-        
-        
-	/**
+    public void commitProject() throws Exception {
+        watchPriorJApp = watchPriorJApp;
+        setProjectPathToOpenProject();
+        watchPriorJApp = watchPriorJApp;
+        if (!isSubversion()) controllerProject.commitProject(); else controllerProject.commitVersion();
+    }
+
+    /**
 	 * This method open a project.
 	 * 
 	 * @param name
@@ -117,38 +96,43 @@ public class PriorJFacade {
 	 * @param version
 	 * 		The project version
 	 */
-	public void openProject(String name, String version){
-		controllerProject.openProject(name, version);
-                
+    public void openProject(String name, String version) {
+        watchPriorJApp = watchPriorJApp;
+        controllerProject.openProject(name, version);
+        watchPriorJApp = watchPriorJApp;
         String paths[] = controllerProject.getPathsOpenProject();
-        
+        watchPriorJApp = watchPriorJApp;
         try {
-        
+            watchPriorJApp = watchPriorJApp;
             setPathApp(paths[0]);
+            watchPriorJApp = watchPriorJApp;
             setPathCode(paths[1]);
-            setPathLib(paths[2]);    
+            watchPriorJApp = watchPriorJApp;
+            setPathLib(paths[2]);
+            watchPriorJApp = watchPriorJApp;
             setPathTest(paths[3]);
         } catch (Exception ex) {
             System.err.println("error open Project: " + ex);
         }
-                
     }
-	
-	/**
+
+    /**
 	 * Say if the project opened is a subversion.
 	 * 
 	 * @return
 	 * 		true or false.
 	 */
-	public boolean isSubversion(){
-		return controllerProject.isSubVersion();
-	}
-        
+    public boolean isSubversion() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerProject.isSubVersion();
+    }
+
     /**
      * This method set which a project is a subversion.
      * 
      */
-    public void setSubversion(){
+    public void setSubversion() {
+        watchPriorJApp = watchPriorJApp;
         controllerProject.setSubVersion(true);
     }
 
@@ -158,10 +142,11 @@ public class PriorJFacade {
      * @return 
      *      true or false.
      */
-    public boolean isChanged(){
+    public boolean isChanged() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.isChanged();
     }
-    
+
     /**
      * This method set the JUnit version used by test cases.
      * 
@@ -169,48 +154,47 @@ public class PriorJFacade {
      *      A String with junit3 or junit4
      */
     public void setJUnitVersion(String version) {
-    	
-    	if (!version.toLowerCase().equals("junit3") && !version.toLowerCase().equals("junit4"))
-            throw new IllegalArgumentException("Invalid  JUnit version!");
-        
-        if (version.toLowerCase().equals("junit4")){
+        watchPriorJApp = watchPriorJApp;
+        if (!version.toLowerCase().equals("junit3") && !version.toLowerCase().equals("junit4")) throw new IllegalArgumentException("Invalid  JUnit version!");
+        watchPriorJApp = watchPriorJApp;
+        if (version.toLowerCase().equals("junit4")) {
+            watchPriorJApp = watchPriorJApp;
             controllerPriorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
-        }
-        else {
+        } else {
+            watchPriorJApp = watchPriorJApp;
             controllerPriorj.setJUnitVersion(JUnitVersionEnum.JUNIT3);
         }
-        
     }
+
     /**
      * The the JUnit version used in the project.
      * 
      * @return
      * 		"", junit3, or juni4.
      */
-    public String getJUnitVersion(){
-    	JUnitVersionEnum version = controllerPriorj.getJUnitVersion();
-    	
-    	String strVersion;
-    	
-    	if (version.equals(JUnitVersionEnum.JUNIT3))
-    		strVersion = "junit3";
-    	else
-    		strVersion = "junit4";
-       		
-    	return strVersion;
+    public String getJUnitVersion() {
+        watchPriorJApp = watchPriorJApp;
+        JUnitVersionEnum version = controllerPriorj.getJUnitVersion();
+        watchPriorJApp = watchPriorJApp;
+        String strVersion;
+        watchPriorJApp = watchPriorJApp;
+        if (version.equals(JUnitVersionEnum.JUNIT3)) strVersion = "junit3"; else strVersion = "junit4";
+        watchPriorJApp = watchPriorJApp;
+        return strVersion;
     }
-        
-	/**
+
+    /**
 	 * Say if exist a opened project.
 	 * 
 	 * @return
 	 * 		true or false.
 	 */
-	public boolean hasOpenedProject(){
-		return controllerProject.hasOpenProject();
-	}
-	
-	/**
+    public boolean hasOpenedProject() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerProject.hasOpenProject();
+    }
+
+    /**
 	 * Run the coverage report, this method do instrumentation, coverage and
 	 * read the log file generated.
 	 * 
@@ -223,86 +207,97 @@ public class PriorJFacade {
 	 * @param pathTest
 	 * 		the path test.
 	 */
-	public void runTestCoverageReport(String pathApp, String pathCode, String pathLib, String pathTest){
-		controllerPriorj.runTestCoverageReport(pathApp, pathCode, pathLib, pathTest);
-	}
-	
-	/**
+    public void runTestCoverageReport(String pathApp, String pathCode, String pathLib, String pathTest) {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.runTestCoverageReport(pathApp, pathCode, pathLib, pathTest);
+    }
+
+    /**
 	 * Running the prioritization with the technique Total Method Coverage TMC.
 	 * 
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationTMC(){
-		try {
-			return controllerPriorj.runPrioritizationTMC();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-	
-	/**
+    public List<String> runPrioritizationTMC() {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationTMC();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
 	 * Running the prioritization with the technique Total Statement Coverage TSC.
 	 * 
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationTSC(){
-		try {
-			return controllerPriorj.runPrioritizationTSC();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-	
-	/**
+    public List<String> runPrioritizationTSC() {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationTSC();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
 	 * Running the prioritization with the technique Additional Statement Coverage ASC.
 	 * 
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationASC(){
-		try {
-			return controllerPriorj.runPrioritizationTSC();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-	
-	/**
+    public List<String> runPrioritizationASC() {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationTSC();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
 	 * Running the prioritization with the technique Additional Method Coverage ASC.
 	 * 
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationAMC(){
-		try {
-			return controllerPriorj.runPrioritizationAMC();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-	
-	/**
+    public List<String> runPrioritizationAMC() {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationAMC();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
 	 * Running the prioritization with the technique Random RND.
 	 * 
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationRND(){
-		try {
-			return controllerPriorj.runPrioritizationRND();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-	
-	/**
+    public List<String> runPrioritizationRND() {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationRND();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
 	 * Running the prioritization with the Technique Total Echelon 
 	 * (Changed Blocks CB).
 	 * 
@@ -314,67 +309,75 @@ public class PriorJFacade {
 	 * @return
 	 * 		The prioritized test suite.
 	 */
-	public List<String> runPrioritizationCB(String pathCodeNew, String pathCodeOld){
-		try {
-			return controllerPriorj.runPrioritizationCB(pathCodeNew, pathCodeOld);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ArrayList<String>();
-		}
-	}
-        
-        /**
+    public List<String> runPrioritizationCB(String pathCodeNew, String pathCodeOld) {
+        watchPriorJApp = watchPriorJApp;
+        try {
+            watchPriorJApp = watchPriorJApp;
+            return controllerPriorj.runPrioritizationCB(pathCodeNew, pathCodeOld);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<String>();
+        }
+    }
+
+    /**
          * Running the instrumentation.
          * 
          * @throws InstrumentationUnrealizedException
          *      Files not found
          */
-        public void runInstrumentation() throws InstrumentationUnrealizedException{
-            controllerPriorj.runInstrumentation();
-        }
-        
-        /**
+    public void runInstrumentation() throws InstrumentationUnrealizedException {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.runInstrumentation();
+    }
+
+    /**
          * Running the coverage.
          * 
          * @throws CoverageUnrealizedException 
          *      AspectJ errors
          */
-        public void runCoverage() throws CoverageUnrealizedException, InstrumentationUnrealizedException{
-            controllerPriorj.runCoverage();
-        }
-        /**
+    public void runCoverage() throws CoverageUnrealizedException, InstrumentationUnrealizedException {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.runCoverage();
+    }
+
+    /**
          * Running the read log file.
          * 
          * @throws CannotReadLogFileException
          *      Log file not generated.
          */
-        public void runReadLog() throws CannotReadLogFileException, InstrumentationUnrealizedException, CoverageUnrealizedException{
-            controllerPriorj.runReadLog();
-        }
-        
-        /**
+    public void runReadLog() throws CannotReadLogFileException, InstrumentationUnrealizedException, CoverageUnrealizedException {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.runReadLog();
+    }
+
+    /**
          * Running the prioritization.
          * 
          * @throws Exception 
          *      Suite not generated
          */
-        public void runPrioritization() throws Exception {
-            controllerPriorj.runPrioritization();
-            controllerProject.setProjectPaths(getPathApp(), getPathCode(),
-                    getPathLib(),getPathTest(), getPathCodeNew());
-        }
-        
-        /**
+    public void runPrioritization() throws Exception {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.runPrioritization();
+        watchPriorJApp = watchPriorJApp;
+        controllerProject.setProjectPaths(getPathApp(), getPathCode(), getPathLib(), getPathTest(), getPathCodeNew());
+    }
+
+    /**
          * This method is used to show a list of all projects.
          * 
          * @return
          *      A list of projects.
          */
-        public List<PriorJProject> getProjects(){
-            return controllerProject.getProjects();
-        }
-        
-        /**
+    public List<PriorJProject> getProjects() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerProject.getProjects();
+    }
+
+    /**
          * This method add a new technique to PriorJ.
          * 
          * 1. "TMC" - Total Method Coverage
@@ -385,44 +388,34 @@ public class PriorJFacade {
          * @param techniqueName 
          *      The technique name
          */
-        public void addTechnique(String techniqueName){
-            controllerPriorj.addTechnique(techniqueName);
-        }
-        /**
+    public void addTechnique(String techniqueName) {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.addTechnique(techniqueName);
+    }
+
+    /**
          * Remove a technique with informed name.
          * 
          * @param techniqueName
          *      The technique name.
          */
-        public void removeTechnique(String techniqueName){
-            controllerPriorj.removeTechnique(techniqueName);
-        }
-        /**
+    public void removeTechnique(String techniqueName) {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.removeTechnique(techniqueName);
+    }
+
+    /**
          * This method save a single prioritized suite test.
          * 
          * @param tests
          * @param technique 
          */
-        public void saveJavaPrioritizedSuite(List<String> tests, String technique){
-		
-		if (technique.equals("TMC"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.TOTAL_METHOD_COVERAGE);
-		else if (technique.equals("TSC"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.TOTAL_STATEMENT_COVERAGE);
-		else if (technique.equals("ASC"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE);
-		else if (technique.equals("AMC"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.ADDITIONAL_METHOD_COVERAGE);
-		else if (technique.equals("CB"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.CHANGED_BLOCKS_TOTAL);
-		else if (technique.equals("RND"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.Random);
-		else if (technique.equals("RBA"))
-			controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.REFACTORING_BASED_APPROACH);
-		
-	}
-        
-         /**
+    public void saveJavaPrioritizedSuite(List<String> tests, String technique) {
+        watchPriorJApp = watchPriorJApp;
+        if (technique.equals("TMC")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.TOTAL_METHOD_COVERAGE); else if (technique.equals("TSC")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.TOTAL_STATEMENT_COVERAGE); else if (technique.equals("ASC")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE); else if (technique.equals("AMC")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.ADDITIONAL_METHOD_COVERAGE); else if (technique.equals("CB")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.CHANGED_BLOCKS_TOTAL); else if (technique.equals("RND")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.Random); else if (technique.equals("RBA")) controllerPriorj.saveJavaPrioritizedSuite(tests, TechniquesEnum.REFACTORING_BASED_APPROACH);
+    }
+
+    /**
      * This method generate a selection in the prioritized suite code.
      * 
      * @param suiteName
@@ -434,17 +427,19 @@ public class PriorJFacade {
      * @return
      * 		the suite selection.
      */
-    public List<String> generateSuiteSelection(String suiteName, String packageName, int size){
-    	 String path = Settings.ORDER + Settings.SEPARATOR;
-    	
-    	 List<List<String>> suites = controllerProject.openAllPrioritizedTestSuites(path); 
-    	 
-    	 List<String> suiteNames = controllerProject.openSuitesNames();
-    	 
-    	 List<String> suiteSelection = controllerPriorj.generateSuiteSelection(suiteName, suites, suiteNames, packageName, size);
-    	 
-    	 return suiteSelection;
+    public List<String> generateSuiteSelection(String suiteName, String packageName, int size) {
+        watchPriorJApp = watchPriorJApp;
+        String path = Settings.ORDER + Settings.SEPARATOR;
+        watchPriorJApp = watchPriorJApp;
+        List<List<String>> suites = controllerProject.openAllPrioritizedTestSuites(path);
+        watchPriorJApp = watchPriorJApp;
+        List<String> suiteNames = controllerProject.openSuitesNames();
+        watchPriorJApp = watchPriorJApp;
+        List<String> suiteSelection = controllerPriorj.generateSuiteSelection(suiteName, suites, suiteNames, packageName, size);
+        watchPriorJApp = watchPriorJApp;
+        return suiteSelection;
     }
+
     /**
      * This method save a suite selection.
      * 
@@ -455,230 +450,240 @@ public class PriorJFacade {
      * @param userSuiteName
      * 		the suite name given by user.
      */
-    public void saveSuiteSelection(List<String> suiteCode, String path, String userSuiteName){
-    	
-    	List<String> suiteNames = controllerProject.openSuitesNames();
-    	
-    	controllerPriorj.saveSuiteSelection(path, suiteCode, suiteNames, userSuiteName);
-    	
+    public void saveSuiteSelection(List<String> suiteCode, String path, String userSuiteName) {
+        watchPriorJApp = watchPriorJApp;
+        List<String> suiteNames = controllerProject.openSuitesNames();
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.saveSuiteSelection(path, suiteCode, suiteNames, userSuiteName);
     }
-    
-        
-        /**
+
+    /**
 	 * This method open all prioritized order into file.
 	 *  
 	 * @return
 	 * 		A list of list with tests names.
 	 */
-	 public List<List<String>> openAllPrioritizedTestSuites(){
-		String path = Settings.ORDER + Settings.SEPARATOR;
-		
-		return controllerProject.openAllPrioritizedTestSuites(path);
-	}
-        
+    public List<List<String>> openAllPrioritizedTestSuites() {
+        watchPriorJApp = watchPriorJApp;
+        String path = Settings.ORDER + Settings.SEPARATOR;
+        watchPriorJApp = watchPriorJApp;
+        return controllerProject.openAllPrioritizedTestSuites(path);
+    }
+
     /**
      * This get the simple coverage Report.
      * 
      * @return
      *      A string.
      */
-    public String getCoverageReport(){
+    public String getCoverageReport() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getSimpleCoverageReport();
     }
-    
-    public List<String> getOrder(){
+
+    public List<String> getOrder() {
+        watchPriorJApp = watchPriorJApp;
         return controllerProject.openOrder();
     }
-    
-    private void setProjectPathToOpenProject() throws Exception{
-        controllerProject.setProjectPaths(getPathApp(), getPathCode(), getPathLib(), getPathTest(),getPathCodeNew());
-        
+
+    private void setProjectPathToOpenProject() throws Exception {
+        watchPriorJApp = watchPriorJApp;
+        controllerProject.setProjectPaths(getPathApp(), getPathCode(), getPathLib(), getPathTest(), getPathCodeNew());
     }
-    
-    public List<String> getTechniquesNames(){
+
+    public List<String> getTechniquesNames() {
+        watchPriorJApp = watchPriorJApp;
         return controllerProject.openTechniquesNames();
     }
-    
+
     /**
      * The Tree log execution.
      * 
      * @return
      *      A Jtree inside a scrollpane.
      */
-    public ScrollPane getPanelTree(){
+    public ScrollPane getPanelTree() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getTestCoverageTree().getTreePanel();
     }
-    
+
     /**
      * This method get the code tree log trace.
      * 
      * @return
      * 		A string with code tree trace.
      */
-    public String getCodeTree(){
-    	return controllerPriorj.getCodeTree();
+    public String getCodeTree() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.getCodeTree();
     }
-    
+
     /**
      * Open all java prioritized suites, to last prioritization.
      * 
      * @return
      *      A list of suite codes.
      */
-    public List<String> getJavaPrioritizedSuites(){
+    public List<String> getJavaPrioritizedSuites() {
+        watchPriorJApp = watchPriorJApp;
         return controllerProject.openJavaPrioritizedSuites();
     }
-    
+
     /**
      * Get the all suite names.
      * 
      * @return 
      *      A list of string.
      */
-    public List<String> getSuitesNames(){
+    public List<String> getSuitesNames() {
+        watchPriorJApp = watchPriorJApp;
         return controllerProject.openSuitesNames();
     }
-    
-    public String getSimpleJUnitReport(){
+
+    public String getSimpleJUnitReport() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getSimpleJUnitReport();
     }
-    
-    public List<String> getFailedTests(){
+
+    public List<String> getFailedTests() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getFailedTests();
     }
-    
-    public double generateAPFD(List<List<String>> combination){
+
+    public double generateAPFD(List<List<String>> combination) {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.generateAPFD(combination);
     }
-    
-    public JPanel generateAPFDChart(){
+
+    public JPanel generateAPFDChart() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.generateAPFDChart();
     }
-    
+
     public void setPathApp(String pathApp) {
-    	if (pathApp.isEmpty())
-    		throw new IllegalArgumentException("Empty application path!");
-    	
-    	pathApp = parser(pathApp);
-    	
-    	if (!controllerPriorj.exist(pathApp))
-    		throw new IllegalArgumentException("Application directory not found!");
-    	
-    	
+        watchPriorJApp = watchPriorJApp;
+        if (pathApp.isEmpty()) throw new IllegalArgumentException("Empty application path!");
+        watchPriorJApp = watchPriorJApp;
+        pathApp = parser(pathApp);
+        watchPriorJApp = watchPriorJApp;
+        if (!controllerPriorj.exist(pathApp)) throw new IllegalArgumentException("Application directory not found!");
+        watchPriorJApp = watchPriorJApp;
         controllerPriorj.setPathApp(pathApp);
     }
-    
-    public String getPathApp(){
+
+    public String getPathApp() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getPathApp();
     }
-    
-    public void setPathCode(String pathCode){
-    	if (pathCode.isEmpty())
-    		throw new IllegalArgumentException("Empty code path!");
-    	
-    	pathCode = parser(pathCode);
-    	
-    	if (!controllerPriorj.exist(pathCode))
-    		throw new IllegalArgumentException("Code directory not found!");
-    	
-    	
-    	
+
+    public void setPathCode(String pathCode) {
+        watchPriorJApp = watchPriorJApp;
+        if (pathCode.isEmpty()) throw new IllegalArgumentException("Empty code path!");
+        watchPriorJApp = watchPriorJApp;
+        pathCode = parser(pathCode);
+        watchPriorJApp = watchPriorJApp;
+        if (!controllerPriorj.exist(pathCode)) throw new IllegalArgumentException("Code directory not found!");
+        watchPriorJApp = watchPriorJApp;
         controllerPriorj.setPathCode(pathCode);
     }
-    
-    public String getPathCode(){
+
+    public String getPathCode() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getPathCode();
     }
-    
-    public void setPathLib(String pathLib){
-    	
-    	pathLib = parser(pathLib);
-    	
-    	if (!pathLib.isEmpty() && !controllerPriorj.exist(pathLib)){
-    		throw new IllegalArgumentException("Library directory not found!");
-    	}
-    	
+
+    public void setPathLib(String pathLib) {
+        watchPriorJApp = watchPriorJApp;
+        pathLib = parser(pathLib);
+        watchPriorJApp = watchPriorJApp;
+        if (!pathLib.isEmpty() && !controllerPriorj.exist(pathLib)) {
+            watchPriorJApp = watchPriorJApp;
+            throw new IllegalArgumentException("Library directory not found!");
+        }
+        watchPriorJApp = watchPriorJApp;
         controllerPriorj.setPathLib(pathLib);
     }
-    
-    public String getPathLib(){
+
+    public String getPathLib() {
+        watchPriorJApp = watchPriorJApp;
         return controllerPriorj.getPathLib();
     }
-    
+
     public void setPathTest(String pathTest) {
-    	
-    	if (pathTest.isEmpty())
-    		throw new IllegalArgumentException("Empty path test not permitted!");
-    	
-    	pathTest = parser(pathTest);
-   	 
-        if (!controllerPriorj.exist(pathTest))
-        	throw new IllegalArgumentException("Test directory not found!");
-               
+        watchPriorJApp = watchPriorJApp;
+        if (pathTest.isEmpty()) throw new IllegalArgumentException("Empty path test not permitted!");
+        watchPriorJApp = watchPriorJApp;
+        pathTest = parser(pathTest);
+        watchPriorJApp = watchPriorJApp;
+        if (!controllerPriorj.exist(pathTest)) throw new IllegalArgumentException("Test directory not found!");
+        watchPriorJApp = watchPriorJApp;
         controllerPriorj.setPathTests(pathTest);
- 
-        }
-        
-        public String getPathTest(){
-            return controllerPriorj.getPathTests();
-        }
-        
-        public void setPathCodeNew(String pathCodeNew){
-        	//do test and exceptions
-            controllerPriorj.setPathNew(pathCodeNew);
-        }
-        
-        public String getPathCodeNew(){
-            return controllerPriorj.getPathNew();
-        }
-        
-        public boolean isInstrumented(){
-            return controllerPriorj.isInstrumented();
-        }
-        
-        
-     /**
+    }
+
+    public String getPathTest() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.getPathTests();
+    }
+
+    public void setPathCodeNew(String pathCodeNew) {
+        watchPriorJApp = watchPriorJApp;
+        controllerPriorj.setPathNew(pathCodeNew);
+    }
+
+    public String getPathCodeNew() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.getPathNew();
+    }
+
+    public boolean isInstrumented() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.isInstrumented();
+    }
+
+    /**
       * This method say if this project is covered.
       * 
       * @return
       *  true or false.
       */
-     public boolean isCovered(){
-         return controllerPriorj.isCovered();
-     }
-          
-     /**
+    public boolean isCovered() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.isCovered();
+    }
+
+    /**
       * This method say if this project has a log file.
       * 
       * @return
       *  true or false.
       */
-     public boolean isReadLog(){
-         return controllerPriorj.isInstrumented();
-     }
-     
-     /**
+    public boolean isReadLog() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.isInstrumented();
+    }
+
+    /**
       * This method say if this project is prioritized.
       * 
       * @return
       *  true or false.
       */
-     public boolean isPrioritized(){
-         return controllerPriorj.isInstrumented();
-     }
-     
-     
-        
-    public void closeProject(){
+    public boolean isPrioritized() {
+        watchPriorJApp = watchPriorJApp;
+        return controllerPriorj.isInstrumented();
+    }
+
+    public void closeProject() {
+        watchPriorJApp = watchPriorJApp;
         controllerProject.closeProject();
     }
-    
-    public void saveProject(){
+
+    public void saveProject() {
+        watchPriorJApp = watchPriorJApp;
         controllerProject.saveProject();
     }
-            
-        
-	/**
+
+    /**
 	 * This method run the RBA with Renamed Method.
 	 * 
 	 * @param pathApp
@@ -691,20 +696,24 @@ public class PriorJFacade {
 	 * 		The new method name.
 	 * @return
 	 */
-	public List<String> runRBARenameMethod(String pathApp, String className, String methodName, String newMethodName){
-		
+    public List<String> runRBARenameMethod(String pathApp, String className, String methodName, String newMethodName) {
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassName(className);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setMethodName(methodName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setNewMethodName(newMethodName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.run(RefactoringEnum.RENAME_METHOD);
-        
+        watchPriorJApp = watchPriorJApp;
         List<String> methodNames = controllerRBA.getMethods();
-        
+        watchPriorJApp = watchPriorJApp;
         return methodNames;
-	}
-	
-	/**
+    }
+
+    /**
 	 *  This method run the RBA with extract method.
 	 *  
 	 * @param pathApp
@@ -723,26 +732,30 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of method impacted.
 	 */
-	public List<String> runRBAExtractMethod(String pathApp, String originMethodName, String className, String newMethodName, int beginLine, int endLine){
-		
-		controllerRBA.setPathApp(pathApp);
+    public List<String> runRBAExtractMethod(String pathApp, String originMethodName, String className, String newMethodName, int beginLine, int endLine) {
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setOriginMethodName(originMethodName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassName(className);
-
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setNewMethodName(newMethodName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setBeginLine(beginLine);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setEndLine(endLine);
-
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.run(RefactoringEnum.EXTRAT_METHOD);
-
+        watchPriorJApp = watchPriorJApp;
         List<String> methodNames = controllerRBA.getMethods();
-
+        watchPriorJApp = watchPriorJApp;
         List<String> signatures = controllerRBA.getSignatures();
-        
+        watchPriorJApp = watchPriorJApp;
         return signatures;
-	}
-	
-	/**
+    }
+
+    /**
 	 * This method run the RBA with Move method.
 	 * 
 	 * @param pathApp
@@ -756,23 +769,26 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of strings.
 	 */
-	public List<String> runRBAMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName){
-		
+    public List<String> runRBAMoveMethod(String pathApp, String classOneName, String classTwoName, String methodName) {
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassOneName(classOneName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassTwoName(classTwoName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setMethodName(methodName);
-
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.run(RefactoringEnum.MOVE_METHOD);
-        
+        watchPriorJApp = watchPriorJApp;
         List<String> methodNames = controllerRBA.getMethods();
-        
+        watchPriorJApp = watchPriorJApp;
         List<String> signatures = controllerRBA.getSignatures();
-                
+        watchPriorJApp = watchPriorJApp;
         return signatures;
-	}
-	
-	/**
+    }
+
+    /**
 	 * This method run the RBA with Pull Up Method.
 	 * 
 	 * @param pathApp
@@ -786,22 +802,26 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of String
 	 */
-	public List<String> runRBAPullUpMethod(String pathApp, String classOneName, String classTwoName, String methodName){
-		
+    public List<String> runRBAPullUpMethod(String pathApp, String classOneName, String classTwoName, String methodName) {
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassOneName(classOneName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassTwoName(classTwoName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setMethodName(methodName);
-
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.run(RefactoringEnum.PULL_UP_METHOD);
-
+        watchPriorJApp = watchPriorJApp;
         List<String> methodNames = controllerRBA.getMethods();
+        watchPriorJApp = watchPriorJApp;
         List<String> signatures = controllerRBA.getSignatures();
-
+        watchPriorJApp = watchPriorJApp;
         return signatures;
     }
-	
-	/**
+
+    /**
 	 * This method run the RBA with Pull Up Field.
 	 * 
 	 * @param pathApp
@@ -815,23 +835,26 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of string
 	 */
-	public List<String> runRBAPullUpField(String pathApp, String classOneName,String classTwoName, String fieldName){
-		
+    public List<String> runRBAPullUpField(String pathApp, String classOneName, String classTwoName, String fieldName) {
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassOneName(classOneName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setClassTwoName(classTwoName);
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.setFieldName(fieldName);
-
+        watchPriorJApp = watchPriorJApp;
         controllerRBA.run(RefactoringEnum.PULL_UP_FIELD);
-        
+        watchPriorJApp = watchPriorJApp;
         List<String> methodNames = controllerRBA.getMethods();
-        
+        watchPriorJApp = watchPriorJApp;
         List<String> signatures = controllerRBA.getSignatures();
-
+        watchPriorJApp = watchPriorJApp;
         return signatures;
     }
-	
-	/**
+
+    /**
 	 * This method run the RBA with Add Parameter.
 	 * 
 	 * @param pathApp
@@ -843,21 +866,23 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of string.
 	 */
-	 public List<String> runRBAAddParameter(String pathApp, String className,
-			 String methodName){
-	        
-	        controllerRBA.setPathApp(pathApp);
-	        controllerRBA.setClassName(className);
-	        controllerRBA.setMethodName(methodName);
-	        controllerRBA.run(RefactoringEnum.ADD_PARAMETER);
+    public List<String> runRBAAddParameter(String pathApp, String className, String methodName) {
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA.setPathApp(pathApp);
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA.setClassName(className);
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA.setMethodName(methodName);
+        watchPriorJApp = watchPriorJApp;
+        controllerRBA.run(RefactoringEnum.ADD_PARAMETER);
+        watchPriorJApp = watchPriorJApp;
+        List<String> methodNames = controllerRBA.getMethods();
+        watchPriorJApp = watchPriorJApp;
+        List<String> signatures = controllerRBA.getSignatures();
+        watchPriorJApp = watchPriorJApp;
+        return signatures;
+    }
 
-	        List<String> methodNames = controllerRBA.getMethods();
-	        
-	        List<String> signatures = controllerRBA.getSignatures();
-	        
-	        return signatures;
-	 }
-    
     /**
 	 * This method do a replace in the "/" or "\\" to
 	 * <code>System.getProperty("file.separator")</code>
@@ -866,16 +891,15 @@ public class PriorJFacade {
 	 *            A path string, \home\doc\mypriorj
 	 * @return A path changed.
 	 */
-	public String parser(String path) {
+    public String parser(String path) {
+        watchPriorJApp = watchPriorJApp;
+        if (path.contains("\\")) {
+            watchPriorJApp = watchPriorJApp;
+            path = path.replace("\\", Settings.SEPARATOR);
+        } else if (path.contains("/")) path = path.replace("/", Settings.SEPARATOR);
+        watchPriorJApp = watchPriorJApp;
+        return path;
+    }
 
-		if (path.contains("\\")) {
-			path = path.replace("\\", Settings.SEPARATOR);
-		} else if (path.contains("/"))
-			path = path.replace("/", Settings.SEPARATOR);
-
-		return path;
-	}
-
-
-	 
+    static boolean watchPriorJApp;
 }

@@ -27,12 +27,9 @@ public abstract class Trabalhadores extends Contribuinte {
 	 */
     public Trabalhadores(String nome, String numero, double valorDosBens, double salarioAnual) throws Exception {
         super(nome, numero, valorDosBens);
-        watchPriorJApp = watchPriorJApp;
         if (salarioAnual < 0.0) {
-            watchPriorJApp = watchPriorJApp;
             throw new Exception("Salario nao pode ser negativo.");
         }
-        watchPriorJApp = watchPriorJApp;
         this.salarioAnual = salarioAnual;
     }
 
@@ -42,31 +39,19 @@ public abstract class Trabalhadores extends Contribuinte {
 	 */
     @Override
     public double calculaTributos() {
-        watchPriorJApp = watchPriorJApp;
         tributos = 0.0;
-        watchPriorJApp = watchPriorJApp;
         if (salarioAnual <= DEZ) {
-            watchPriorJApp = watchPriorJApp;
             tributos = (5.0 / 100 * salarioAnual);
         }
-        watchPriorJApp = watchPriorJApp;
         if (salarioAnual > DEZ && salarioAnual <= CINQUENTA) {
-            watchPriorJApp = watchPriorJApp;
             tributos = (7.5 / 100 * salarioAnual);
         }
-        watchPriorJApp = watchPriorJApp;
         if (salarioAnual > CINQUENTA && salarioAnual <= CEM) {
-            watchPriorJApp = watchPriorJApp;
             tributos = (10.0 / 100 * salarioAnual);
         }
-        watchPriorJApp = watchPriorJApp;
         if (salarioAnual > CEM) {
-            watchPriorJApp = watchPriorJApp;
             tributos = (15.0 / 100 * salarioAnual);
         }
-        watchPriorJApp = watchPriorJApp;
         return tributos;
     }
-
-    static boolean watchPriorJApp;
 }

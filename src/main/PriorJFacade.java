@@ -35,6 +35,7 @@ import project.PriorJProject;
 
 import technique.RefactoringEnum;
 import technique.TechniquesEnum;
+import util.ManagerFiles;
 import util.Settings;
 
 import controller.PriorJController;
@@ -67,9 +68,26 @@ public class PriorJFacade {
 	 * 		The project name.
 	 * @param version
 	 * 		The project version, example: JUnit3 or JUnit4
+	 * @throws Exception 
 	 */
-	public void createProject(String name, String version) throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
-            controllerProject.createNewProject(name, version);	
+	public void createProject(String name, String version) throws Exception{
+    	
+    	if (name == null)
+    		throw new Exception("Invalid input");
+      	
+    	else if (name.isEmpty())
+    		throw new EmptyPriorJProjectNameException();
+    	
+    	else if (version == null)
+    		throw new Exception("Invalid input");
+    	
+    	else if (version.isEmpty())
+    		throw new Exception("Empty version name");
+    	
+    	else if (!version.equals("junit3") && !version.equals("junit4"))
+    		throw new Exception("Invalid junit version name");
+   	    
+		controllerProject.createNewProject(name, version);	
 	}
 	/**
 	 * Say if a project with informed name exist.
@@ -874,6 +892,21 @@ public class PriorJFacade {
 		return path;
 	}
 
-
+	/**
+	 * Remove all projects in the folder.
+	 */
+	public void removeProjectAll() {
+		
+		if (ManagerFiles.existFileOrDirectory(Settings.PRIORJ_PROJECT))
+			ManagerFiles.deleteAllOnlyInside(Settings.PRIORJ_PROJECT);		
+	}
+	
+	/**
+	 * The 
+	 * @return
+	 */
+	public int numberOfProjects(){
+		return getProjects().size();
+	}
 	 
 }

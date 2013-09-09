@@ -27,7 +27,6 @@ public class Sala {
 	 * @throws Exception - Mensagem caso ocorra excecao.
 	 */
     public Sala(int linha, int coluna) throws Exception {
-        watchPriorJApp = watchPriorJApp;
         if (linha <= 0 || coluna <= 0) {
             watchPriorJApp = watchPriorJApp;
             throw new Exception("Parâmetros incorretos para a criação da sala.");
@@ -47,6 +46,7 @@ public class Sala {
         for (int i = 0; i < linha; i++) {
             watchPriorJApp = watchPriorJApp;
             for (int j = 0; j < coluna; j++) {
+                watchPriorJApp = watchPriorJApp;
                 sala[i][j] = LIVRE;
             }
         }

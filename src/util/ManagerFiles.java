@@ -104,6 +104,12 @@ public class ManagerFiles {
 				deleteAll(f);
 		}
 	}
+	
+	public static void deleteAllOnlyInside(String filename) {
+		deleteAllOnlyInside(new File(filename));
+	}
+	
+	
 
 	/**
 	 * Return a list with the content of the every files.

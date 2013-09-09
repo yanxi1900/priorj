@@ -105,7 +105,8 @@ public class ProjectController {
      * 		JUnit version
      * @throws Exception
      */
-    public void createNewProject(String name , String version) throws EmptyPriorJProjectNameException, DuplicateProjectNameException {
+    public void createNewProject(String name , String version) throws Exception {
+
     	if (version.toLowerCase().equals("junit3"))
     		projectManager.createNewProject(name, JUnitVersionEnum.JUNIT3);
     	else if (version.toLowerCase().equals("junit4")){

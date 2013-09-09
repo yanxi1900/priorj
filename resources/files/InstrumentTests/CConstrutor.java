@@ -12,11 +12,7 @@ public class MinhaCDteca {
 
     public MinhaCDteca(String nome, int numero) {
         this.nome = nome;
-        watchPriorJApp = watchPriorJApp;
         this.numero = numero;
-        watchPriorJApp = watchPriorJApp;
         listaCDs = new ArrayList<CD>();
     }
-
-    static boolean watchPriorJApp;
 }

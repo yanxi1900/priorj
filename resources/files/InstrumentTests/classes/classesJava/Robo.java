@@ -27,7 +27,6 @@ public class Robo {
 	 * @throws Exception - Mensagem caso ocorra uma excecao.
 	 */
     public Robo(Sala salaDoRobo, int energiaDoRobo) throws Exception {
-        watchPriorJApp = watchPriorJApp;
         if (energiaDoRobo <= 0) {
             watchPriorJApp = watchPriorJApp;
             throw new Exception("A energia do robo deve ser maior que zero.");
@@ -85,6 +84,7 @@ public class Robo {
         if (!salaDoRobo.verificarPosicaoLivre(posicaoDoRobo[0] - 1, posicaoDoRobo[1])) {
             watchPriorJApp = watchPriorJApp;
             if (!salaDoRobo.posicaoValida(posicaoDoRobo[0] - 1, posicaoDoRobo[1])) {
+                watchPriorJApp = watchPriorJApp;
                 throw new Exception("Posicao invalida.");
             }
             watchPriorJApp = watchPriorJApp;
@@ -117,6 +117,7 @@ public class Robo {
         if (!salaDoRobo.verificarPosicaoLivre(posicaoDoRobo[0] + 1, posicaoDoRobo[1])) {
             watchPriorJApp = watchPriorJApp;
             if (!salaDoRobo.posicaoValida(posicaoDoRobo[0] + 1, posicaoDoRobo[1])) {
+                watchPriorJApp = watchPriorJApp;
                 throw new Exception("Posicao invalida.");
             }
             watchPriorJApp = watchPriorJApp;
@@ -149,6 +150,7 @@ public class Robo {
         if (!salaDoRobo.verificarPosicaoLivre(posicaoDoRobo[0], posicaoDoRobo[1] + 1)) {
             watchPriorJApp = watchPriorJApp;
             if (!salaDoRobo.posicaoValida(posicaoDoRobo[0], posicaoDoRobo[1] + 1)) {
+                watchPriorJApp = watchPriorJApp;
                 throw new Exception("Posicao invalida.");
             }
             watchPriorJApp = watchPriorJApp;
@@ -181,6 +183,7 @@ public class Robo {
         if (!salaDoRobo.verificarPosicaoLivre(posicaoDoRobo[0], posicaoDoRobo[1] - 1)) {
             watchPriorJApp = watchPriorJApp;
             if (!salaDoRobo.posicaoValida(posicaoDoRobo[0], posicaoDoRobo[1] - 1)) {
+                watchPriorJApp = watchPriorJApp;
                 throw new Exception("Posicao invalida.");
             }
             watchPriorJApp = watchPriorJApp;

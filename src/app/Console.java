@@ -467,12 +467,9 @@ public class Console {
 	 * 	JUnit version.
 	 * @param facade
 	 * 	The Facade Object.
-	 * @throws EmptyPriorJProjectNameException
-	 * 	When the project name is empty.
-	 * @throws DuplicateProjectNameException
-	 * 	When has a duplicated project name.
+	 * @throws Exception 
 	 */
-	private void createConsoleProject(String version,PriorJFacade facade) throws EmptyPriorJProjectNameException, DuplicateProjectNameException{
+	private void createConsoleProject(String version,PriorJFacade facade) throws Exception{
 		if ( facade.searchProject("console"))
 			facade.removeProject("console");
 		

@@ -24,26 +24,17 @@ public abstract class Contribuinte {
 	 * @throws Exception Excecoes de nome, numero, e valor de bens.
 	 */
     public Contribuinte(String nome, String numero, double valorDosBens) throws Exception {
-        watchPriorJApp = watchPriorJApp;
         if (nome == null || nome.equals("")) {
-            watchPriorJApp = watchPriorJApp;
             throw new Exception("Nome invalido.");
         }
-        watchPriorJApp = watchPriorJApp;
         if (numero == null || numero.equals("")) {
-            watchPriorJApp = watchPriorJApp;
             throw new Exception("Numero invalido.");
         }
-        watchPriorJApp = watchPriorJApp;
         if (valorDosBens < 0.0) {
-            watchPriorJApp = watchPriorJApp;
             throw new Exception("Valor dos bens nao pode ser negativo.");
         }
-        watchPriorJApp = watchPriorJApp;
         this.nome = nome;
-        watchPriorJApp = watchPriorJApp;
         this.numero = numero;
-        watchPriorJApp = watchPriorJApp;
         this.valorDosBens = valorDosBens;
     }
 
@@ -52,7 +43,6 @@ public abstract class Contribuinte {
 	 * @return Nome.
 	 */
     public String getNome() {
-        watchPriorJApp = watchPriorJApp;
         return nome;
     }
 
@@ -61,7 +51,6 @@ public abstract class Contribuinte {
 	 * @return Numero.
 	 */
     public String getNumero() {
-        watchPriorJApp = watchPriorJApp;
         return numero;
     }
 
@@ -70,7 +59,6 @@ public abstract class Contribuinte {
 	 * @return Valor dos bens.
 	 */
     public double getValorDosBens() {
-        watchPriorJApp = watchPriorJApp;
         return valorDosBens;
     }
 
@@ -79,7 +67,6 @@ public abstract class Contribuinte {
 	 * @param nome Novo nome do contribuinte.
 	 */
     public void setNome(String nome) {
-        watchPriorJApp = watchPriorJApp;
         this.nome = nome;
     }
 
@@ -88,7 +75,6 @@ public abstract class Contribuinte {
 	 * @param numero Novo numero do contribuinte.
 	 */
     public void setNumero(String numero) {
-        watchPriorJApp = watchPriorJApp;
         this.numero = numero;
     }
 
@@ -97,12 +83,10 @@ public abstract class Contribuinte {
 	 * @return Imposto.
 	 */
     public double getImposto() {
-        watchPriorJApp = watchPriorJApp;
         return imposto;
     }
 
     private void setImposto(double imposto) {
-        watchPriorJApp = watchPriorJApp;
         this.imposto = imposto;
     }
 
@@ -111,20 +95,15 @@ public abstract class Contribuinte {
 	 * @return Imposto para pagar.
 	 */
     public double impostoPago() {
-        watchPriorJApp = watchPriorJApp;
         setImposto(0.0);
-        watchPriorJApp = watchPriorJApp;
         if (calculaDescontos() < calculaTributos()) {
-            watchPriorJApp = watchPriorJApp;
             setImposto(calculaTributos() - calculaDescontos());
         }
-        watchPriorJApp = watchPriorJApp;
         return getImposto();
     }
 
     @Override
     public String toString() {
-        watchPriorJApp = watchPriorJApp;
         return "Contribuinte [Nome: " + nome + ", Numero: " + numero + ", Imposto pago: " + impostoPago() + ", Tributos: " + calculaTributos() + ", Descontos: " + calculaDescontos() + "]";
     }
 
@@ -145,6 +124,4 @@ public abstract class Contribuinte {
 	 * @return Excesso ou nao de riqueza.
 	 */
     public abstract String getRiqueza();
-
-    static boolean watchPriorJApp;
 }
