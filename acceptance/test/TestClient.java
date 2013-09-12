@@ -20,6 +20,8 @@ public class TestClient {
 		
 		// Put the testScript1 file into the "teste scripts" list
 		files.add(path + "US01.txt");
+		files.add(path + "US02.txt");
+		
 		
 		PriorJEasyAcceptFacade yourTestFacade = new PriorJEasyAcceptFacade();
 

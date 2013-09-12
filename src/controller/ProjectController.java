@@ -31,6 +31,7 @@ import project.JUnitVersionEnum;
 import project.PriorJProject;
 import project.PriorJProjectManager;
 
+import util.ManagerFiles;
 import util.Settings;
 
 
@@ -44,6 +45,7 @@ import util.Settings;
 public class ProjectController {
 	
     private PriorJProjectManager projectManager;
+    
     private boolean IS_SUB_VERSION = false;
     private boolean isSaved, isChanged;
 
@@ -52,11 +54,35 @@ public class ProjectController {
          isSaved = false;
          isChanged = false;
     }
-
     public void removeProject(String nameProject){
         projectManager.deleteProject(nameProject);
     }
 	
+    public void removeAllProjects() {
+    	if (ManagerFiles.existFileOrDirectory(Settings.PRIORJ_PROJECT))
+    		ManagerFiles.deleteAll(Settings.PRIORJ_PROJECT);
+    	
+    	//create again the directory
+    	ManagerFiles.createDirectory(Settings.PRIORJ_PROJECT);
+	}
+    
+    /**
+     * Get all projects names.
+     * 
+     * @return
+     */
+    public List<String> getProjectNames(){
+    	List<PriorJProject> projects = getProjects();
+    	
+    	List<String> names = new ArrayList<String>();
+    	
+    	for (PriorJProject p : projects){
+    		names.add(p.getName());
+    	}
+    	
+    	return names;
+    }
+    
     public void setProjectPaths(String pathApp, String pathCode, String pathLib, String pathTest, String pathCodeNew) throws Exception{
        projectManager.setPaths(pathApp, pathCode, pathLib, pathTest, pathCodeNew);    
     }
@@ -308,5 +334,6 @@ public class ProjectController {
       public List<List<String>> openAllPrioritizedTestSuites(String path){
     	return projectManager.openAllPrioritizedTestSuites(path);
     }
+	
     
 }

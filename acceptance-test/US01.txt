@@ -13,7 +13,7 @@ expectError "Invalid input" createProject name="xpto" version=
 
 expectError "Project name can not be empty" createProject name="" version="junit3"
 expectError "Empty version name" createProject name="xpto" version=""
-#expectError "Invalid JUnit version name" createProject name="xpto" version="xpto"
+expectError "Invalid junit version name" createProject name="xpto" version="xpto"
 
 
 
@@ -24,3 +24,5 @@ removeProject name"AVL-02"
 removeProject name"AVL-03"
 
 expect 0 numberOfProjects
+
+quit

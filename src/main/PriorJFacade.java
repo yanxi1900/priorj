@@ -18,6 +18,7 @@ package main;
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +87,10 @@ public class PriorJFacade {
     	
     	else if (!version.equals("junit3") && !version.equals("junit4"))
     		throw new Exception("Invalid junit version name");
+    	
+    	if (hasOpenedProject()){
+    		closeProject();
+    	}
    	    
 		controllerProject.createNewProject(name, version);	
 	}
@@ -97,8 +102,15 @@ public class PriorJFacade {
 	 * 
 	 * @return
 	 * 		True or false
+	 * @throws Exception 
 	 */
-	public boolean searchProject(String projectName){
+	public boolean searchProject(String projectName) throws Exception{
+		if (projectName == null)
+			throw new Exception("Invalid Project Name");
+		
+		if (projectName.isEmpty())
+			throw new Exception("Empty Project Name");
+		
 		return controllerProject.searchProject(projectName);
 	}
 	
@@ -141,7 +153,6 @@ public class PriorJFacade {
         String paths[] = controllerProject.getPathsOpenProject();
         
         try {
-        
             setPathApp(paths[0]);
             setPathCode(paths[1]);
             setPathLib(paths[2]);    
@@ -859,8 +870,7 @@ public class PriorJFacade {
 	 * @return
 	 * 		A list of string.
 	 */
-	 public List<String> runRBAAddParameter(String pathApp, String className,
-			 String methodName){
+	 public List<String> runRBAAddParameter(String pathApp, String className, String methodName){
 	        
 	        controllerRBA.setPathApp(pathApp);
 	        controllerRBA.setClassName(className);
@@ -894,11 +904,10 @@ public class PriorJFacade {
 
 	/**
 	 * Remove all projects in the folder.
+	 * @throws Exception 
 	 */
 	public void removeProjectAll() {
-		
-		if (ManagerFiles.existFileOrDirectory(Settings.PRIORJ_PROJECT))
-			ManagerFiles.deleteAllOnlyInside(Settings.PRIORJ_PROJECT);		
+		controllerProject.removeAllProjects();
 	}
 	
 	/**
@@ -907,6 +916,53 @@ public class PriorJFacade {
 	 */
 	public int numberOfProjects(){
 		return getProjects().size();
+	}
+
+	/**
+	 * This method return the field value to indicated field from 
+	 * opened project.
+	 * 
+	 * @param attribute
+	 * @throws Exception 
+	 */
+	public String getAttributesOpenedProject(String attribute) throws Exception {
+		
+		if (attribute == null)
+			throw new Exception("Invalid Attribute Null");
+		
+		if (attribute.isEmpty())
+			throw new Exception("Empty Project Attribute");
+		
+		PriorJProject p = controllerProject.getOpenProject();
+		
+		if (attribute.equalsIgnoreCase("name")){
+			return p.getName();
+		}
+		else if (attribute.equalsIgnoreCase("version")){
+			return p.getVersion().getName();
+		}
+		else if (attribute.equalsIgnoreCase("pathApp")){
+			return p.getPathApp();
+		}
+		else if (attribute.equalsIgnoreCase("pathCode")){
+			return p.getPathCode();
+		}
+		else if (attribute.equalsIgnoreCase("pathLib")){
+			return p.getPathLib();
+		}
+		else if (attribute.equalsIgnoreCase("pathTest")){
+			return p.getPathTest();
+		}
+		else if (attribute.equalsIgnoreCase("pathNew")){
+			return p.getPathCodeNew();
+		}
+		else if (attribute.equalsIgnoreCase("date")){
+			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+			return formatDate.format(p.getDate().getTime());
+		}
+		else {
+			throw new Exception ("Nonexistent Project Attribute");
+		}
 	}
 	 
 }
