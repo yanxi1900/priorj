@@ -1,0 +1,23 @@
+#(US04.txt) User Story 04  - Run. 
+# warning: before run tests adjust the paths.
+
+resetSystem
+
+# valid input
+createProject name="xpto" version="junit4"
+
+setPathApp pathApp="/home/samuel/eclipseEE/workspace/PriorJ/resources/app"
+setPathCode pathCode="/home/samuel/eclipseEE/workspace/PriorJ/resources/app/src"
+setPathLib pathLib="/home/samuel/eclipseEE/workspace/PriorJ/resources/app/lib"
+setPathTest pathTest="/home/samuel/eclipseEE/workspace/PriorJ/resources/app/test/bst"
+setPathNew pathNew="/home/samuel/eclipseEE/workspace/PriorJ/resources/appnew/src"
+
+runInstrumentation
+
+expect true isInstrumented
+
+runCoverage
+
+expect true isCovered
+
+quit

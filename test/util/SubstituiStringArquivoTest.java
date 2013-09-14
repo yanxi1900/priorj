@@ -67,7 +67,7 @@ public class SubstituiStringArquivoTest {
 		
 		String pathDestination = local + content + "copy" + separator; 
 		
-		ManagerFiles.copyFileAll(pathOrigin, pathDestination);
+		FileManager.copyFileAll(pathOrigin, pathDestination);
 		
 		pathDestination = pathDestination + filename;
 		

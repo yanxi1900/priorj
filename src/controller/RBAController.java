@@ -38,7 +38,7 @@ import java.util.Map;
 import main.FacadeRBA;
 
 import technique.RefactoringEnum;
-import util.Settings;
+import util.PathTo;
 
 import dao.XStreamWrite;
 import exceptions.DBException;

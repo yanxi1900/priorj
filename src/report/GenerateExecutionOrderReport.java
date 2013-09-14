@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import technique.TechniquesEnum;
-import util.Settings;
+import util.PathTo;
 
 
 
@@ -51,7 +51,7 @@ public class GenerateExecutionOrderReport {
             builder.append("............: Prioritization Order ");
             builder.append(this.technique.getName());
             builder.append(" :..............");
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             int number = 0;
             for (String test : testCases) {
@@ -60,7 +60,7 @@ public class GenerateExecutionOrderReport {
                     builder.append(" - ");
                     builder.append(test.replace(".java", ""));
                     builder.append("()");
-                    builder.append(Settings.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
             }
             
             return builder.toString();

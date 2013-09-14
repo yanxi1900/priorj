@@ -21,7 +21,7 @@ package core;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import util.Settings;
+import util.PathTo;
 
 /**
  * <p>
@@ -83,7 +83,7 @@ public class InstrumentApp {
         		if (arq.isDirectory()) {
         			instrumentClassOfPath(arq);
         		} else if (arq.getName().endsWith(".java") && !arq.getPath().contains(pathTest)) {
-        			InstrumentClass instrumenta = new InstrumentClass(path.toString() + Settings.SEPARATOR, arq.getName());
+        			InstrumentClass instrumenta = new InstrumentClass(path.toString() + PathTo.SEPARATOR, arq.getName());
         			instrumenta.instrumentationRun();
         		}
         	}

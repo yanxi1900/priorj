@@ -30,9 +30,9 @@ import dao.XStreamWrite;
 import java.util.LinkedList;
 
 import util.CopyFile;
-import util.ManagerFiles;
+import util.FileManager;
 import util.ReadFile;
-import util.Settings;
+import util.PathTo;
 
 
 /**
@@ -46,11 +46,11 @@ import util.Settings;
 public class PriorJProjectDAO implements ProjectDAO {
 
     private XStreamWrite writer;
-    private String local = Settings.USER_DIR;
+    private String local = PathTo.USER_DIR;
     
-    private String directory = Settings.SEPARATOR + "PriorJProjects"+Settings.SEPARATOR;
+    private String directory = PathTo.SEPARATOR + "PriorJProjects"+PathTo.SEPARATOR;
     private String file = "info-projects";
-    private String directoryName = Settings.SEPARATOR+"PriorJProjects";
+    private String directoryName = PathTo.SEPARATOR+"PriorJProjects";
         
     private XStreamRead reader;
 
@@ -59,9 +59,9 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public PriorJProjectDAO(){
         local = System.getProperty("user.dir");
-        directory = Settings.SEPARATOR+"PriorJProjects"+Settings.SEPARATOR;
+        directory = PathTo.SEPARATOR+"PriorJProjects"+PathTo.SEPARATOR;
         file = "info-projects";
-        directoryName = Settings.SEPARATOR+"PriorJProjects";
+        directoryName = PathTo.SEPARATOR+"PriorJProjects";
     }
     
     
@@ -83,9 +83,9 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public void createDirectory(String directoryName) {
     	
-        String path = Settings.USER_DIR;
+        String path = PathTo.USER_DIR;
         
-        path += Settings.SEPARATOR+"PriorJProjects"+Settings.SEPARATOR;
+        path += PathTo.SEPARATOR+"PriorJProjects"+PathTo.SEPARATOR;
         
       
         File file = new File(path + directoryName);
@@ -107,9 +107,9 @@ public class PriorJProjectDAO implements ProjectDAO {
     }
     
     public void removeDirectory(String directoryName) {
-        String path = Settings.USER_DIR;
+        String path = PathTo.USER_DIR;
         
-        path += Settings.SEPARATOR + "PriorJProjects"+Settings.SEPARATOR;
+        path += PathTo.SEPARATOR + "PriorJProjects"+PathTo.SEPARATOR;
        
         File file = new File(path+directoryName);
         
@@ -139,7 +139,7 @@ public class PriorJProjectDAO implements ProjectDAO {
         String path = System.getProperty("user.dir");
         
         //new directory
-        String directoryName = Settings.SEPARATOR+"PriorJProjects"+Settings.SEPARATOR;
+        String directoryName = PathTo.SEPARATOR+"PriorJProjects"+PathTo.SEPARATOR;
         
         File f = new File(path+directoryName+fileName);
  
@@ -165,7 +165,7 @@ public class PriorJProjectDAO implements ProjectDAO {
     public boolean checkPriorJProjectDirectory(){
         String path = System.getProperty("user.dir");
         
-        String directoryName = Settings.SEPARATOR + "PriorJProjects" +Settings.SEPARATOR;
+        String directoryName = PathTo.SEPARATOR + "PriorJProjects" +PathTo.SEPARATOR;
         
         File f = new File(path+directoryName);
  
@@ -282,8 +282,8 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public void setOpenProject(String projectName){
         if (find(projectName)){
-            String origin = local+directory + projectName + Settings.SEPARATOR;
-            String destination = local + Settings.SEPARATOR+"report"+Settings.SEPARATOR;
+            String origin = local+directory + projectName + PathTo.SEPARATOR;
+            String destination = local + PathTo.SEPARATOR+"report"+PathTo.SEPARATOR;
        
             File f = new File(destination);
             f.delete();
@@ -302,8 +302,8 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public void setOpenProject(String projectName, String version){
         if (find(projectName)){
-            String origin = local+directory + projectName + Settings.SEPARATOR + version +Settings.SEPARATOR;
-            String destination = local + Settings.SEPARATOR +"report"+Settings.SEPARATOR;
+            String origin = local+directory + projectName + PathTo.SEPARATOR + version +PathTo.SEPARATOR;
+            String destination = local + PathTo.SEPARATOR +"report"+PathTo.SEPARATOR;
        
             File f = new File(destination);
             deleteAll(f);
@@ -321,15 +321,15 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public void commitProject(String projectName){
             if (find(projectName)){
-                String destination = local+directory + projectName + Settings.SEPARATOR;
+                String destination = local+directory + projectName + PathTo.SEPARATOR;
                 
-                String origin = local + Settings.SEPARATOR +"report"+Settings.SEPARATOR;
+                String origin = local + PathTo.SEPARATOR +"report"+PathTo.SEPARATOR;
                 
                 //list directory destination...
                 File f = new File(destination);
                 File [] files = f.listFiles();
         
-                String versionName = projectName + " version-" + (files.length+1) + Settings.SEPARATOR;
+                String versionName = projectName + " version-" + (files.length+1) + PathTo.SEPARATOR;
                 destination += versionName;
                 
                 moveAllFiles(origin, destination);
@@ -347,7 +347,7 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     
     public void deleteAll(File file){
-        ManagerFiles.deleteAll(file);       
+        FileManager.deleteAll(file);       
     }
     
     /**
@@ -363,7 +363,7 @@ public class PriorJProjectDAO implements ProjectDAO {
      */
     public String openProjectFile(String filename) throws Exception{
         
-        String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR;
+        String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR;
         
         String contentFile =  ReadFile.read(local + directory + filename);
         

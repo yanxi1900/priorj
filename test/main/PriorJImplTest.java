@@ -37,7 +37,7 @@ import exception.EmptySetOfTestCaseException;
 import exception.InstrumentationUnrealizedException;
 
 import technique.TechniquesEnum;
-import util.Settings;
+import util.PathTo;
 
 
 /**
@@ -165,10 +165,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunInstrumentation() throws InstrumentationUnrealizedException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		
 		priorj.runInstrumentation();
 		
@@ -177,10 +177,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunCoverage() throws InstrumentationUnrealizedException, CoverageUnrealizedException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -191,10 +191,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunReadLog() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -206,10 +206,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunPrioritizationTMC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -227,10 +227,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunPrioritizationTSC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -248,10 +248,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunPrioritizationAMC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -269,10 +269,10 @@ public class PriorJImplTest {
 
 	@Test
 	public void testPriorJRunPrioritizationASC() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -290,10 +290,10 @@ public class PriorJImplTest {
 	
 	@Test
 	public void testPriorJRunPrioritizationRND() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException, EmptySetOfTestCaseException{
-		priorj.setPathApplication(Settings.APP);
-		priorj.setPathCode(Settings.APP_CODE);
-		priorj.setPathLibraries(Settings.APP_LIB);
-		priorj.setPathTests(Settings.APP_TEST);
+		priorj.setPathApplication(PathTo.APP);
+		priorj.setPathCode(PathTo.APP_CODE);
+		priorj.setPathLibraries(PathTo.APP_LIB);
+		priorj.setPathTests(PathTo.APP_TEST);
 		priorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 		
 		priorj.runInstrumentation();
@@ -313,8 +313,8 @@ public class PriorJImplTest {
 	public void testPrioritizedTestPositionByTechnique(){
 		String filename = "TMC.txt";
 		
-		String path = Settings.RESOURCES_FILES + Settings.SEPARATOR + filename;
-		String localPath = Settings.ORDER;
+		String path = PathTo.RESOURCES_FILES + PathTo.SEPARATOR + filename;
+		String localPath = PathTo.ORDER;
 		
 		String testCaseName = "tests.AVLTest.testEstadoInicial";
 		

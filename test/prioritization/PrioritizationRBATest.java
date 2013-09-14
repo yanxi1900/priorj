@@ -29,7 +29,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 
 /**
  * This class is a test to RBA methods.
@@ -55,14 +55,14 @@ public class PrioritizationRBATest {
 	
 	
 	@Before
-	public void setUp(){
+	public void setUp() throws Exception{
 		facade = new PriorJFacade();
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
 		
-		facade.setPathCodeNew(Settings.APP_CODE_NEW);
+		facade.setPathCodeNew(PathTo.APP_CODE_NEW);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -81,7 +81,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 			
 			className="calc.Calculator";
 			methodName="div";
@@ -104,7 +104,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 					
 			className="controller.Agenda";
 			
@@ -132,7 +132,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 		
 			classOneName="model.Person";
 			classTwoName="model.Employee";
@@ -155,7 +155,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 		
 			classOneName = "model.Person";
 			classTwoName = "model.Contact";
@@ -177,7 +177,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 		
 			classOneName = "model.Person";
 			classTwoName = "model.Contact";
@@ -198,7 +198,7 @@ public class PrioritizationRBATest {
 			facade.runCoverage();
 			facade.runReadLog();
 						
-			pathApp = Settings.APP_CODE_NEW.replace(Settings.SEPARATOR + "src", "");
+			pathApp = PathTo.APP_CODE_NEW.replace(PathTo.SEPARATOR + "src", "");
 		
 			className = "model.Person";
 			methodName = "setName(String name, String sobrenome)";

@@ -50,10 +50,10 @@ public class RunAntTest {
 	
 	@Test
 	public void testRunAntRunning() {
-		String app = Settings.APP;
-		String code = Settings.APP_CODE.replace(app + Settings.SEPARATOR, "");
-		String lib = Settings.APP_LIB.replace(app + Settings.SEPARATOR, "");
-		String test = Settings.APP_TEST.replace(app + Settings.SEPARATOR, "");
+		String app = PathTo.APP;
+		String code = PathTo.APP_CODE.replace(app + PathTo.SEPARATOR, "");
+		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
+		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
 		runAnt = new RunAnt(app,code, test,lib);
 		

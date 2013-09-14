@@ -4,12 +4,10 @@ import dao.Repository;
 public aspect AspectCoverage {
 
 	private Repository repository;
-		
-	//pointcut callTestCase() : execution([parameter])  && (within(* [pathTest]*[pathTest].*));
 
 	pointcut callTestCase() : execution([parameter])  && !within(AspectCoverage);
 		
-    pointcut callMethod() : execution(* *(..)) && !execution(* [pathTest]*..*.*(..)) 
+    pointcut callMethod() : execution(* *(..)) && !execution([parameter]) 
 	&& !execution(* junit..*..*.*(..)) && !execution(* java..*..*.*(..)) && !within(AspectCoverage);
 
 	pointcut callWatchPrior() : get(* *.watchPriorJApp);

@@ -36,7 +36,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import util.Settings;
+import util.PathTo;
 import util.SubstituiStringArquivo;
 
 /**
@@ -52,14 +52,14 @@ public class InstrumentClassTest {
 	
 	private InstrumentClass ic;
 	
-	private final String folderInstrumentTests = Settings.INSTRUMENT_TESTS;
+	private final String folderInstrumentTests = PathTo.INSTRUMENT_TESTS;
 	
-	private final String separator = Settings.SEPARATOR;
-	private final String folderBlocks = Settings.INSTRUMENT_BLOCKS;
+	private final String separator = PathTo.SEPARATOR;
+	private final String folderBlocks = PathTo.INSTRUMENT_BLOCKS;
 	
 	@Before
 	public void createObject() {
-		ic = new InstrumentClass(Settings.INSTRUMENT_TESTS, Settings.SEPARATOR  + "CDteca1.java");
+		ic = new InstrumentClass(PathTo.INSTRUMENT_TESTS, PathTo.SEPARATOR  + "CDteca1.java");
 		}
 	
 	@Test
@@ -579,7 +579,7 @@ public class InstrumentClassTest {
 	
 	@Test
 	public void testGetsSets() {
-		assertEquals(Settings.RESOURCES_FILES + "/InstrumentTests", ic.getPathFile());
+		assertEquals(PathTo.RESOURCES_FILES + "/InstrumentTests", ic.getPathFile());
 		ic.setPathFile("/home/AVL/");
 		assertEquals("/home/AVL/", ic.getPathFile());
 		

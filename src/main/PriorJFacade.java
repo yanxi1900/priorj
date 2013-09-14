@@ -36,8 +36,8 @@ import project.PriorJProject;
 
 import technique.RefactoringEnum;
 import technique.TechniquesEnum;
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 
 import controller.PriorJController;
 import controller.ProjectController;
@@ -464,7 +464,7 @@ public class PriorJFacade {
      * 		the suite selection.
      */
     public List<String> generateSuiteSelection(String suiteName, String packageName, int size){
-    	 String path = Settings.ORDER + Settings.SEPARATOR;
+    	 String path = PathTo.ORDER + PathTo.SEPARATOR;
     	
     	 List<List<String>> suites = controllerProject.openAllPrioritizedTestSuites(path); 
     	 
@@ -500,7 +500,7 @@ public class PriorJFacade {
 	 * 		A list of list with tests names.
 	 */
 	 public List<List<String>> openAllPrioritizedTestSuites(){
-		String path = Settings.ORDER + Settings.SEPARATOR;
+		String path = PathTo.ORDER + PathTo.SEPARATOR;
 		
 		return controllerProject.openAllPrioritizedTestSuites(path);
 	}
@@ -584,14 +584,17 @@ public class PriorJFacade {
         return controllerPriorj.generateAPFDChart();
     }
     
-    public void setPathApp(String pathApp) {
+    public void setPathApp(String pathApp) throws Exception {
+    	if (pathApp ==null)
+    		throw new Exception("Invalid application path Null");
+    	
     	if (pathApp.isEmpty())
-    		throw new IllegalArgumentException("Empty application path!");
+    		throw new Exception("Empty application path");
     	
     	pathApp = parser(pathApp);
-    	
+ 
     	if (!controllerPriorj.exist(pathApp))
-    		throw new IllegalArgumentException("Application directory not found!");
+    		throw new Exception("Application path not found");
     	
     	
         controllerPriorj.setPathApp(pathApp);
@@ -601,16 +604,17 @@ public class PriorJFacade {
         return controllerPriorj.getPathApp();
     }
     
-    public void setPathCode(String pathCode){
+    public void setPathCode(String pathCode) throws Exception{
+    	if (pathCode == null)
+    		throw new Exception("Invalid code path Null");
+    	
     	if (pathCode.isEmpty())
-    		throw new IllegalArgumentException("Empty code path!");
+    		throw new Exception("Empty code path");
     	
     	pathCode = parser(pathCode);
     	
     	if (!controllerPriorj.exist(pathCode))
-    		throw new IllegalArgumentException("Code directory not found!");
-    	
-    	
+    		throw new Exception("Code path not found");
     	
         controllerPriorj.setPathCode(pathCode);
     }
@@ -619,12 +623,15 @@ public class PriorJFacade {
         return controllerPriorj.getPathCode();
     }
     
-    public void setPathLib(String pathLib){
+    public void setPathLib(String pathLib) throws Exception{
+    	
+    	if (pathLib == null)
+    		throw new Exception("Invalid library path Null");
     	
     	pathLib = parser(pathLib);
     	
     	if (!pathLib.isEmpty() && !controllerPriorj.exist(pathLib)){
-    		throw new IllegalArgumentException("Library directory not found!");
+    		throw new Exception("Library path not found");
     	}
     	
         controllerPriorj.setPathLib(pathLib);
@@ -634,15 +641,18 @@ public class PriorJFacade {
         return controllerPriorj.getPathLib();
     }
     
-    public void setPathTest(String pathTest) {
+    public void setPathTest(String pathTest) throws Exception {
+    	
+    	if (pathTest == null)
+    		throw new Exception("Invalid test path Null");
     	
     	if (pathTest.isEmpty())
-    		throw new IllegalArgumentException("Empty path test not permitted!");
+    		throw new Exception("Empty test path");
     	
     	pathTest = parser(pathTest);
    	 
         if (!controllerPriorj.exist(pathTest))
-        	throw new IllegalArgumentException("Test directory not found!");
+        	throw new Exception("Test path not found");
                
         controllerPriorj.setPathTests(pathTest);
  
@@ -895,9 +905,9 @@ public class PriorJFacade {
 	public String parser(String path) {
 
 		if (path.contains("\\")) {
-			path = path.replace("\\", Settings.SEPARATOR);
+			path = path.replace("\\", PathTo.SEPARATOR);
 		} else if (path.contains("/"))
-			path = path.replace("/", Settings.SEPARATOR);
+			path = path.replace("/", PathTo.SEPARATOR);
 
 		return path;
 	}

@@ -14,7 +14,7 @@ public class ReadFileTest {
 	
 	@Before
 	public void setUp(){
-		path = Settings.RESOURCES_FILES + Settings.SEPARATOR;
+		path = PathTo.RESOURCES_FILES + PathTo.SEPARATOR;
 	}
 	
 	

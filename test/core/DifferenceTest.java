@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import util.Settings;
+import util.PathTo;
 
 public class DifferenceTest {
 	

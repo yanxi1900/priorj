@@ -34,8 +34,8 @@ import report.CodeTree;
 import report.CoverageReport;
 
 import technique.TechniquesEnum;
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 
 import main.PriorJ;
 import main.PriorJFacade;
@@ -64,7 +64,7 @@ public class Console {
 	private String paths [];
 	Scanner input = new Scanner(System.in);
 	
-	public void run(){
+	public void run() throws Exception{
 		PriorJFacade facade = new PriorJFacade();
 		
 		readPaths(facade);
@@ -80,8 +80,9 @@ public class Console {
 	 * This method read and validate the input paths.
 	 * 
 	 * @param facade
+	 * @throws Exception 
 	 */
-	private void readPaths(PriorJFacade facade) {
+	private void readPaths(PriorJFacade facade) throws Exception {
 		
 		String pathApp = readPathApp();
 		
@@ -568,7 +569,7 @@ public class Console {
 	 */
 	public boolean validate(String path){
 		path = pathParse(path);
-		return ManagerFiles.existFileOrDirectory(path);
+		return FileManager.existFileOrDirectory(path);
 	}
 	
 	
@@ -778,9 +779,9 @@ public class Console {
 	 */
 	private static String pathParse(String path) {
 		if (path.contains("\\"))
-			path = path.replace("\\", Settings.SEPARATOR);
+			path = path.replace("\\", PathTo.SEPARATOR);
 		else if (path.contains("/"))
-			path = path.replace("/",Settings.SEPARATOR);
+			path = path.replace("/",PathTo.SEPARATOR);
 		return path;
 	}
 

@@ -27,7 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 /**
  * <p>
  * 	This class is a test to RBA controller.
@@ -52,7 +52,7 @@ public class ControllerRBATest {
 		
 	@Test //ok
 	public void testControllerRunRenameMethod() {
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		String className = "calc.Calculator";
 		String methodName = "div";
 		String newMethodName= "division";
@@ -80,7 +80,7 @@ public class ControllerRBATest {
 
 	@Test //no
 	public void testControllerRunExtractMethod() {
-		String pathApp = Settings.APP_CODE_NEW;
+		String pathApp = PathTo.APP_CODE_NEW;
 		
 		String className="controller.Agenda";
 		String originMethodName = "getTelefonesDoContatoAtivo";
@@ -119,7 +119,7 @@ public class ControllerRBATest {
 	
 	@Test //ok
 	public void testControllerPullUpMethod(){
-		String pathApp = Settings.APP_CODE_NEW;
+		String pathApp = PathTo.APP_CODE_NEW;
 		
 		String classOneName = "model.Person";
 		String classTwoName = "model.Contact";
@@ -143,7 +143,7 @@ public class ControllerRBATest {
 
 	@Test //ok
 	public void testControllerPullUpField(){
-		String pathApp = Settings.APP_CODE_NEW;
+		String pathApp = PathTo.APP_CODE_NEW;
 
 		String classOneName = "model.Person";
 		String classTwoName = "model.Contact";
@@ -168,7 +168,7 @@ public class ControllerRBATest {
 	
 	@Test //ok
 	public void testControllerRunMoveMethod(){
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		
 		String classOneName="model.Person";
 		String classTwoName="model.Employee";
@@ -193,7 +193,7 @@ public class ControllerRBATest {
 	
 	@Test
 	public void testControllerRunAddParameter(){
-		String pathApp = Settings.APP_CODE_NEW;
+		String pathApp = PathTo.APP_CODE_NEW;
 		
 		String className = "model.Person";
 		String methodName = "setName(String name, String sobrenome)";

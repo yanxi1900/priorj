@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import util.Settings;
+import util.PathTo;
 
 public class InstrumentAppTest2 {
 	
@@ -73,71 +73,71 @@ public class InstrumentAppTest2 {
 	@Before
 	public void createObjects() {
 		//classesMain
-		dir1 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		jogoDaVelha = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/JogoDaVelhaModularizado.java");
-		vinteUm = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/VinteUmJogo.java");
-		explorandoMS = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/ExplorandoOMundoDasSeries.java");
-		meuSDT = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/MeuSistemaDeTributacao.java");
+		dir1 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		jogoDaVelha = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/JogoDaVelhaModularizado.java");
+		vinteUm = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/VinteUmJogo.java");
+		explorandoMS = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/ExplorandoOMundoDasSeries.java");
+		meuSDT = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMain", "/MeuSistemaDeTributacao.java");
 	
 		//classesJava
-		dir2 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		fibonacci = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Fibonacci.java");
-		pa = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/ProgressaoAritmetica.java");
-		robo = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Robo.java");
-		sala = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Sala.java");
+		dir2 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		fibonacci = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Fibonacci.java");
+		pa = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/ProgressaoAritmetica.java");
+		robo = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Robo.java");
+		sala = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesJava", "/Sala.java");
 		
 		//classesTests
-		dir3 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesTest", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		roboT = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestaRobo.java");
-		salaT = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestaSala.java");
-		cdtecaT = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/CDtecaTest.java");
-		cdT = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestCD.java");
+		dir3 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesTest", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		roboT = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestaRobo.java");
+		salaT = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestaSala.java");
+		cdtecaT = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/CDtecaTest.java");
+		cdT = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesTests", "/TestCD.java");
 		
 		//classesException
-		dir4 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesException", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		dneEx = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/DirectoryNotExistException.java");
-		epEx = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/EmptyPathExcecao.java");
-		iuEx = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/InstrumentationUnrealized.java");
+		dir4 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesException", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		dneEx = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/DirectoryNotExistException.java");
+		epEx = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/EmptyPathExcecao.java");
+		iuEx = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesException", "/InstrumentationUnrealized.java");
 		
 		//classesMixed
-		dir5 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		cd = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/CD.java");
-		tCD = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/TestaCD.java");
-		tAbs = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/TaxiAbstract.java");
-		inter = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/Interface.java");
+		dir5 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		cd = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/CD.java");
+		tCD = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/TestaCD.java");
+		tAbs = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/TaxiAbstract.java");
+		inter = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesMixed", "/Interface.java");
 		
 		//classesWithoutClass
-		dir6 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesWithoutClass", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		dir6 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesWithoutClass", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
 		
 		//classesPriorJ
-		dir7 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		priorjFac = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJFacade.java");
-		priorjImpl = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJImpl.java");
-		priorjSysImpl = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJSystemImpl.java");
+		dir7 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		priorjFac = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJFacade.java");
+		priorjImpl = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJImpl.java");
+		priorjSysImpl = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesPriorJ", "/PriorJSystemImpl.java");
 		
 		//classesInterface
-		dir8 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		dis = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/Disciplinas.java");
-		fg = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/FigurasGeometricas.java");
-		priorj = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/PriorJ.java");
-		priorjSys = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/PriorJSystem.java");
+		dir8 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		dis = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/Disciplinas.java");
+		fg = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/FigurasGeometricas.java");
+		priorj = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/PriorJ.java");
+		priorjSys = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesInterface", "/PriorJSystem.java");
 		
 		//classesAbstracts
-		dir9 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		cont = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Contribuinte.java");
-		rod = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Rodoviario.java");
-		trab = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Trabalhadores.java");
+		dir9 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		cont = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Contribuinte.java");
+		rod = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Rodoviario.java");
+		trab = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/classes/classesAbstracts", "/Trabalhadores.java");
 		
 		/*
 		 * variosPacotes
 		 * package1, package2 e package3
 		 */
-		dir10 = new InstrumentApp(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes", Settings.RESOURCES_FILES + "/InstrumentTests/classes/tests");
-		cont2 = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package1", "/Contribuinte2.java");
-		rod2 = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package2", "/Rodoviario2.java");
-		trab2 = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package3", "/Trabalhadores2.java");
-		fib2 = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package1", "/Fibonacci2.java");
-		pa2 = new InstrumentClass(Settings.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package2", "/ProgressaoAritmetica2.java");
+		dir10 = new InstrumentApp(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes", PathTo.RESOURCES_FILES + "/InstrumentTests/classes/tests");
+		cont2 = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package1", "/Contribuinte2.java");
+		rod2 = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package2", "/Rodoviario2.java");
+		trab2 = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package3", "/Trabalhadores2.java");
+		fib2 = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package1", "/Fibonacci2.java");
+		pa2 = new InstrumentClass(PathTo.RESOURCES_FILES + "/InstrumentTests/variosPacotes/package2", "/ProgressaoAritmetica2.java");
 		
 		
 	}

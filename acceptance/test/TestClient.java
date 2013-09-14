@@ -21,21 +21,19 @@ public class TestClient {
 		// Put the testScript1 file into the "teste scripts" list
 		files.add(path + "US01.txt");
 		files.add(path + "US02.txt");
-		
+		files.add(path + "US03.txt");
+		files.add(path + "US04.txt");
 		
 		PriorJEasyAcceptFacade yourTestFacade = new PriorJEasyAcceptFacade();
 
 		// Instantiate EasyAccept facade
-
 		EasyAcceptFacade eaFacade = new EasyAcceptFacade(yourTestFacade, files);
 
 		// Execute the tests
 		eaFacade.executeTests();
 
 		// Print the tests execution results
-
 		System.out.println(eaFacade.getCompleteResults());
 		
 	}
-
 }

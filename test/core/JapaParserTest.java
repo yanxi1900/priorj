@@ -42,7 +42,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 
 public class JapaParserTest {
 
@@ -54,7 +54,7 @@ public class JapaParserTest {
 	public void setUp() throws Exception {
 		cu = new CompilationUnit();
 
-		path = Settings.INSTRUMENT_BLOCKS + Settings.SEPARATOR + "ForIf.java";
+		path = PathTo.INSTRUMENT_BLOCKS + PathTo.SEPARATOR + "ForIf.java";
 
 	}
 

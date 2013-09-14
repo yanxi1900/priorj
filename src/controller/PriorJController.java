@@ -29,9 +29,9 @@ import report.CodeTree;
 import report.CoverageReport;
 
 import technique.TechniquesEnum;
-import util.ManagerFiles;
+import util.FileManager;
 import util.ReadFile;
-import util.Settings;
+import util.PathTo;
 
 import main.PriorJ;
 import main.PriorJImpl;
@@ -128,11 +128,11 @@ public class PriorJController {
         
         try {
             
-            List<String> seriesName = ManagerFiles.listFilesNames(Settings.ORDER);
+            List<String> seriesName = FileManager.listFilesNames(PathTo.ORDER);
             List<String> testsFailed = priorj.getFailedTestCase();
             
             List<List<String>> orderList = new ArrayList<List<String>>();
-            String local = Settings.ORDER + Settings.SEPARATOR;
+            String local = PathTo.ORDER + PathTo.SEPARATOR;
             
             for (String filename: seriesName){
                 
@@ -196,9 +196,9 @@ public class PriorJController {
         setCombinations(combinations);
         
         try {
-            orders = ManagerFiles.listFilesNames(Settings.ORDER);
+            orders = FileManager.listFilesNames(PathTo.ORDER);
            
-            List<String> tests = ReadFile.readFileAndReturnList(Settings.ORDER + Settings.SEPARATOR + orders.get(0));
+            List<String> tests = ReadFile.readFileAndReturnList(PathTo.ORDER + PathTo.SEPARATOR + orders.get(0));
 
             return priorj.calculateAPFD(tests, combinations);
         } catch (Exception ex) {
@@ -652,7 +652,7 @@ public class PriorJController {
      */
 	public boolean exist(String path) {
 		// TODO Auto-generated method stub
-		return ManagerFiles.existFileOrDirectory(path);
+		return FileManager.existFileOrDirectory(path);
 	}
 	
 	public Object getNumberOfTechniques() {
@@ -673,7 +673,7 @@ public class PriorJController {
 	 */
 	public int getPrioritizedTestCasePosition(String testCaseName, String technique){
 		
-		String localPath = Settings.ORDER;
+		String localPath = PathTo.ORDER;
 		TechniquesEnum techniqueObject = parseTechnique(technique);
 		
 		return priorj.getPrioritizedTestPositionByTechnique(localPath, testCaseName, techniqueObject);

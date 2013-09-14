@@ -70,9 +70,9 @@ public class CopyFile {
 	
       for (File file : files) {  
          if (file.isDirectory())  
-            copyAll(file,new File(destino+Settings.SEPARATOR+file.getName()),overwrite);  
+            copyAll(file,new File(destino+PathTo.SEPARATOR+file.getName()),overwrite);  
          else{  
-            copy(file, new File(destino+Settings.SEPARATOR+file.getName()),overwrite);  
+            copy(file, new File(destino+PathTo.SEPARATOR+file.getName()),overwrite);  
          }  
       }  
    }  

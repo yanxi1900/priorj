@@ -32,7 +32,7 @@ import technique.TechniqueRandom;
 import technique.TechniqueRefactoringBasedApproach;
 import technique.TechniqueTotalMethod;
 import technique.TechniqueTotalStatement;
-import util.Settings;
+import util.PathTo;
 
 import core.DifferenceApp;
 import core.InstrumentApp;
@@ -264,8 +264,8 @@ public class Prioritization {
      */
     public List<String> getRBAMethods(){
      
-        String local = Settings.USER_DIR;
-        String dir = Settings.SEPARATOR+"priorjtmp"+Settings.SEPARATOR;
+        String local = PathTo.USER_DIR;
+        String dir = PathTo.SEPARATOR+"priorjtmp"+PathTo.SEPARATOR;
         String file = "methods";
 
         try {  

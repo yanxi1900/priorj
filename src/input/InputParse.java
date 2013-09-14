@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.apache.tools.ant.types.FileList.FileName;
 
-import util.ManagerFiles;
+import util.FileManager;
 
 /*
  * PriorJ: JUnit Test Case Prioritization.
@@ -83,7 +83,7 @@ public class InputParse {
 	 * @return
 	 */
 	public boolean checkFile() {
-		return ManagerFiles.existFileOrDirectory(configFile);
+		return FileManager.existFileOrDirectory(configFile);
 	}
 
 	/**

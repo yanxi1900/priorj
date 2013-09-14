@@ -35,7 +35,7 @@ import exception.DuplicateProjectNameException;
 import exception.EmptyPriorJProjectNameException;
 import exception.InstrumentationUnrealizedException;
 import main.PriorJFacade;
-import util.Settings;
+import util.PathTo;
 
 
 /**
@@ -50,7 +50,7 @@ public class PriorJFacadeTest {
 	/**
 	 * Path not exist.
 	 */
-	private final String pathNotFound = "xpto" + Settings.SEPARATOR + "project";
+	private final String pathNotFound = "xpto" + PathTo.SEPARATOR + "project";
 	/**
 	 * Path empty.
 	 */
@@ -76,30 +76,30 @@ public class PriorJFacadeTest {
 		facade.setPathApp(pathNotFound);
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void testPathCodeEmpty(){
+	@Test (expected = Exception.class)
+	public void testPathCodeEmpty() throws Exception{
 		facade.setPathCode(pathEmpty);
 	}
 	
-	@Test  (expected = IllegalArgumentException.class )
-	public void testPathCodeNotFound(){
+	@Test  (expected = Exception.class )
+	public void testPathCodeNotFound() throws Exception{
 		facade.setPathCode(pathNotFound);
 	}
 	
 	@Test  // this case is permitted, project don't have libraries
-	public void testPathLibIsEmpty(){
+	public void testPathLibIsEmpty() throws Exception{
 		facade.setPathLib("");
 		assertEquals("", facade.getPathLib());
 	}
 
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void testPathTestEmpty(){
+	@Test (expected = Exception.class)
+	public void testPathTestEmpty() throws Exception{
 		facade.setPathTest(pathEmpty);
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void testPathTestDirectoryNotFound(){
+	@Test (expected = Exception.class)
+	public void testPathTestDirectoryNotFound() throws Exception{
 		facade.setPathTest(pathNotFound);
 	}
 	
@@ -126,11 +126,11 @@ public class PriorJFacadeTest {
 	}
 	
 	@Test
-	public void testFacadeRunInstrumentation() throws InstrumentationUnrealizedException{
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
+	public void testFacadeRunInstrumentation() throws Exception{
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -141,11 +141,11 @@ public class PriorJFacadeTest {
 	
 	
 	@Test
-	public void testFacadeRunCoverage() throws InstrumentationUnrealizedException, CoverageUnrealizedException{
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
+	public void testFacadeRunCoverage() throws Exception{
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -157,11 +157,11 @@ public class PriorJFacadeTest {
 	
 	@Test
 	public void testFacadeRunPrioritizationChangedBlocks() throws Exception{
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
-		facade.setPathCodeNew(Settings.APP_CODE_NEW);
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
+		facade.setPathCodeNew(PathTo.APP_CODE_NEW);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -178,11 +178,11 @@ public class PriorJFacadeTest {
 	
 	
 	@Test
-	public void testFacadeRunReadLog() throws InstrumentationUnrealizedException, CoverageUnrealizedException, CannotReadLogFileException{
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
+	public void testFacadeRunReadLog() throws Exception{
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -196,10 +196,10 @@ public class PriorJFacadeTest {
 	
 	@Test
 	public void testFacadeRunPrioritization() throws Exception{
-		facade.setPathApp(Settings.APP);
-		facade.setPathCode(Settings.APP_CODE);
-		facade.setPathLib(Settings.APP_LIB);
-		facade.setPathTest(Settings.APP_TEST);
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
 		
 		facade.setJUnitVersion("junit4");
 		
@@ -293,7 +293,7 @@ public class PriorJFacadeTest {
 	@Test
 	public void testFacadeRunRBARenameMethod(){
 		
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		String className = "calc.Calculator";
 		String methodName = "div";
 		String newMethodName= "division";
@@ -312,7 +312,7 @@ public class PriorJFacadeTest {
 	@Test
 	public void testFacadeRunRBAMoveMethod(){
 		
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		
 		String classOneName="model.Person";
 		String classTwoName="model.Employee";
@@ -326,7 +326,7 @@ public class PriorJFacadeTest {
 	@Test
 	public void testFacadeRunRBAPullUpMethodMethod(){
 		
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		String className = "calc.Calculator";
 		String methodName = "div";
 		String newMethodName= "division";
@@ -340,7 +340,7 @@ public class PriorJFacadeTest {
 	@Test
 	public void testFacadeRunRBAPullUpFieldMethod(){
 		
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		String className = "calc.Calculator";
 		String methodName = "div";
 		String newMethodName= "division";
@@ -353,7 +353,7 @@ public class PriorJFacadeTest {
 	@Test
 	public void testFacadeRunRBAAddParameter(){
 		
-		String pathApp = Settings.APP_CODE;
+		String pathApp = PathTo.APP_CODE;
 		String className = "calc.Calculator";
 		String methodName = "div";
 		String newMethodName= "division";

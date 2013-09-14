@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import project.JUnitVersionEnum;
 
-import util.Settings;
+import util.PathTo;
 
 import controller.PriorJController;
 import exception.CannotReadLogFileException;
@@ -44,10 +44,10 @@ public class PriorJControllerTest {
 	public void setUp(){
 		controller = new PriorJController();
 		
-		controller.setPathApp(Settings.APP);
-		controller.setPathCode(Settings.APP_CODE);
-		controller.setPathLib(Settings.APP_LIB);
-		controller.setPathTests(Settings.APP_TEST);
+		controller.setPathApp(PathTo.APP);
+		controller.setPathCode(PathTo.APP_CODE);
+		controller.setPathLib(PathTo.APP_LIB);
+		controller.setPathTests(PathTo.APP_TEST);
 		controller.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 	}
 	

@@ -27,7 +27,7 @@ import java.util.List;
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.swing.JOptionPane;
 
-import util.ManagerFiles;
+import util.FileManager;
 import util.WriteFile;
 
 
@@ -171,8 +171,8 @@ public class SuiteFactory {
     public void save(String path, List<String> suites, List<String> filenames){
         
         try {
-        	if (!ManagerFiles.existFileOrDirectory(path))
-        		ManagerFiles.createDirectory(path);
+        	if (!FileManager.existFileOrDirectory(path))
+        		FileManager.createDirectory(path);
         	
             for(int i=0; i < filenames.size(); i++){
                 saveCode(suiteName+filenames.get(i).replace(".java",""), suites.get(i) ,path);

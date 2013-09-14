@@ -30,8 +30,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.JUnitVersionEnum;
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 import exception.CannotReadLogFileException;
 import exception.CoverageUnrealizedException;
 import exception.InstrumentationUnrealizedException;
@@ -104,7 +104,7 @@ public class PriorJSystemTest {
 	
 	@Test
 	public void testRunInstrumentation() throws InstrumentationUnrealizedException{
-		String app = Settings.APP;
+		String app = PathTo.APP;
 		
 		system = new PriorJSystemImpl(app, "code", "test", "");
 		system.runInstrumentation();
@@ -113,16 +113,16 @@ public class PriorJSystemTest {
 	
 	@Test
 	public void testDoCopyFile() throws IOException{
-		String app = Settings.APP;
-		String code = Settings.APP_CODE.replace(app + separator, "");
-		String lib = Settings.APP_LIB.replace(app + separator, "");
-		String test = Settings.APP_TEST.replace(app + separator, "");
+		String app = PathTo.APP;
+		String code = PathTo.APP_CODE.replace(app + separator, "");
+		String lib = PathTo.APP_LIB.replace(app + separator, "");
+		String test = PathTo.APP_TEST.replace(app + separator, "");
 		
 		system = new PriorJSystemImpl(app, code, test, lib);
 			
 		system.copyFiles();
 		
-		String path = Settings.APP + separator + "AspectCoverage.aj";
+		String path = PathTo.APP + separator + "AspectCoverage.aj";
 		
 		File f = new File(path);
 		
@@ -136,16 +136,16 @@ public class PriorJSystemTest {
 	
 	@Test
 	public void testRemoveAspectFile() throws IOException{
-		String app = Settings.APP;
-		String code = Settings.APP_CODE.replace(app + separator, "");
-		String lib = Settings.APP_LIB.replace(app + separator, "");
-		String test = Settings.APP_TEST.replace(app + separator, "");
+		String app = PathTo.APP;
+		String code = PathTo.APP_CODE.replace(app + separator, "");
+		String lib = PathTo.APP_LIB.replace(app + separator, "");
+		String test = PathTo.APP_TEST.replace(app + separator, "");
 		
 		system = new PriorJSystemImpl(app, code, test, lib);
 			
 		system.copyFiles();
 		
-		String path = Settings.APP + separator +  "AspectCoverage.aj";
+		String path = PathTo.APP + separator +  "AspectCoverage.aj";
 		
 		system.deleteAspectosFile();
 		
@@ -158,10 +158,10 @@ public class PriorJSystemTest {
 	
 	@Test
 	public void testRunCoverage() throws InstrumentationUnrealizedException, CoverageUnrealizedException{
-		String app = Settings.APP;
-		String code = Settings.APP_CODE.replace(app + Settings.SEPARATOR, "");
-		String lib = Settings.APP_LIB.replace(app + Settings.SEPARATOR, "");
-		String test = Settings.APP_TEST.replace(app + Settings.SEPARATOR, "");
+		String app = PathTo.APP;
+		String code = PathTo.APP_CODE.replace(app + PathTo.SEPARATOR, "");
+		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
+		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
 		system = new PriorJSystemImpl(app, code, test, lib);
 		system.runInstrumentation();
@@ -172,10 +172,10 @@ public class PriorJSystemTest {
 
 	@Test
 	public void testRunReadLogFile() throws CannotReadLogFileException, CoverageUnrealizedException, InstrumentationUnrealizedException{
-		String app = Settings.APP;
-		String code = Settings.APP_CODE.replace(app + Settings.SEPARATOR, "");
-		String lib = Settings.APP_LIB.replace(app + Settings.SEPARATOR, "");
-		String test = Settings.APP_TEST.replace(app + Settings.SEPARATOR, "");
+		String app = PathTo.APP;
+		String code = PathTo.APP_CODE.replace(app + PathTo.SEPARATOR, "");
+		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
+		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
 		system = new PriorJSystemImpl(app, code, test, lib);
 		system.runInstrumentation();

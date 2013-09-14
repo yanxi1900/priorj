@@ -27,7 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 
 public class InstrumentAppTest {
 
@@ -45,7 +45,7 @@ public class InstrumentAppTest {
 
 	@Test
 	public void testExcludePathTest(){
-		File f = new File(Settings.APP_AVL_TEST);
+		File f = new File(PathTo.APP_AVL_TEST);
 		
 		System.out.println(f.getPath());
 		

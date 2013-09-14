@@ -56,7 +56,7 @@ public class SaveFile {
             	f.mkdir();
             }
             
-            XStreamWrite writer = new XStreamWrite(local+Settings.SEPARATOR+filename);
+            XStreamWrite writer = new XStreamWrite(local+PathTo.SEPARATOR+filename);
 
             writer.write(objects);
            
@@ -69,7 +69,7 @@ public class SaveFile {
       *         A String with the coverage report.
       */
      public static void saveCoverageReport(String code) {
-        String nameFile = "report"+Settings.SEPARATOR+"coverageReport";
+        String nameFile = "report"+PathTo.SEPARATOR+"coverageReport";
         WriteFile write = new WriteFile(nameFile, "txt");
         write.write(code);
         write.close();
@@ -86,8 +86,8 @@ public class SaveFile {
      */
     public static void saveCode(String filename , String code) {
        
-        String local = Settings.USER_DIR;
-        String directory = Settings.SEPARATOR+"report"+Settings.SEPARATOR+"suites"+Settings.SEPARATOR;
+        String local = PathTo.USER_DIR;
+        String directory = PathTo.SEPARATOR+"report"+PathTo.SEPARATOR+"suites"+PathTo.SEPARATOR;
         
         String versionFile = local+directory+filename;
         
@@ -108,7 +108,7 @@ public class SaveFile {
      */
     public static void  saveFileOrderExecutionTestCase(String filename, String content) {
         
-        String local = Settings.ORDER + Settings.SEPARATOR;
+        String local = PathTo.ORDER + PathTo.SEPARATOR;
 
         WriteFile write = new WriteFile(local+filename, "txt");
         
@@ -118,16 +118,16 @@ public class SaveFile {
     
     public static void save(List<String> map){
             
-            String directory =  Settings.SEPARATOR + "priorjtmp" + Settings.SEPARATOR;
+            String directory =  PathTo.SEPARATOR + "priorjtmp" + PathTo.SEPARATOR;
             String file = "impactedtests";
             
-            File f = new File(Settings.USER_DIR+directory);
+            File f = new File(PathTo.USER_DIR+directory);
             
             if (!f.exists()){
                f.mkdir();
             }
             
-            XStreamWrite writer = new XStreamWrite(Settings.USER_DIR+directory+file);
+            XStreamWrite writer = new XStreamWrite(PathTo.USER_DIR+directory+file);
 
             writer.write(map);
     }

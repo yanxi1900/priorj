@@ -37,11 +37,11 @@ import system.PriorJSystemImpl;
 import technique.RefactoringEnum;
 import technique.TechniquesEnum;
 import ui.TreeBuilder;
-import util.ManagerFiles;
+import util.FileManager;
 import util.ReadFile;
 import util.ReadXML;
 import util.SaveFile;
-import util.Settings;
+import util.PathTo;
 import util.TestResult;
 
 import controller.RBAController;
@@ -111,9 +111,9 @@ public class PriorJImpl implements PriorJ {
 
 	public void initPriorJ() {
 		
-		pathCode = pathCode.replace(pathApp + Settings.SEPARATOR, "");
-		pathLib = pathLib.replace(pathApp + Settings.SEPARATOR, "");
-		pathTest = pathTest.replace(pathApp + Settings.SEPARATOR, "");
+		pathCode = pathCode.replace(pathApp + PathTo.SEPARATOR, "");
+		pathLib = pathLib.replace(pathApp + PathTo.SEPARATOR, "");
+		pathTest = pathTest.replace(pathApp + PathTo.SEPARATOR, "");
 				
 		system = new PriorJSystemImpl(pathApp, pathCode, pathTest, pathCodeNew, pathLib);
 		
@@ -372,8 +372,8 @@ public class PriorJImpl implements PriorJ {
 
 	public String openPrioritizationOrder(TechniquesEnum technique) {
 
-		String local = Settings.ORDER + Settings.SEPARATOR;
-		String fileName = local + ManagerFiles.alias(technique.getId())+ ".txt";
+		String local = PathTo.ORDER + PathTo.SEPARATOR;
+		String fileName = local + FileManager.alias(technique.getId())+ ".txt";
 
 		try {
 			String content = ReadFile.read(fileName);
@@ -389,8 +389,8 @@ public class PriorJImpl implements PriorJ {
 
 	public String openSimpleCoverageReport() {
 		try {
-			String filename = Settings.REPORT + Settings.SEPARATOR
-					+ Settings.FILE_COVERAGE_REPORT;
+			String filename = PathTo.REPORT + PathTo.SEPARATOR
+					+ PathTo.FILE_COVERAGE_REPORT;
 
 			String report = ReadFile.read(filename);
 
@@ -441,7 +441,7 @@ public class PriorJImpl implements PriorJ {
 				code = GenerateTestSuiteForJUnit4.generate(packageName, tests,suiteSelectionSize);
 			}
 
-			SaveFile.saveCode(ManagerFiles.alias(technique.getId()), code);
+			SaveFile.saveCode(FileManager.alias(technique.getId()), code);
 
 		} catch (Exception e) {
 			System.err.println("save Java Prioritized suite error: "+ e.getMessage());
@@ -457,7 +457,7 @@ public class PriorJImpl implements PriorJ {
 
 		String result = executionOrder.generateExecutionOrder();
 
-		String techniqueNames = ManagerFiles.alias(technique.getId());
+		String techniqueNames = FileManager.alias(technique.getId());
 
 		SaveFile.saveFileOrderExecutionTestCase(techniqueNames, result);
 	}
@@ -778,8 +778,8 @@ public class PriorJImpl implements PriorJ {
 	@Override
 	public int getPrioritizedTestPositionByTechnique(String localPath, String testCaseName, TechniquesEnum technique) {
 		
-		String filename = ManagerFiles.alias(technique.getId()) + ".txt";
-		String path = localPath + Settings.SEPARATOR + filename;
+		String filename = FileManager.alias(technique.getId()) + ".txt";
+		String path = localPath + PathTo.SEPARATOR + filename;
 		
 		List<String> testsList = ReadFile.readFileAndReturnList(path);
 		

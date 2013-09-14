@@ -21,7 +21,7 @@ package report;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.Settings;
+import util.PathTo;
 
 import coverage.ClassCode;
 import coverage.Method;
@@ -92,7 +92,7 @@ public class GenerateCoverageReport {
                     builder.append(" - ");
                     builder.append(newTest);
                     builder.append("()");
-                    builder.append(Settings.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
 
 
                     double percent = percentValue(getCountUniqueClassCoverage(tc), classes.size());
@@ -103,7 +103,7 @@ public class GenerateCoverageReport {
                     builder.append(String.valueOf(percent));
 
                     builder.append( "%)");
-                    builder.append(Settings.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
 
 
                     percent = percentValue(getCountUniqueMethodCoverage(tc), methods.size());
@@ -115,7 +115,7 @@ public class GenerateCoverageReport {
                     builder.append(String.valueOf(percent));
 
                     builder.append("%)");
-                    builder.append(Settings.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
 
                     percent = percentValue(getCountUniqueStatementCoverage(tc), statements.size());
 
@@ -125,8 +125,8 @@ public class GenerateCoverageReport {
                     builder.append("Coverage (");
                     builder.append( String.valueOf(percent));
                     builder.append("%)");
-                    builder.append(Settings.NEWLINE);
-                    builder.append(Settings.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
+                    builder.append(PathTo.NEWLINE);
 
                 }
 
@@ -162,25 +162,25 @@ public class GenerateCoverageReport {
 
             builder.append(".................................:   PriorJ - Coverage Report");
             builder.append("  :.......................................");
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             builder.append("	             Name Test Suite: ");
             builder.append(this.suites.get(0).getName());
             
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             builder.append("	        Number of test cases: ");
             builder.append(String.valueOf(this.testCases.size()));
             
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
 
             builder.append(line.toString());
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             builder.append("CC = Classes Covered \t");
             builder.append("|MC = Methods Covered \t");
             
             builder.append("|SC = Statements Covered" );
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             builder.append("Number of Classes = ");
             builder.append(String.valueOf(totalClasses));
@@ -189,11 +189,11 @@ public class GenerateCoverageReport {
             builder.append("\t|Number of Statements = ");
             builder.append(String.valueOf(totalStatements));
             
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             builder.append(line.toString());
             
-            builder.append(Settings.NEWLINE);
+            builder.append(PathTo.NEWLINE);
             
             return builder.toString();
 	}

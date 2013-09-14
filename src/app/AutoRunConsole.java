@@ -31,8 +31,8 @@ import exception.CoverageUnrealizedException;
 import exception.InstrumentationUnrealizedException;
 
 import project.JUnitVersionEnum;
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 
 import main.PriorJFacade;
 
@@ -45,7 +45,7 @@ import main.PriorJFacade;
  */
 public class AutoRunConsole {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		String path = readPathsConfigFile();
 		
@@ -66,31 +66,31 @@ public class AutoRunConsole {
 	private static void showReports(PriorJFacade facade, InputPriorJ input) {
 		if (input.coverageReport().toLowerCase().equals("yes")){
 			print("See coverage Report:");
-			print(Settings.REPORT + Settings.SEPARATOR);
+			print(PathTo.REPORT + PathTo.SEPARATOR);
 		}
 		
 		if(input.codeTree().toLowerCase().equals("yes")){
 			//print(facade.getCodeTree());
 			print("See code Tree:");
-			print(Settings.REPORT + Settings.SEPARATOR+ "coverageReport.xml");
+			print(PathTo.REPORT + PathTo.SEPARATOR+ "coverageReport.xml");
 		}
 		
 		if(input.jUnitReport().toLowerCase().equals("yes")){
 			//print(facade.getSimpleJUnitReport());
 			print("See JUnit Report:");
-			print(Settings.REPORT + Settings.SEPARATOR + "html");
+			print(PathTo.REPORT + PathTo.SEPARATOR + "html");
 		}
 		
 		if(input.executionOrder().toLowerCase().equals("yes")){
 			//print(Settings.ORDER + Settings.SEPARATOR);
 			print("See execution order:");
-			print(Settings.ORDER + Settings.SEPARATOR);
+			print(PathTo.ORDER + PathTo.SEPARATOR);
 		}
 		
 		if(input.hasSuite()){
 			//print(Settings.ORDER + Settings.SEPARATOR);
 			print("See Prioritized Suites:");
-			print(Settings.SUITES + Settings.SEPARATOR);
+			print(PathTo.SUITES + PathTo.SEPARATOR);
 		}
 		
 	}
@@ -144,7 +144,7 @@ public class AutoRunConsole {
 			System.out.println("Undefined JUnit Version!");
 	}
 
-	private static void setPaths(PriorJFacade facade, InputPriorJ input) {
+	private static void setPaths(PriorJFacade facade, InputPriorJ input) throws Exception {
 		facade.setPathApp(input.pathApp());
 		facade.setPathCode(input.pathCode());
 		facade.setPathLib(input.pathLib());
@@ -161,7 +161,7 @@ public class AutoRunConsole {
 	
 		path = pathParse(path);
 		
-		if(ManagerFiles.existFileOrDirectory(path))
+		if(FileManager.existFileOrDirectory(path))
 			return path;
 		else
 			return readPathsConfigFile();
@@ -169,9 +169,9 @@ public class AutoRunConsole {
 
 	private static String pathParse(String path) {
 		if (path.contains("\\"))
-			path = path.replace("\\", Settings.SEPARATOR);
+			path = path.replace("\\", PathTo.SEPARATOR);
 		else if (path.contains("/"))
-			path = path.replace("/",Settings.SEPARATOR);
+			path = path.replace("/",PathTo.SEPARATOR);
 		return path;
 	}
 	

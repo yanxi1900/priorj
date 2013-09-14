@@ -1,4 +1,4 @@
-# (US01.txt) User Story 02  -  Open , Search and close projects. 
+# (US02.txt) User Story 02  -  Open , Search and close projects. 
 
 resetSystem
 

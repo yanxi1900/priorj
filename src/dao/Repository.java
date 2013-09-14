@@ -22,7 +22,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.Settings;
+import util.PathTo;
 
 import coverage.ClassCode;
 import coverage.Method;
@@ -52,7 +52,7 @@ public class Repository {
      */
     public Repository() {
         this.suites = new ArrayList<TestSuite>();
-        this.escritor = new Writer("report" + Settings.SEPARATOR +"coveragePriorJ");
+        this.escritor = new Writer("report" + PathTo.SEPARATOR +"coveragePriorJ");
         
     }
 

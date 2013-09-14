@@ -53,44 +53,44 @@ public class SettingsTest {
 
 	@Test
 	public void testApplicationPaths(){
-		file = new File(Settings.APP);
+		file = new File(PathTo.APP);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_CODE);
+		file = new File(PathTo.APP_CODE);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_LIB);
+		file = new File(PathTo.APP_LIB);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_TEST);
+		file = new File(PathTo.APP_TEST);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_CODE_NEW);
+		file = new File(PathTo.APP_CODE_NEW);
 		
 		assertTrue(file.exists());
 		
 		
-		file = new File(Settings.APP_AVL);
+		file = new File(PathTo.APP_AVL);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_AVL_CODE);
+		file = new File(PathTo.APP_AVL_CODE);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.APP_AVL_TEST);
+		file = new File(PathTo.APP_AVL_TEST);
 		
 		assertTrue(file.exists());
 
-		file = new File(Settings.INSTRUMENT_TESTS);
+		file = new File(PathTo.INSTRUMENT_TESTS);
 		
 		assertTrue(file.exists());
 		
-		file = new File(Settings.INSTRUMENT_BLOCKS);
+		file = new File(PathTo.INSTRUMENT_BLOCKS);
 		
 		assertTrue(file.exists());
 		
@@ -99,7 +99,7 @@ public class SettingsTest {
 	
 	@Test
 	public void testPathResourceFolderFiles(){
-		file = new File(Settings.RESOURCES_FILES);
+		file = new File(PathTo.RESOURCES_FILES);
 		
 		assertTrue(file.isDirectory());
 		
@@ -108,7 +108,7 @@ public class SettingsTest {
 	@Test
 	public void testPathResourceTxtFile(){
 		String filename = "TMC.txt";
-		String path = Settings.RESOURCES_FILES + Settings.SEPARATOR + filename;
+		String path = PathTo.RESOURCES_FILES + PathTo.SEPARATOR + filename;
 		
 		file = new File(path);
 		

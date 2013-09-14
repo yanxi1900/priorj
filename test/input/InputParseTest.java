@@ -8,14 +8,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 
 public class InputParseTest {
 	
 	InputParse parse;
 	String filename = "inputconfig.txt";
-	String local = Settings.RESOURCES_FILES;
-	String separator = Settings.SEPARATOR;
+	String local = PathTo.RESOURCES_FILES;
+	String separator = PathTo.SEPARATOR;
 	String path = "";
 	
 	@Before

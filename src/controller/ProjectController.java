@@ -31,8 +31,8 @@ import project.JUnitVersionEnum;
 import project.PriorJProject;
 import project.PriorJProjectManager;
 
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 
 
 /**
@@ -59,11 +59,11 @@ public class ProjectController {
     }
 	
     public void removeAllProjects() {
-    	if (ManagerFiles.existFileOrDirectory(Settings.PRIORJ_PROJECT))
-    		ManagerFiles.deleteAll(Settings.PRIORJ_PROJECT);
+    	if (FileManager.existFileOrDirectory(PathTo.PRIORJ_PROJECT))
+    		FileManager.deleteAll(PathTo.PRIORJ_PROJECT);
     	
     	//create again the directory
-    	ManagerFiles.createDirectory(Settings.PRIORJ_PROJECT);
+    	FileManager.createDirectory(PathTo.PRIORJ_PROJECT);
 	}
     
     /**
@@ -229,10 +229,10 @@ public class ProjectController {
     private String parser(String path){
         
         if (path.contains("\\")){
-            path = path.replace("\\", Settings.SEPARATOR);
+            path = path.replace("\\", PathTo.SEPARATOR);
         }
         else if (path.contains("/"))
-            path = path.replace("/", Settings.SEPARATOR);
+            path = path.replace("/", PathTo.SEPARATOR);
         
         return path;
     }
@@ -257,8 +257,8 @@ public class ProjectController {
     
     public List<String> openJavaPrioritizedSuites(){
         try{
-             String local = Settings.USER_DIR;
-             String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR+"suites"+Settings.SEPARATOR;
+             String local = PathTo.USER_DIR;
+             String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR+"suites"+PathTo.SEPARATOR;
              
              List<String> suites = projectManager.openAllFiles(local+directory);
              
@@ -271,9 +271,9 @@ public class ProjectController {
      }
     
     public List<String> openTechniquesNames(){
-        String local = Settings.USER_DIR;
+        String local = PathTo.USER_DIR;
         
-        String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR+"order"+Settings.SEPARATOR;
+        String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR+"order"+PathTo.SEPARATOR;
 
         try {            
             List<String> techniqueNames = projectManager.getFilesListNames(local+directory);
@@ -288,8 +288,8 @@ public class ProjectController {
     public List<String> openSuitesNames(){
         
         try {
-            String local = Settings.USER_DIR;
-            String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR+"suites"+Settings.SEPARATOR;
+            String local = PathTo.USER_DIR;
+            String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR+"suites"+PathTo.SEPARATOR;
             List<String> listNames = projectManager.getFilesListNames(local+directory);
             
             return listNames;
@@ -302,8 +302,8 @@ public class ProjectController {
     public List<String> openOrder(){
        
        try {
-           String local = Settings.USER_DIR;
-           String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR+"order"+Settings.SEPARATOR;
+           String local = PathTo.USER_DIR;
+           String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR+"order"+PathTo.SEPARATOR;
            
            List<String> order = projectManager.openAllFiles(local+directory);
        
@@ -318,8 +318,8 @@ public class ProjectController {
     
     public List<String> openPrioritizedSuites(){
         try{
-               String local = Settings.USER_DIR;
-               String directory = Settings.SEPARATOR + "report"+Settings.SEPARATOR+"suites"+Settings.SEPARATOR;
+               String local = PathTo.USER_DIR;
+               String directory = PathTo.SEPARATOR + "report"+PathTo.SEPARATOR+"suites"+PathTo.SEPARATOR;
                
                List<String> suites = projectManager.openAllFiles(local+directory);
                

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.*;
 
-import util.Settings;
+import util.PathTo;
 
 public class DifferenceAppTest {
 	

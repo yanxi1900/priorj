@@ -25,10 +25,10 @@ import java.util.List;
 import project.JUnitVersionEnum;
 import report.CoverageReport;
 import util.CopyFile;
-import util.ManagerFiles;
+import util.FileManager;
 import util.Reader;
 import util.RunAnt;
-import util.Settings;
+import util.PathTo;
 import util.SubstituiStringArquivo;
 import core.DifferenceApp;
 import core.InstrumentApp;
@@ -156,13 +156,13 @@ public class PriorJSystemImpl implements PriorJSystem {
     public void copyBackupFiles(String pathOrigemApp) throws IOException, Exception {
         File origem = new File(pathOrigemApp);
         
-        File dirDestino = new File(Settings.WORKSPACE+ Settings.SEPARATOR);
+        File dirDestino = new File(PathTo.WORKSPACE+ PathTo.SEPARATOR);
         
         if (!dirDestino.exists()) {
             dirDestino.mkdir();
         }
         
-        File destino = new File(Settings.WORKSPACE+ Settings.SEPARATOR + origem.getName());
+        File destino = new File(PathTo.WORKSPACE+ PathTo.SEPARATOR + origem.getName());
         CopyFile.copyAll(origem, destino, true);
         setPathApp(destino.toString());
         
@@ -171,7 +171,7 @@ public class PriorJSystemImpl implements PriorJSystem {
         if (!pathCodeNew.isEmpty()){
         	origemNewCode = new File(pathCodeNew);
         	
-        	destino = new File(Settings.WORKSPACE+ Settings.SEPARATOR + origemNewCode.getName());
+        	destino = new File(PathTo.WORKSPACE+ PathTo.SEPARATOR + origemNewCode.getName());
         	
             CopyFile.copyAll(origemNewCode, destino, true);
            
@@ -182,25 +182,25 @@ public class PriorJSystemImpl implements PriorJSystem {
     
     public void copyFiles() throws IOException {
         
-        File origem = new File(Settings.ASPECT_FILE + Settings.SEPARATOR );
+        File origem = new File(PathTo.ASPECT_FILE + PathTo.SEPARATOR );
      
-        File destino = new File(getPathApp()+ Settings.SEPARATOR);
+        File destino = new File(getPathApp()+ PathTo.SEPARATOR + "src");
         CopyFile.copyAll(origem, destino, true);
 
-        File ori = new File(Settings.EXTERNAL +Settings.SEPARATOR+"lib"+Settings.SEPARATOR);
-        File des = new File(getPathApp() + Settings.SEPARATOR + getPathLib() + Settings.SEPARATOR);
+        File ori = new File(PathTo.EXTERNAL +PathTo.SEPARATOR+"lib"+PathTo.SEPARATOR);
+        File des = new File(getPathApp() + PathTo.SEPARATOR + getPathLib() + PathTo.SEPARATOR);
         CopyFile.copyAll(ori, des, true);
     }
     
     public void setPathAspectFile(JUnitVersionEnum version) {
     	
-        File arquivo = new File(getPathApp() + Settings.SEPARATOR+"AspectCoverage.aj");
+        File arquivo = new File(getPathApp() + PathTo.SEPARATOR + "src"+PathTo.SEPARATOR+"AspectCoverage.aj");
         
         try {
         	String testPath = getPathTests();
         	
-        	if (testPath.contains(Settings.SEPARATOR))
-        		testPath = getPathTests().substring(getPathTests().lastIndexOf(Settings.SEPARATOR), getPathTests().length()).replace(Settings.SEPARATOR, "");
+        	if (testPath.contains(PathTo.SEPARATOR))
+        		testPath = getPathTests().substring(getPathTests().lastIndexOf(PathTo.SEPARATOR), getPathTests().length()).replace(PathTo.SEPARATOR, "");
                     	
             String pointcutAspect = "";
             
@@ -220,9 +220,9 @@ public class PriorJSystemImpl implements PriorJSystem {
 
  
     public void deleteAspectosFile() {
-        String path = getPathApp() + Settings.SEPARATOR+"AspectCoverage.aj";
+        String path = getPathApp() + PathTo.SEPARATOR+ "src" + PathTo.SEPARATOR + "AspectCoverage.aj";
         
-        ManagerFiles.deleteFile(path);
+        FileManager.deleteFile(path);
     }
     
     public void executaAnt(String pathApp, String pathCode, String pathTest, String pathLib) {
@@ -233,7 +233,7 @@ public class PriorJSystemImpl implements PriorJSystem {
     public void readLogFile() throws CannotReadLogFileException {
               
     	try{
-	        Reader rd = new Reader(Settings.REPORT+Settings.SEPARATOR+"coveragePriorJ");
+	        Reader rd = new Reader(PathTo.REPORT+PathTo.SEPARATOR+"coveragePriorJ");
 	
 	        List<TestSuite> suites = (List<TestSuite>) rd.read();
 	        
@@ -325,11 +325,11 @@ public class PriorJSystemImpl implements PriorJSystem {
     }
     
     public String getTotalPathCode() {
-        return getPathApp() + Settings.SEPARATOR + getPathCode();
+        return getPathApp() + PathTo.SEPARATOR + getPathCode();
     }
     
     public String getTotalPathTests() {
-        return getPathApp() + Settings.SEPARATOR+ getPathTests();
+        return getPathApp() + PathTo.SEPARATOR+ getPathTests();
     }
     
     public String getPathLib() {

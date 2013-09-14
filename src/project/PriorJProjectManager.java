@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import util.ManagerFiles;
-import util.Settings;
+import util.FileManager;
+import util.PathTo;
 
 /**
  * This class does the implementation of ProjectManager interface.
@@ -84,8 +84,8 @@ public class PriorJProjectManager implements ProjectManager  {
         String local  = System.getProperty("user.dir");
         String directory = separator+"report"+separator;
         
-        if (!ManagerFiles.existFileOrDirectory(local+directory)){
-            ManagerFiles.createDirectory(local+directory);
+        if (!FileManager.existFileOrDirectory(local+directory)){
+            FileManager.createDirectory(local+directory);
         }
        
     }
@@ -190,11 +190,11 @@ public class PriorJProjectManager implements ProjectManager  {
         repository.writeFile(projects);
         
         //do backup files
-        String localOrigem = Settings.PRIORJ_PROJECT + Settings.SEPARATOR+ projectName + Settings.SEPARATOR + version;
+        String localOrigem = PathTo.PRIORJ_PROJECT + PathTo.SEPARATOR+ projectName + PathTo.SEPARATOR + version;
         
-        String localDestination = Settings.REPORT;
+        String localDestination = PathTo.REPORT;
         
-        ManagerFiles.copyFileAll(localOrigem, localDestination);
+        FileManager.copyFileAll(localOrigem, localDestination);
         
     }
     
@@ -418,7 +418,7 @@ public class PriorJProjectManager implements ProjectManager  {
     
     public List<String> getFilesListNames(String path) throws Exception{
         
-        List<String> fileNames = ManagerFiles.listFilesNames(path);
+        List<String> fileNames = FileManager.listFilesNames(path);
         
         return fileNames;
     }

@@ -6,13 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import util.Settings;
+import util.PathTo;
 
 public class InputPriorJTest {
 
 	InputPriorJ input;
 	
-	String path = Settings.RESOURCES_FILES + Settings.SEPARATOR + "inputconfig.txt";
+	String path = PathTo.RESOURCES_FILES + PathTo.SEPARATOR + "inputconfig.txt";
 	
 	@Before
 	public void setUp() throws Exception {

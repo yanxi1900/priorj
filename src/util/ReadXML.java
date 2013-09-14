@@ -47,7 +47,7 @@ public class ReadXML {
     public static List<TestSuite> getAllTestSuites() throws Exception{
         //read log file...
         String local = System.getProperty("user.dir");
-        String pathReport = Settings.SEPARATOR + "report"+  Settings.SEPARATOR +"coveragePriorJ";
+        String pathReport = PathTo.SEPARATOR + "report"+  PathTo.SEPARATOR +"coveragePriorJ";
         Reader readFileReport = new Reader(local + pathReport);
         //get list of test suites
         List<TestSuite> suites = (List<TestSuite>) readFileReport.read();
@@ -62,9 +62,9 @@ public class ReadXML {
         List<TestResult> testResults = new ArrayList<TestResult>();
         TestResult testResult; // a object with test result.
 
-        String local = System.getProperty("user.dir").replace("\\", Settings.SEPARATOR);
+        String local = System.getProperty("user.dir").replace("\\", PathTo.SEPARATOR);
         
-        String directory = Settings.SEPARATOR +"report"+Settings.SEPARATOR;
+        String directory = PathTo.SEPARATOR +"report"+PathTo.SEPARATOR;
 
         xmlFile = local + directory + xmlFile + ".xml";
 
