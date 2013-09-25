@@ -36,7 +36,11 @@ import util.PathTo;
 import main.PriorJ;
 import main.PriorJImpl;
 
+import coverage.ClassCode;
+import coverage.Method;
+import coverage.Statement;
 import coverage.TestCase;
+import coverage.TestSuite;
 
 import apfd.ChartAPFD;
 
@@ -372,7 +376,7 @@ public class PriorJController {
     }
 
     public void setTechniques(List<TechniquesEnum> techniques) {
-        priorj.SetPrioritizationTechniques(techniques);
+        priorj.setPrioritizationTechniques(techniques);
     }
 
  
@@ -433,7 +437,7 @@ public class PriorJController {
         return priorj.openTestCoverageTree();
     }
     
-    public void addTechnique(String technique){
+    public void addTechnique(String technique) throws Exception{
         
         if (technique.toLowerCase().equals("tmc"))
             addTechnique(TechniquesEnum.TOTAL_METHOD_COVERAGE);
@@ -452,7 +456,7 @@ public class PriorJController {
         
     }
     
-    public void removeTechnique(String technique){
+    public void removeTechnique(String technique) throws Exception{
         if (technique.toLowerCase().equals("tmc"))
             removeTechnique(TechniquesEnum.TOTAL_METHOD_COVERAGE);
         else if (technique.toLowerCase().equals("tsc"))
@@ -497,6 +501,42 @@ public class PriorJController {
     }
     
     /**
+     * Get added techniques names.
+     * 
+     * @return
+     * 		A list of techniques names.
+     */
+    public List<String> getAddedTechniques(){
+    	List<String> techniques = new ArrayList<String>();
+    	
+    	for (TechniquesEnum technique : getTechniques()){
+    		if (technique.getId() == TechniquesEnum.TOTAL_METHOD_COVERAGE.getId()){
+    			techniques.add("tmc");
+    		}
+    		else if (technique.getId() == TechniquesEnum.TOTAL_STATEMENT_COVERAGE.getId()){
+      			techniques.add("tsc");
+    		}
+    		else if (technique.getId() == TechniquesEnum.ADDITIONAL_METHOD_COVERAGE.getId()){
+      			techniques.add("amc");
+    		}
+    		else if (technique.getId() == TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE.getId()){
+      			techniques.add("asc");
+    		}
+    		else if (technique.getId() == TechniquesEnum.CHANGED_BLOCKS_TOTAL.getId()){
+      			techniques.add("cb");
+    		}
+    		else if (technique.getId() == TechniquesEnum.Random.getId()){
+      			techniques.add("rnd");
+    		}
+    		else if (technique.getId() == TechniquesEnum.REFACTORING_BASED_APPROACH.getId()){
+      			techniques.add("rba");
+    		}
+    	}
+    	
+    	return techniques;
+    }
+    
+    /**
      * This method generate a suite selection.
      * 
      * @param suiteName
@@ -527,16 +567,18 @@ public class PriorJController {
      * This method add a new technique.
      * 
      * @param technique
+     * @throws Exception 
      */
-    public void addTechnique(TechniquesEnum technique){
+    public void addTechnique(TechniquesEnum technique) throws Exception{
         priorj.addPrioritizationTechnique(technique);
     }
     /**
      * This method remove a technique.
      * 
      * @param technique
+     * @throws Exception 
      */
-    public void removeTechnique(TechniquesEnum technique){
+    public void removeTechnique(TechniquesEnum technique) throws Exception{
         priorj.removePrioritizationTechnique(technique);
     }
     /**
@@ -651,16 +693,13 @@ public class PriorJController {
      * 		true or false
      */
 	public boolean exist(String path) {
-		// TODO Auto-generated method stub
 		return FileManager.existFileOrDirectory(path);
 	}
 	
-	public Object getNumberOfTechniques() {
-		// TODO Auto-generated method stub
+	public int getNumberOfTechniques() {
 		return priorj.getNumberOfTechniques();
 	}
 	public String getCodeTree() {
-		// TODO Auto-generated method stub
 		return priorj.getCodeTree();
 	}
 	
@@ -679,5 +718,9 @@ public class PriorJController {
 		return priorj.getPrioritizedTestPositionByTechnique(localPath, testCaseName, techniqueObject);
 		
 	}
+
+    public String generateFMeasureReport(){
+    	return priorj.generateFMeasureReport();
+    }
 }
 

@@ -213,6 +213,7 @@ public class Prioritization {
         diff.run();
         
         List<String> diferencas = diff.getListDiff();
+        
                 
         diff = new DifferenceApp(pathCodeOld, pathCodeNew);
         diff.run();
@@ -243,18 +244,6 @@ public class Prioritization {
             System.out.println(ex.getMessage());
         }
     }
-
-    
-    
-//    public List<String> selectionTestRBA(){
-//        List<String> testNames = new ArrayList<String>();
-//        
-//        for (TestCase test : suiteList)
-//            testNames.add(test.getSignature());
-//            
-//        return testNames;
-//
-//    }
     
     /**
      * This method is used by Refactoring Based Approach to prioritization test suite.

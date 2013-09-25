@@ -114,7 +114,7 @@ public class PriorJControllerTest {
 	}
 	
 	@Test
-	public void testAddTechniques(){
+	public void testAddTechniques() throws Exception{
 		controller.addTechnique("TMC");
 		controller.addTechnique("TSC");
 		controller.addTechnique("AMC");
@@ -125,7 +125,7 @@ public class PriorJControllerTest {
 	}
 	
 	@Test
-	public void testRemoveTechniques(){
+	public void testRemoveTechniques() throws Exception{
 		controller.addTechnique("TMC");
 		controller.addTechnique("TSC");
 		controller.addTechnique("AMC");

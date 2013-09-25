@@ -363,6 +363,35 @@ public class PriorJFacadeTest {
 		assertFalse(impactedMethods.isEmpty());
 	}
 	
-	
+	@Test
+	public void testFacadeGenerateFMeasure() throws Exception{
+		if ( facade.searchProject("avl_fmeasure"))
+			facade.removeProject("avl_fmeasure");
+		
+		facade.createProject("avl_fmeasure", "junit4");
+		
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
+		
+		
+		facade.addTechnique("tmc");
+		facade.addTechnique("rnd");
+		facade.addTechnique("tsc");
+		facade.addTechnique("amc");
+		facade.addTechnique("asc");
+		
+		
+		facade.runInstrumentation();
+		facade.runCoverage();
+		facade.runReadLog();
+		
+		facade.runPrioritization();
+		
+		System.out.println(facade.generateFMeasureReport());
+		
+		assertFalse(facade.generateFMeasureReport().isEmpty());
+	}
 	
 }

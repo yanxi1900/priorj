@@ -18,6 +18,7 @@ package main;
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,8 +44,11 @@ import util.ReadXML;
 import util.SaveFile;
 import util.PathTo;
 import util.TestResult;
+import util.WriteFile;
 
 import controller.RBAController;
+import coverage.Method;
+import coverage.Statement;
 import coverage.TestCase;
 import coverage.TestSuite;
 import coverage.ClassCode;
@@ -363,8 +367,7 @@ public class PriorJImpl implements PriorJ {
 			return codetree;
 
 		} catch (Exception ex) {
-			System.err.println("Open Test Coverage Tree error: "
-					+ ex.getMessage());
+			System.err.println("Open Test Coverage Tree error: "+ ex.getMessage());
 			return new CodeTree(new TreeBuilder());
 		}
 
@@ -473,9 +476,10 @@ public class PriorJImpl implements PriorJ {
 
 		for (TestResult result : resultList) {
 			if (!result.isPassed()) {
-				String testName = result.getNameSuite() + "."
-						+ result.getTestName();
-				tests.add(testName);
+				String testName = result.getNameSuite() + "."+ result.getTestName();
+				
+				if (!testName.contains("initializationErro"))
+					tests.add(testName);
 			}
 		}
 
@@ -531,18 +535,27 @@ public class PriorJImpl implements PriorJ {
 		return system.getTotalPathTests();
 	}
 	
-	public void SetPrioritizationTechniques(List<TechniquesEnum> technques) {
+	public void setPrioritizationTechniques(List<TechniquesEnum> technques) {
 		this.techniques = techniques;
 	}
 
-	public void addPrioritizationTechnique(TechniquesEnum technique) {
+	public void addPrioritizationTechnique(TechniquesEnum technique) throws Exception {
+		if (techniques.contains(technique))
+			throw new Exception("Duplicated Technique");
+		
 		this.techniques.add(technique);
 	}
 
-	public void removePrioritizationTechnique(TechniquesEnum technique) {
+	public void removePrioritizationTechnique(TechniquesEnum technique) throws Exception {
+		if (!techniques.contains(technique))
+			throw new Exception("Technique Not Found");
+		
 		this.techniques.remove(technique);
 	}
-
+	
+	
+	//warning: handler the case where the project has been opened
+	// when not exist techniques selected.
 	public List<TechniquesEnum> getPrioritizationTechniques() {
 		return techniques;
 	}
@@ -761,7 +774,6 @@ public class PriorJImpl implements PriorJ {
 
 	@Override
 	public int getNumberOfTechniques() {
-		// TODO Auto-generated method stub
 		return techniques.size();
 	}
 
@@ -788,11 +800,71 @@ public class PriorJImpl implements PriorJ {
 		
 		return TEST_NOT_FOUND;
 	}
+	
+	/**
+	 * Get the prioritized order tests.
+	 * @param technique
+	 * @return
+	 */
+	public List<String> getPrioritizedTestCasesList(TechniquesEnum technique){
+		String localPath = PathTo.ORDER;
+		String filename = FileManager.alias(technique.getId()) + ".txt";
+		String path = localPath + PathTo.SEPARATOR + filename;
+		
+		return ReadFile.readFileAndReturnList(path);
+		
+	}
+	
+	public String generateFMeasureReport(){
+		StringBuilder builder = new StringBuilder();
+		builder.append("----------------- F-Measure Report ---------------\n");
+		builder.append("Value");
+		builder.append("\t");
+		builder.append("Technique Name\n");
+		
+		for(TechniquesEnum t : getPrioritizationTechniques()){
+			int fMeasure = fMeasure(t);
+			builder.append(String.valueOf(fMeasure));
+			builder.append("\t");
+			builder.append(t.getName());
+			builder.append("\n");
+		}
+		
+		saveFMeasureReport(builder.toString());
+		
+		return builder.toString();
+	}
 
 	@Override
-	public int fMeasure(String techniqueName) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int fMeasure(TechniquesEnum technique) {
 		
+		List<String> failedTests = getFailedTestCase();
+		
+		List<String> allTests = getPrioritizedTestCasesList(technique);
+		
+		List<Integer> positions = new ArrayList<Integer>();
+				
+		int position=1;
+		for (String testCaseName : allTests){
+			if (failedTests.contains(testCaseName)){
+				break;
+			}
+			else{
+				position++;
+			}
+		}
+		return position;
+	}
+	
+	
+	private int getTestPosition(TechniquesEnum technique, String testCaseName){
+		return getPrioritizedTestPositionByTechnique(PathTo.ORDER, testCaseName, technique);
+	}
+	
+	
+	public void saveFMeasureReport(String report){
+		WriteFile w = new WriteFile("fmeasure", "txt");
+		w.write(report);
+	}
+	
 }

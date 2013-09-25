@@ -27,7 +27,11 @@ import report.JUnitReport;
 
 import technique.TechniquesEnum;
 
+import coverage.ClassCode;
+import coverage.Method;
+import coverage.Statement;
 import coverage.TestCase;
+import coverage.TestSuite;
 
 import exception.CannotReadLogFileException;
 import exception.CoverageUnrealizedException;
@@ -218,7 +222,7 @@ public interface PriorJ {
         * @param techniques
         *      A list of Techniques.
         */
-    public void SetPrioritizationTechniques(List<TechniquesEnum> techniques);
+    public void setPrioritizationTechniques(List<TechniquesEnum> techniques);
 
     /**
         * This method add a new technique to prioritization process.
@@ -226,7 +230,7 @@ public interface PriorJ {
         * @param technique
         *      A Prioritization techinique.
         */
-    public void addPrioritizationTechnique(TechniquesEnum technique);
+    public void addPrioritizationTechnique(TechniquesEnum technique) throws Exception;
 
     /**
         * This method remove a Prioritization technique.
@@ -234,7 +238,7 @@ public interface PriorJ {
         * @param technique
         *      A technique
         */
-    public void removePrioritizationTechnique(TechniquesEnum technique);
+    public void removePrioritizationTechnique(TechniquesEnum technique) throws Exception;
 
 
     /**
@@ -664,6 +668,13 @@ public interface PriorJ {
     * @param techniqueName
     * @return
     */
-   public int fMeasure(String techniqueName); 
+   public int fMeasure(TechniquesEnum technique); 
    
+   /**
+    * Generate the F-Measure report for all techniques.
+    * 
+    * @return
+    * 		A string.
+    */
+   public String generateFMeasureReport();
 }

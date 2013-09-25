@@ -23,6 +23,7 @@ public class TestClient {
 		files.add(path + "US02.txt");
 		files.add(path + "US03.txt");
 		files.add(path + "US04.txt");
+		files.add(path + "US05.txt");
 		
 		PriorJEasyAcceptFacade yourTestFacade = new PriorJEasyAcceptFacade();
 

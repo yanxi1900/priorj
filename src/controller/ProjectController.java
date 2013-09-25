@@ -334,6 +334,5 @@ public class ProjectController {
       public List<List<String>> openAllPrioritizedTestSuites(String path){
     	return projectManager.openAllPrioritizedTestSuites(path);
     }
-	
-    
+
 }

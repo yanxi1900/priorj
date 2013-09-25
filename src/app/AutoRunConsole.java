@@ -112,7 +112,7 @@ public class AutoRunConsole {
 		}
 	}
 
-	private static void addTechniques(PriorJFacade facade, InputPriorJ input) {
+	private static void addTechniques(PriorJFacade facade, InputPriorJ input) throws Exception {
 		if (input.TMC().toLowerCase().equals("yes"))
 			facade.addTechnique("tmc");
 		

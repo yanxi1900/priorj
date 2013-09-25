@@ -16,7 +16,6 @@ expectError "Empty version name" createProject name="xpto" version=""
 expectError "Invalid junit version name" createProject name="xpto" version="xpto"
 
 
-
 expect 3 numberOfProjects
 
 removeProject name"AVL-01"

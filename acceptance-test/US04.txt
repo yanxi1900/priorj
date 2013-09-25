@@ -1,4 +1,4 @@
-#(US04.txt) User Story 04  - Run. 
+#(US04.txt) User Story 04  - The user can add paths and  add or remove prioritization techniques. 
 # warning: before run tests adjust the paths.
 
 resetSystem
@@ -12,12 +12,50 @@ setPathLib pathLib="/home/samuel/eclipseEE/workspace/PriorJ/resources/app/lib"
 setPathTest pathTest="/home/samuel/eclipseEE/workspace/PriorJ/resources/app/test/bst"
 setPathNew pathNew="/home/samuel/eclipseEE/workspace/PriorJ/resources/appnew/src"
 
-runInstrumentation
+#valid conditions 
+expect {} getAddedTechniquesNames
+expect 0 getNumberOfTechniques
 
-expect true isInstrumented
+addTechnique techniqueName="tmc"
+addTechnique techniqueName="amc"
+addTechnique techniqueName="tsc"
+addTechnique techniqueName="asc"
+addTechnique techniqueName="rba"
+addTechnique techniqueName="rnd"
+addTechnique techniqueName="cb"
 
-runCoverage
+expect {tmc,amc,tsc,asc,rba,rnd,cb} getAddedTechniquesNames
+expect 7 getNumberOfTechniques
 
-expect true isCovered
+#invalid condition
+expectError "Duplicated Technique" addTechnique techniqueName="tmc"
+expectError "Empty Technique" addTechnique techniqueName=""
+expectError "Invalid Technique" addTechnique techniqueName=
+expectError "Invalid Technique" addTechnique techniqueName="xpto"
+
+#valid conditions
+removeTechnique techniqueName="tmc"
+removeTechnique techniqueName="amc"
+removeTechnique techniqueName="tsc"
+removeTechnique techniqueName="asc"
+removeTechnique techniqueName="rba"
+removeTechnique techniqueName="rnd"
+removeTechnique techniqueName="cb"
+
+expect {} getAddedTechniquesNames
+expect 0 getNumberOfTechniques
+
+#invalid conditions
+expectError "Technique Not Found" removeTechnique techniqueName="tmc"
+expectError "Empty Technique" removeTechnique techniqueName=""
+expectError "Invalid Technique" removeTechnique techniqueName=
+expectError "Invalid Technique" removeTechnique techniqueName="xpto"
+
+#runInstrumentation
+#expect true isInstrumented
+
+#runCoverage
+
+#expect true isCovered
 
 quit

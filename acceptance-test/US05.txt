@@ -1,0 +1,65 @@
+#(US04.txt) User Story 05  - Creating a Test Suite and Testing the Prioritization Process. 
+# warning: before run tests adjust the paths.
+
+resetSystem
+
+#creating statements
+stmt1ID=createStatement lineNumber="10"
+stmt2ID=createStatement lineNumber="13"
+stmt3ID=createStatement lineNumber="16"
+stmt4ID=createStatement lineNumber="32"
+stmt5ID=createStatement lineNumber="18"
+
+#creating methods
+method1ID=createMethod methodName="m1"
+method2ID=createMethod methodName="m2"
+method3ID=createMethod methodName="m3"
+method4ID=createMethod methodName="m4"
+method5ID=createMethod methodName="m5"
+
+#adding statement to methods
+methodAddStatement idMethod=${method1ID} idStatement=${stmt1ID}
+methodAddStatement idMethod=${method1ID} idStatement=${stmt2ID}
+methodAddStatement idMethod=${method1ID} idStatement=${stmt3ID}
+methodAddStatement idMethod=${method2ID} idStatement=${stmt4ID}
+methodAddStatement idMethod=${method3ID} idStatement=${stmt5ID}
+
+#valid conditions
+expect 3 getNumberOfStatementFromMethod idMethod=${method1ID}
+expect 1 getNumberOfStatementFromMethod idMethod=${method2ID}
+expect 1 getNumberOfStatementFromMethod idMethod=${method3ID}
+
+#creating class code
+classcode1ID=createClassCode packageName="pk1" className="A"
+classcode2ID=createClassCode packageName="pk1" className="B"
+classcode3ID=createClassCode packageName="pk2" className="C"
+classcode4ID=createClassCode packageName="pk2" className="D"
+
+#adding methods to class codes
+classCodeAddMethod idClassCode=${classcode1ID} idMethod=${method1ID}
+classCodeAddMethod idClassCode=${classcode1ID} idMethod=${method2ID}
+classCodeAddMethod idClassCode=${classcode1ID} idMethod=${method3ID}
+
+classCodeAddMethod idClassCode=${classcode2ID} idMethod=${method4ID}
+classCodeAddMethod idClassCode=${classcode3ID} idMethod=${method5ID}
+
+expect 3 getNumberOfMethodsFromClassCode idClassCode=${classcode1ID}
+expect 1 getNumberOfMethodsFromClassCode idClassCode=${classcode2ID}
+expect 1 getNumberOfMethodsFromClassCode idClassCode=${classcode3ID}
+
+#creating test cases
+testcase1ID=createTestCase testCaseName="tc1"
+testcase2ID=createTestCase testCaseName="tc2"
+testcase3ID=createTestCase testCaseName="tc3"
+
+#adding class code to test cases
+addClassCodeToTestCase idTestCase=${testcase1ID} idClassCode=${classcode1ID}
+addClassCodeToTestCase idTestCase=${testcase1ID} idClassCode=${classcode2ID}
+addClassCodeToTestCase idTestCase=${testcase2ID} idClassCode=${classcode1ID}
+addClassCodeToTestCase idTestCase=${testcase2ID} idClassCode=${classcode4ID}
+
+expect 4 getNumberOfMethodsFromTestCase idTestCase=${testcase1ID}
+
+
+
+quit
