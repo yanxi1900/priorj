@@ -388,9 +388,7 @@ public class PriorJFacadeTest {
 		facade.runReadLog();
 		
 		facade.runPrioritization();
-		
-		System.out.println(facade.generateFMeasureReport());
-		
+				
 		assertFalse(facade.generateFMeasureReport().isEmpty());
 	}
 	

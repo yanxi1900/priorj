@@ -65,6 +65,8 @@ public class PathTo {
      */
     public static final String RESOURCES_FILES = RESOURCES + SEPARATOR + "files";
     
+    public static final String RESOURCES_PRIORITIZATION_FILES = RESOURCES_FILES + SEPARATOR+"PrioritizationTests";
+    
     public static final String APP = RESOURCES + SEPARATOR + "app";
     
     public static final String APP_CODE = APP + SEPARATOR + "src";

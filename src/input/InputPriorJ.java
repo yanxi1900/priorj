@@ -160,11 +160,11 @@ public class InputPriorJ {
 		return parse.getValue(Property.RM_CLASS_NAME);
 	}
 
-	public Object rmMethodName() {
+	public String rmMethodName() {
 		return parse.getValue(Property.RM_METHOD_NAME);
 	}
 
-	public Object rmNewMethodName() {
+	public String rmNewMethodName() {
 		return parse.getValue(Property.RM_NEW_METHOD_NAME);
 	}
 	

@@ -8,6 +8,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import coverage.ClassCode;
+import coverage.Method;
+import coverage.Statement;
+import coverage.TestCase;
+import coverage.TestSuite;
+
 import util.PathTo;
 
 public class InputParseTest {
@@ -70,6 +76,111 @@ public class InputParseTest {
 		
 		assertFalse(resultList.isEmpty());
 	}
+	
+	@Test
+	public void testDoParseForTestSuite(){
+		
+		filename = "test-suite-one.txt";
+		
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		
+		parse = new InputParse(path, "testsuite");
+		
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+		
+		assertTrue(suites.size() == 3);
+	}
+	
+	@Test
+	public void testDoParseForTestCase(){
+		
+		filename = "test-suite-two.txt";
+		
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		
+		parse = new InputParse(path, "testsuite");
+		
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+		List<TestCase> tests = parse.getResultAsTestCase();
+		
+		assertTrue(suites.size() == 3);
+		assertTrue(tests.size() == 15);
+		
+	}
+	
+	@Test
+	public void testDoParseForClassCode(){
+		
+		filename = "test-suite-three.txt";
+		
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		
+		parse = new InputParse(path, "testsuite");
+		
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+		List<TestCase> tests = parse.getResultAsTestCase();
+		
+		assertTrue(suites.size() == 3);
+		
+		for(TestCase test : tests)
+			assertTrue(test.getClassCoverage().size() > 0);
+	}
+
+	@Test
+	public void testDoParseForMethods(){
+		
+		filename = "test-suite-four.txt";
+		
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		
+		parse = new InputParse(path, "testsuite");
+		
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+		List<TestCase> tests = parse.getResultAsTestCase();
+		
+		assertTrue(suites.size() == 3);
+		
+		for(TestCase test : tests)
+			for (ClassCode classcode : test.getClassCoverage()){
+				for (Method method : classcode.getMethodCoverage()){
+					assertTrue(classcode.getMethodCoverage().size() > 0);
+				}
+			}
+	}
+	
+	@Test
+	public void testDoParseForStatements(){
+		
+		filename = "test-suite-five.txt";
+		
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		
+		parse = new InputParse(path, "testsuite");
+		
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+		List<TestCase> tests = parse.getResultAsTestCase();
+		
+		assertTrue(suites.size() == 3);
+		
+		for(TestCase test : tests)
+			for (ClassCode classcode : test.getClassCoverage()){
+				for (Method method : classcode.getMethodCoverage()){
+					assertTrue(method.getStatementCoverage().size() > 0);
+				}
+			}
+	}
+	
+	
 	
 	@Test
 	public void testValuePropertyPaths(){
