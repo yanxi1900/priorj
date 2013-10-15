@@ -2,9 +2,14 @@ package input;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import coverage.TestCase;
+import coverage.TestSuite;
 
 import util.PathTo;
 

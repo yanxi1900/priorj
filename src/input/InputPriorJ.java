@@ -3,6 +3,9 @@ package input;
 import java.util.LinkedList;
 import java.util.List;
 
+import coverage.TestCase;
+import coverage.TestSuite;
+
 /*
 * PriorJ: JUnit Test Case Prioritization.
 * 
@@ -32,14 +35,36 @@ import java.util.List;
 public class InputPriorJ {
 
 	InputParse parse;
-	
+	/**
+	 * Default parse
+	 */
 	public InputPriorJ(){
 		parse = new InputParse();
 	}
-	
+	/**
+	 * Construct a InputPriorJ to configuration file.
+	 * @param pathConfigFile
+	 */
 	public InputPriorJ(String pathConfigFile){
 		parse = new InputParse(pathConfigFile);
 		parse.runParse();
+	}
+	
+	
+	
+	/**
+	 * Get the tests cases.
+	 * @return
+	 */
+	public List<TestCase> getSetOfTestCase(){
+		return parse.getResultAsTestCase();
+	}
+	/**
+	 * Get the test suites.
+	 * @return
+	 */
+	public List<TestSuite> getTestSuites(){
+		return parse.getResultAsSuite();
 	}
 		
 	public String pathApp(){

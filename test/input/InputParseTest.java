@@ -23,6 +23,8 @@ public class InputParseTest {
 	String local = PathTo.RESOURCES_FILES;
 	String separator = PathTo.SEPARATOR;
 	String path = "";
+	String pathToSuite = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR;
+	
 	
 	@Before
 	public void setUp() throws Exception {
@@ -78,13 +80,20 @@ public class InputParseTest {
 	}
 	
 	@Test
+	public void testReadOnlyOneTestSuite(){
+		filename = "test-suite-tmc01.txt";
+		
+		parse = new InputParse(pathToSuite+filename, "testsuite");
+		parse.runParse();
+		
+	}
+	
+	@Test
 	public void testDoParseForTestSuite(){
 		
 		filename = "test-suite-one.txt";
 		
-		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
-		
-		parse = new InputParse(path, "testsuite");
+		parse = new InputParse(pathToSuite+filename, "testsuite");
 		
 		parse.runParse();
 		
@@ -98,7 +107,7 @@ public class InputParseTest {
 		
 		filename = "test-suite-two.txt";
 		
-		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		parse = new InputParse(pathToSuite+filename, "testsuite");
 		
 		parse = new InputParse(path, "testsuite");
 		
@@ -117,7 +126,7 @@ public class InputParseTest {
 		
 		filename = "test-suite-three.txt";
 		
-		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		parse = new InputParse(pathToSuite+filename, "testsuite");
 		
 		parse = new InputParse(path, "testsuite");
 		
@@ -137,7 +146,7 @@ public class InputParseTest {
 		
 		filename = "test-suite-four.txt";
 		
-		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		parse = new InputParse(pathToSuite+filename, "testsuite");
 		
 		parse = new InputParse(path, "testsuite");
 		
@@ -161,7 +170,7 @@ public class InputParseTest {
 		
 		filename = "test-suite-five.txt";
 		
-		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR +filename;
+		parse = new InputParse(pathToSuite+filename, "testsuite");
 		
 		parse = new InputParse(path, "testsuite");
 		
@@ -172,12 +181,14 @@ public class InputParseTest {
 		
 		assertTrue(suites.size() == 3);
 		
-		for(TestCase test : tests)
+		for(TestCase test : tests){
+			//System.out.println(test.getSignature());	
 			for (ClassCode classcode : test.getClassCoverage()){
 				for (Method method : classcode.getMethodCoverage()){
 					assertTrue(method.getStatementCoverage().size() > 0);
 				}
 			}
+		}
 	}
 	
 	

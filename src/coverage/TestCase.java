@@ -34,6 +34,7 @@ public class TestCase {
     private String name;
     private List<ClassCode> classCoverage;
     private int numberStatementsCovered;
+    
 	private int numberMethodsCovered;
     private String signature;
 
@@ -215,11 +216,11 @@ public class TestCase {
      * @return the number of statements distinct.
      */
     public int getNumberStatementsCoverageDistinct(){
-    	return numberStatementsCovered;
+    	return numberStatementsCovered != 0 ? numberStatementsCovered : getStatementsCoverageDistinct().size();
     }
     
     public int getNumberMethodsCoveredDistinct(){
-    	return numberMethodsCovered;
+    	return numberMethodsCovered != 0 ? numberMethodsCovered : getMethodCoverageDistinct().size();
     }
     
     public void setNumberStatementsCoverageDistinct( int numberStatements){

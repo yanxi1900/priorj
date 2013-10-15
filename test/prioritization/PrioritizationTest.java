@@ -45,7 +45,7 @@ public class PrioritizationTest {
 	private Prioritization prioritize;
 	private TechniquesEnum technique;
 	private List<TestCase> tests;
-	private PriorJ priorj;
+	
 	
 	@Before
 	public void setUp(){
@@ -55,7 +55,7 @@ public class PrioritizationTest {
 		
 		prioritize = new Prioritization(tests, technique.getId(), "", "");
 		
-		priorj = new PriorJImpl();
+
 	}
 	
 	@After
