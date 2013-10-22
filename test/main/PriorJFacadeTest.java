@@ -386,5 +386,32 @@ public class PriorJFacadeTest {
 				
 		assertFalse(facade.generateFMeasureReport().isEmpty());
 	}
-	
+
+	@Test
+	public void testFacadeRunJMock() throws Exception{
+		if ( facade.searchProject("jmock"))
+			facade.removeProject("jmock");
+		
+		facade.createProject("jmock", "junit3");
+		
+		facade.setPathApp("/home/samuel/CODE-APP/jmock-1.1.0");
+		facade.setPathCode("/home/samuel/CODE-APP/jmock-1.1.0/core/src");
+		facade.setPathLib("/home/samuel/CODE-APP/jmock-1.1.0/lib");
+		facade.setPathTest("/home/samuel/CODE-APP/jmock-1.1.0/core/acceptance-tests/core/tests");
+		
+		facade.addTechnique("tmc");
+		facade.addTechnique("rnd");
+		facade.addTechnique("tsc");
+		facade.addTechnique("amc");
+		facade.addTechnique("asc");
+		
+		facade.runInstrumentation();
+		facade.runCoverage();
+		facade.runReadLog();
+		
+		facade.runPrioritization();
+				
+		assertFalse(facade.generateFMeasureReport().isEmpty());
+	}
+
 }

@@ -191,6 +191,21 @@ public class InputParseTest {
 		}
 	}
 	
+	@Test
+	public void testDoParseWithRealApplication(){
+		filename = "jmock.txt";
+		
+		parse = new InputParse(pathToSuite+filename, "testsuite");
+
+		parse.runParse();
+		
+		List<TestSuite> suites = parse.getResultAsSuite();
+
+		System.out.println(suites.size());
+		System.out.println(suites);
+	}
+	
+	
 	
 	
 	@Test

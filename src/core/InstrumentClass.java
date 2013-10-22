@@ -33,6 +33,7 @@ import japa.parser.ast.expr.FieldAccessExpr;
 import japa.parser.ast.expr.NameExpr;
 import japa.parser.ast.expr.ThisExpr;
 import japa.parser.ast.stmt.BlockStmt;
+import japa.parser.ast.stmt.DoStmt;
 import japa.parser.ast.stmt.ExpressionStmt;
 import japa.parser.ast.stmt.ForStmt;
 import japa.parser.ast.stmt.ForeachStmt;
@@ -55,7 +56,9 @@ import java.util.List;
  * 		to found the statement line number.
  * </p>
  * @author Samuel T. C. Santos
- * 		   Julio H. Rocha
+ * @author Julio H. Rocha
+ * @author Igor Meira
+ * 
  * @version 1.0
  *
  */
@@ -357,8 +360,14 @@ public class InstrumentClass {
             state.setFinallyBlock((BlockStmt) instrumentarBody(state.getFinallyBlock(), watch));
             
             return state;
-        }
-        else {     
+        } else if (stm instanceof DoStmt) {
+        	
+        	DoStmt state = (DoStmt) stm;
+        	
+        	state.setBody(instrumentarBody(state.getBody(), watch));
+        	
+        	return state;        	
+        } else {     
             return stm;
         }
     }

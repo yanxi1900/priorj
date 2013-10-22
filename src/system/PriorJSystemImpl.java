@@ -240,6 +240,10 @@ public class PriorJSystemImpl implements PriorJSystem {
 	        coverage =  new CoverageReport();
 	        
 	        coverage.buildReport(suites);
+	        
+	        //this method create a coverage file.
+	        coverage.buildFileConfig(suites);
+	        
     	}
     	catch(Exception ex){
     		throw new CannotReadLogFileException(ex.getMessage());
