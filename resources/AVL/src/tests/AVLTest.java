@@ -1,7 +1,5 @@
 package tests;
 
-
-
 import junit.framework.TestCase;
 import avl.AVLImpl;
 import avl.ArvoreAVL;

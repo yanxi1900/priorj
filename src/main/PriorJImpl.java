@@ -439,7 +439,8 @@ public class PriorJImpl implements PriorJ {
 			packageName = GenerateTestSuite.getPackageName(system.getTotalPathTests());
 			
 			if (version == JUnitVersionEnum.JUNIT3) {
-				code = GenerateTestSuite.generate(packageName, tests,suiteSelectionSize);
+				// the empty string bellow is the suite name.
+				code = GenerateTestSuite.generate(packageName,"", tests,suiteSelectionSize);
 			} else {
 				code = GenerateTestSuiteForJUnit4.generate(packageName, tests,suiteSelectionSize);
 			}

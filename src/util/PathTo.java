@@ -67,6 +67,8 @@ public class PathTo {
     
     public static final String RESOURCES_PRIORITIZATION_FILES = RESOURCES_FILES + SEPARATOR+"PrioritizationTests";
     
+    public static final String RESOURCES_GENERATED_SUITE_FILES = RESOURCES_FILES + SEPARATOR+"GeneratedSuiteTests";
+     
     public static final String APP = RESOURCES + SEPARATOR + "app";
     
     public static final String APP_CODE = APP + SEPARATOR + "src";
@@ -88,6 +90,7 @@ public class PathTo {
     // test to instrument class and instrument app
     public static final String INSTRUMENT_TESTS = RESOURCES_FILES + SEPARATOR + "InstrumentTests";
     
-    //tests to instrument blocks for, if
+    
+    //tests to instrument blocks for, if 
     public static final String INSTRUMENT_BLOCKS = INSTRUMENT_TESTS + SEPARATOR + "blocks";
 }

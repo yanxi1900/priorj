@@ -22,17 +22,12 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import project.PriorJProject;
 
-import exception.CannotReadLogFileException;
-import exception.CoverageUnrealizedException;
-import exception.DuplicateProjectNameException;
-import exception.EmptyPriorJProjectNameException;
 import exception.InstrumentationUnrealizedException;
 import main.PriorJFacade;
 import util.PathTo;
@@ -370,10 +365,10 @@ public class PriorJFacadeTest {
 		
 		facade.createProject("avl_fmeasure", "junit4");
 		
-		facade.setPathApp(PathTo.APP);
-		facade.setPathCode(PathTo.APP_CODE);
-		facade.setPathLib(PathTo.APP_LIB);
-		facade.setPathTest(PathTo.APP_TEST);
+		facade.setPathApp(PathTo.APP_AVL);
+		facade.setPathCode(PathTo.APP_AVL_CODE);
+		facade.setPathLib(PathTo.APP_AVL_LIB);
+		facade.setPathTest(PathTo.APP_AVL_TEST);
 		
 		
 		facade.addTechnique("tmc");
