@@ -68,7 +68,7 @@ public class TechniqueEchelonAdditional implements Technique {
                 String obj = itObjects.next();
                 if(containsBlock(obj)){
                         count++;
-                       // blockAffected.remove(obj);
+                        blockAffected.remove(obj);
                 }
         }
         return getPercentage(count);
@@ -112,12 +112,17 @@ public class TechniqueEchelonAdditional implements Technique {
         
         TestCase test = null;
        
-        while(!copyList.isEmpty()){
+        while(!copyList.isEmpty() && !blockAffected.isEmpty()){
             test = biggerWeight(copyList);
-           
-            copyList.remove(test);
-            if (!test.getSignature().isEmpty()) 
-            	suiteList.add(test.getSignature());
+            if (!test.getSignature().isEmpty()){
+                copyList.remove(test);
+               	suiteList.add(test.getSignature());
+            }
+         
+        }
+        
+        for (TestCase tst : copyList){
+        	suiteList.add(tst.getSignature());
         }
         
         return suiteList;
