@@ -40,7 +40,6 @@ import util.FileManager;
  * @author Samuel T. C. Santos
  * @version 1.0
  */
-
 public class InputParse {
 
 	/**

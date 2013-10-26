@@ -25,31 +25,27 @@ import java.util.List;
 
 import coverage.TestCase;
 
-
-
-
 public class TechniqueEchelonAdditional implements Technique {
     
-    private List blockAffected;
+    private List<String> blockAffected;
     private int sizeBlockAffected = 0;
     private List<TestCase> tests;
     
-    public TechniqueEchelonAdditional(List blockAffected, List<TestCase> tests){
+    public TechniqueEchelonAdditional(List<String> blockAffected, List<TestCase> tests){
             this.blockAffected = blockAffected;
             this.sizeBlockAffected = blockAffected.size();
             this.tests = tests;
     }
 	
-    public List getBlockAffected() {
+    public List<String> getBlockAffected() {
 		return blockAffected;
     }
 
-    public void setBlockAffected(List blockAffected) {
+    public void setBlockAffected(List<String> blockAffected) {
             this.blockAffected = blockAffected;
     }
 
-
-    private boolean containsBlock(String value){
+    public boolean containsBlock(String value){
             Iterator<String> itBlock = blockAffected.iterator();
             while (itBlock.hasNext()) {
                     String statment = itBlock.next();
@@ -60,7 +56,7 @@ public class TechniqueEchelonAdditional implements Technique {
             return false;
     }
 
-    private double getPercentage(double value){;
+    public double getPercentage(double value){;
             if(sizeBlockAffected == 0) return 0;
             return value/sizeBlockAffected;
     }
@@ -72,7 +68,7 @@ public class TechniqueEchelonAdditional implements Technique {
                 String obj = itObjects.next();
                 if(containsBlock(obj)){
                         count++;
-                        this.blockAffected.remove(obj);
+                       // blockAffected.remove(obj);
                 }
         }
         return getPercentage(count);
@@ -85,6 +81,7 @@ public class TechniqueEchelonAdditional implements Technique {
         int index=0;
         for (TestCase test: tests){
             double weight = getWeight(test.getStatementsCoverageDistinct());
+           
             if (weight > bigger){
                 indexBigger = index;
                 bigger = weight;
@@ -104,7 +101,7 @@ public class TechniqueEchelonAdditional implements Technique {
         if (sameWeight.size()>1)
             Collections.shuffle(sameWeight);
         
-        return sameWeight.get(0);
+        return  sameWeight.size() > 0 ? sameWeight.get(0): new TestCase("");
         
     }
     
@@ -119,8 +116,8 @@ public class TechniqueEchelonAdditional implements Technique {
             test = biggerWeight(copyList);
            
             copyList.remove(test);
-             
-            suiteList.add(test.getSignature());
+            if (!test.getSignature().isEmpty()) 
+            	suiteList.add(test.getSignature());
         }
         
         return suiteList;

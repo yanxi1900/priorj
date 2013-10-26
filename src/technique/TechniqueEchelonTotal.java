@@ -34,36 +34,35 @@ import coverage.TestCase;
 import exception.EmptySetOfTestCaseException;
 
 public class TechniqueEchelonTotal implements Technique {
-	private List blockAffected;
-    private List<TestCase> tests;
-        
 	
-	public TechniqueEchelonTotal(List blockAffected, List<TestCase> tests){
+	private List<String> blockAffected;
+    private List<TestCase> tests;
+    
+	public TechniqueEchelonTotal(List<String> blockAffected, List<TestCase> tests){
 		this.blockAffected = blockAffected;
-                this.tests  = tests;
+        this.tests  = tests;
 	}
 	
-    public List getBlockAffected() {
+    public List<String> getBlockAffected() {
 		return blockAffected;
 	}
 
-	public void setBlockAffected(List blockAffected) {
+	public void setBlockAffected(List<String> blockAffected) {
 		this.blockAffected = blockAffected;
 	}
 	
-	private boolean containsBlock(String value){
+	public boolean containsBlock(String value){
 		Iterator<String> itBlock = blockAffected.iterator();
 		while (itBlock.hasNext()) {
 			String statment = itBlock.next();
 			if(statment.equals(value)){
-                            //System.out.println("blocl affected  " + statment  +" stmt test "+ value );
 			    return true;
 			}
 		}
 		return false;
 	}
 	
-	private double getPercentage(double value){
+	public double getPercentage(double value){
 		int sizeBlock = getBlockAffected().size();
 		if(sizeBlock == 0) return 0;
 		return value/sizeBlock;
@@ -114,7 +113,7 @@ public class TechniqueEchelonTotal implements Technique {
         return suiteList;
     }
 
-      public Integer biggerWeight(List<TestCase> tests){
+    public Integer biggerWeight(List<TestCase> tests){
           
         int indexBigger = 0;
         double bigger=0;
@@ -130,7 +129,7 @@ public class TechniqueEchelonTotal implements Technique {
             index++;
         }
 
-           Map<Integer, TestCase> sameWeight = new HashMap<Integer, TestCase>();
+        Map<Integer, TestCase> sameWeight = new HashMap<Integer, TestCase>();
 
         for (int i = 0 ; i < tests.size(); i++){
             TestCase testCurrent  =  tests.get(i);

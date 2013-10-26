@@ -31,12 +31,12 @@ import java.util.List;
  */
 public class TestCase {
 
-    private String name;
+    private String name = "";
     private List<ClassCode> classCoverage;
     private int numberStatementsCovered;
     
 	private int numberMethodsCovered;
-    private String signature;
+    private String signature = "";
 
 
     /**
