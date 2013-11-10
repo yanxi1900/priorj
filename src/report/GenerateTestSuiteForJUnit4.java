@@ -62,11 +62,7 @@ public class GenerateTestSuiteForJUnit4 {
     public static String generate(String packageName , Set tests, int percentSize){
 
         int total = tests.size();
-        
-        // total ------ 100%
-        // x     ------ psize
-        // x = total * pSize / 100;
-        
+      
         int index = (int)(total * percentSize/100.0);
         
         List list = Arrays.asList(tests.toArray());
@@ -84,10 +80,6 @@ public class GenerateTestSuiteForJUnit4 {
      public static String generate(String packageName , List<String> tests, int percentSize){
 
         int total = tests.size();
-        
-        // total ------ 100%
-        // x     ------ psize
-        // x = total * pSize / 100;
         
         int index = (int)(total * percentSize/100.0);
         

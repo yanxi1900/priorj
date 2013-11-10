@@ -48,8 +48,6 @@ import apfd.ChartAPFD;
 
 import exception.*;
 
-
-
 /**
  * This class is a controller to PriorJ and PriorJProjectManager.
  * 

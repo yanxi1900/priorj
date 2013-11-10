@@ -12,7 +12,7 @@
 	[test_case_name]:[testB]
 		[class_code_name]:[pkgB,classB]
 			[method_name]:[methodAA]
-				[statements_numbers]:[11,12,13,14,82,78,89]
+				[statements_numbers]:[11,12,13,14,82,78,89,112]
 			[method_name]:[methodAB]
 				[statements_numbers]:[19,22,31,41,10,8,]
 
