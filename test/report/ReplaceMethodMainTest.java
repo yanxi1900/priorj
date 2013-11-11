@@ -1,8 +1,17 @@
 package report;
 
 import static org.junit.Assert.*;
+import japa.parser.ASTHelper;
 import japa.parser.ParseException;
 import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.expr.FieldAccessExpr;
+import japa.parser.ast.expr.MethodCallExpr;
+import japa.parser.ast.expr.NameExpr;
+import japa.parser.ast.expr.StringLiteralExpr;
+import japa.parser.ast.stmt.BlockStmt;
+import japa.parser.ast.stmt.Statement;
+import japa.parser.ast.visitor.GenericVisitor;
+import japa.parser.ast.visitor.VoidVisitor;
 
 import java.io.FileNotFoundException;
 
@@ -48,6 +57,22 @@ public class ReplaceMethodMainTest {
 		assertEquals("name should be main!", "main",methodDec.getName());
 	}
 
+	@Test
+	public void testMethodDeclarationExpressions(){
+		MethodDeclaration methodDec = replace.findMainMethod();
+		
+		BlockStmt block = methodDec.getBody();
+				
+	    NameExpr instance = new NameExpr("main");
+        MethodCallExpr call = new MethodCallExpr(instance, "d");
+        ASTHelper.addStmt(block, call);
+		
+		for (Statement stmt : block.getStmts()){
+			stmt.setData("oi");
+			System.out.println(stmt.toString());
+			
+		}
+	}
 	
 	
 }

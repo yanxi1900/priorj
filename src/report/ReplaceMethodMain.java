@@ -1,11 +1,13 @@
 package report;
 
+import japa.parser.ASTHelper;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
 import japa.parser.ast.body.BodyDeclaration;
 import japa.parser.ast.body.MethodDeclaration;
 import japa.parser.ast.body.TypeDeclaration;
+import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,4 +58,29 @@ public class ReplaceMethodMain {
 	        
 	        return null;
 	  }
+	
+	  /**
+     * Simple visitor implementation for visiting MethodDeclaration nodes.
+     */
+    private static class MethodChangerVisitor extends VoidVisitorAdapter {
+
+        @Override
+        public void visit(MethodDeclaration n, Object arg) {
+            // change the name of the method to upper case
+            n.setName(n.getName().toUpperCase());
+
+            // create the new Expression
+
+            // add a statement do the method body
+            //NameExpr clazz = new NameExpr("System");
+            //FieldAccessExpr field = new FieldAccessExpr(clazz, "out");
+            //MethodCallExpr call = new MethodCallExpr(field, "println");
+            //ASTHelper.addArgument(call, new StringLiteralExpr("Hello World!"));
+            //ASTHelper.addStmt(block, call);
+
+            // add the parameter to the method
+            //ASTHelper.addParameter(n, newArg);
+        }
+
+    }
 }
