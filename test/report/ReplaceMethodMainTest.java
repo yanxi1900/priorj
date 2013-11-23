@@ -14,6 +14,8 @@ import japa.parser.ast.visitor.GenericVisitor;
 import japa.parser.ast.visitor.VoidVisitor;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -62,17 +64,33 @@ public class ReplaceMethodMainTest {
 		MethodDeclaration methodDec = replace.findMainMethod();
 		
 		BlockStmt block = methodDec.getBody();
+		
+		BlockStmt newBlock = new BlockStmt();
 				
 	    NameExpr instance = new NameExpr("main");
         MethodCallExpr call = new MethodCallExpr(instance, "d");
         ASTHelper.addStmt(block, call);
 		
 		for (Statement stmt : block.getStmts()){
-			stmt.setData("oi");
 			System.out.println(stmt.toString());
 			
 		}
 	}
+	
+	@Test
+	public void tryChangeOrder(){
+		
+		String initialOrder = replace.getCompilationUnit();
+		
+		List<String> list = Arrays.asList("a", "x", "d","k");
+				
+		replace.changeOrderMethodMain(list);
+		
+		String changedOrder = replace.getCompilationUnit();
+		
+		assertFalse(initialOrder.equals(changedOrder));
+	}
+	
 	
 	
 }
