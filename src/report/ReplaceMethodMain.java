@@ -11,11 +11,9 @@ import japa.parser.ast.expr.MethodCallExpr;
 import japa.parser.ast.expr.NameExpr;
 import japa.parser.ast.stmt.BlockStmt;
 import japa.parser.ast.stmt.Statement;
-import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -88,7 +86,8 @@ public class ReplaceMethodMain {
 		
 		BlockStmt newBlock = new BlockStmt();
 		
-		 ASTHelper.addStmt(newBlock, firstLine);
+		ASTHelper.addStmt(newBlock, firstLine);
+		
 		for (String methodName : list){
 		    NameExpr instance = new NameExpr("main");
 	        MethodCallExpr call = new MethodCallExpr(instance, methodName);
