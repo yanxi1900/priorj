@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import util.FileManager;
 import util.PathTo;
 import util.ReadFile;
+import util.SaveFile;
 
 /**
  * This class do an update in the generated test suite.
@@ -21,10 +22,45 @@ public class UpdateGeneratedTestSuite {
 	 * This field allow to validate the conditions where are
 	 * possible do an update in the test suite.
 	 */
-	public boolean active;
-
+	private boolean active;
+	
+	/**
+	 * Do update in the suite.
+	 */
+	private ReplaceMethodMain replace;
+	
+	/**
+	 * Default constructor.
+	 */
 	public UpdateGeneratedTestSuite(){
 		active = false;
+	}
+	
+	/**
+	 * This method do an update process in the suites folder.
+	 * 
+	 */
+	public void doUpdate(){
+		try {
+			if(existGeneratedTestSuiteCode()){
+				List<String> allSuiteNames = detectAllSuites();
+				
+				for (String suiteName : allSuiteNames){
+					List<String> newOrder = detectOrder(suiteName);
+					String pathToSuite = PathTo.SUITES + PathTo.SEPARATOR + suiteName;
+					
+					replace = new ReplaceMethodMain(pathToSuite);
+					
+					replace.changeOrderMethodMain(newOrder);
+					
+					String newSuite = replace.getCompilationUnit();
+					
+					SaveFile.saveCode(pathToSuite, newSuite);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

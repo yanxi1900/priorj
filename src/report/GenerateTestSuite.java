@@ -102,7 +102,7 @@ public class GenerateTestSuite {
 
 		List<String> l = extractSubList(tests, percentSize);
 
-		return generate(packageName, className, l);
+		return newGenerate(packageName, className, l);
 	}
 
 	/**

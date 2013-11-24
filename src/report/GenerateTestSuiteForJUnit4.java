@@ -19,91 +19,114 @@ package report;
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 import org.junit.runner.Result;
 
-import util.LogRead;
-
-
-
-
+import util.PathTo;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
+/**
+ * This class generate a Test Suite for JUnit4.x
+ * 
+ * @author Julio Rocha
+ * @author Samuel T. C. Santos
+ * @version 1.0
+ * 
+ */
 public class GenerateTestSuiteForJUnit4 {
-	static String quebra = System.getProperty("line.separator");
-	private static String getCabecalho(String packageName){
-		String cabecalho = "package " + packageName+quebra;
-		cabecalho += "import org.junit.runner.JUnitCore;"+quebra;
-		cabecalho += "import org.junit.runner.Request;"+quebra;
-		cabecalho += "import org.junit.runner.Result;"+quebra;
-		return cabecalho;
-	}
-
-	private static String getCorpoSuperior(){
-		String corpo = "public class SuitePrioritizedPriorJ {"+quebra;
-		corpo += "    private int failureCount = 0;"+quebra;
-		corpo += "    private int runCount = 0;"+quebra;
-		corpo += "    private int errorCount = 0;"+quebra;
-		return corpo;
-	}
-
-    public static String generate(String packageName , Set tests, int percentSize){
-
-        int total = tests.size();
-      
-        int index = (int)(total * percentSize/100.0);
-        
-        List list = Arrays.asList(tests.toArray());
-        
-        List l = list.subList(0, index);
-        
-        Set listSet = new HashSet();
-        
-        for (Object o: l)
-            listSet.add(o);
-        
-        return generate(packageName,listSet);
-    }
-    
-     public static String generate(String packageName , List<String> tests, int percentSize){
-
-        int total = tests.size();
-        
-        int index = (int)(total * percentSize/100.0);
-        
-        List list = Arrays.asList(tests.toArray());
-        
-        List l = list.subList(0, index);
-        
-        Set listSet = new HashSet();
-        
-        for (Object o: l)
-            listSet.add(o);
-        
-        return generate(packageName,listSet);
-    }
-        
 	
-	public static String generate(String packageName, Set tests) {
+	static String newline = PathTo.NEWLINE;
+	
+	/**
+	 * This method do a header to Test Suite.
+	 * 
+	 * @param packageName
+	 * 		The package name.
+	 * @return
+	 * 		Package declaration and imports declarations.
+	 * 
+	 */
+	public static String getHeader(String packageName){
+		String header = "package " + packageName+";\n";
+		header += "import org.junit.runner.JUnitCore;\n";
+		header += "import org.junit.runner.Request;\n";
+		header += "import org.junit.runner.Result;\n";
+		return header;
+	}
+
+	/**
+	 * This method create the suite class declaration and 
+	 * field declarations.
+	 * 
+	 * @return
+	 * 		the class declaration and fields.
+	 */
+	public static String getBodyHigher(String className){
+		String body = "";
+		
+		if (className.isEmpty())
+            body = "public class SuitePrioritizedPriorJ {\n";
+		else
+            body = "public class "+ className + " {\n";
+		
+		body += "\tprivate int failureCount = 0;\n";
+		body += "\tprivate int runCount = 0;\n";
+		body += "\tprivate int errorCount = 0;\n";
+		return body;
+	}
+
+   
+    /**
+     * This method create a suite.
+     * 
+     * @param packageName
+     * 		the package name.
+     * @param suiteName
+     * 		the suite name.
+     * @param tests
+     * 		all test cases
+     * @param percentSize
+     * 		the suite size.
+     * @return
+     * 		the suite code generated.
+     * 
+     */
+    public static String generate(String packageName , String suiteName, List<String> tests, int percentSize){
+    	 
+    	List<String> list = GenerateTestSuite.extractSubList(tests, percentSize); 
+        
+        return newGenerate(packageName, suiteName, list);
+    }
+        
+	/**
+	 * This method generate the suite code.
+	 * 
+	 * @param packageName
+	 * 		the package name.
+	 * @param suiteClassName
+	 * 		The suite class name
+	 * @param tests
+	 * 		the list with prioritized test cases.
+	 * @return
+	 * 		the suite code.
+	 */
+	public static String generate(String packageName, String suiteClassName, List<String> tests) {
 		List<String> jaInstanciada = new ArrayList<String>();
-        String code = getCabecalho(packageName);
-        code += getCorpoSuperior();
-        code += "    public void run(){"+quebra;
-        code += "        try{"+quebra;
-        code += "            JUnitCore jc = new JUnitCore();"+quebra;
-        code += "           Result result = null;"+quebra;
+        String code = getHeader(packageName);
+        code += getBodyHigher(suiteClassName);
+        
+        code += "\tpublic void run(){\n";
+        code += "\t\ttry{\n";
+        code += "\t\t\tJUnitCore jc = new JUnitCore();\n";
+        code += "\t\t\tResult result = null;\n";
+       
         for (Object string : tests) {
            String caminho = (String) string;
            caminho = caminho.replace(".java", "");
@@ -114,93 +137,135 @@ public class GenerateTestSuiteForJUnit4 {
            String instance = getPathInstance(paths);
            String requestName = generateRequestName(suiteName, tcName);
            if(!jaInstanciada.contains(suiteName)){
-               code += "            Class "+suiteName+" = Class.forName(\""+instance+"\");"+quebra;
+               code += "\t\t\tClass "+suiteName+" = Class.forName(\""+instance+"\");\n";
                jaInstanciada.add(suiteName);
            }
-           code += "		    	Request "+requestName+" = Request.method("+suiteName+",\""+tcName+"\");"+quebra;
-           code += "                result = jc.run("+requestName+");"+quebra;
-           code += "			    setResult(\""+tcName+"\",result);"+quebra;         
+           code += "\t\t\tRequest "+requestName+" = Request.method("+suiteName+",\""+tcName+"\");\n";
+           code += "\t\t\tresult = jc.run("+requestName+");\n";
+           code += "\t\t\tsetResult(\""+tcName+"\",result);\n";         
         }
-        code += "			} catch (Exception e) {"+quebra;
-        code += "    			e.printStackTrace();"+quebra;
-        code += "        	}"+quebra;  
-        code += "         }"+quebra;
-        code += getFinalSuite();
+        code += "\t\t} catch (Exception e) {\n";
+        code += "\t\t\te.printStackTrace();\n";
+        code += "\t\t}\n";  
+        code += "\t}\n";
+
+        code += getFinalSuite(suiteClassName, tests);
+        
         return code;
     }
 	
-	private static String getFinalSuite(){
+	public static String newGenerate(String packageName, String className, List<String> tests) {
+		List<String> jaInstanciada = new ArrayList<String>();
+       String code = getHeader(packageName);
+       code += getBodyHigher(className);
+       
+        for (String testName : tests) {
+            String caminho = testName;
+            caminho = caminho.replace(".java", "");
+            String[] paths = caminho.split("\\.");
+            String tcName = paths[paths.length-1];
+
+             String suiteName = caminho.replaceAll("\\.", "").replace(tcName, "");
+            
+        	 code += "\tpublic void "+  generateNameSuite(paths) + "{\n";
+             code += "\t\ttry{\n";
+             code += "\t\t\tJUnitCore jc = new JUnitCore();\n";
+             code += "\t\t\tResult result = null;\n";
+             
+
+             String instance = getPathInstance(paths);
+             String requestName = generateRequestName(suiteName, tcName);
+             
+             if(!jaInstanciada.contains(suiteName)){
+                 code += "\t\t\tClass "+suiteName+" = Class.forName(\""+instance+"\");\n";
+                 jaInstanciada.add(suiteName);
+             }
+             code += "\t\t\tRequest "+requestName+" = Request.method("+suiteName+",\""+tcName+"\");\n";
+             code += "\t\t\tresult = jc.run("+requestName+");\n";
+             code += "\t\t\tsetResult(\""+tcName+"\",result);\n";  
+
+             code += "\t\t} catch (Exception e) {\n";
+             code += "\t\t\te.printStackTrace();\n";
+             code += "\t\t}\n";  
+             code += "\t}\n";
+             
+        }
+        
+        code += getFinalSuite(className, tests);
+        
+        return code;
+	}
+	
+	/**
+	 * This method create the main method to test suite.
+	 * 	
+	 * @param className
+	 * @param tests
+	 * @return
+	 */
+	private static String getFinalSuite(String className, List<String> tests){
 		String code = "";
-		code += "		private void setResult(String testCaseName,Result result){"+quebra;
-		code += "           System.out.println(\"TestCase: \" + testCaseName +\" \" + getStatus(result));"+quebra;
-		code += "			runCount += result.getRunCount();"+quebra;
-		code += "			failureCount += result.getFailureCount();"+quebra;
-		code += "		}"+quebra;
-		code += "		private String getStatus(Result result){"+quebra;
-		code += "			int failureCount = result.getFailureCount();"+quebra;
-		code += "			if(failureCount > 0) return \"[FAILURE]\";"+quebra;
-		code += "			else return \"[ACCEPTED]\";"+quebra;
-		code += "		}"+quebra;
-		code += "		public void printResult(){"+quebra;
-		code += "			System.out.println(\"=================== Test Suite Prioritized - PriorJ =================\");"+quebra;
-		code += "			System.out.println(\"Run: \" + this.runCount);"+quebra;
-		code += "			System.out.println(\"Faults: \" + this.failureCount);"+quebra;
-		code += "           System.out.println(\"Errors: \" + this.errorCount);"+quebra;
-		code += "		}"+quebra;
-		code += "		public static void main(String[] args) {"+quebra;
-		code += "			SuitePrioritizedPriorJ st = new SuitePrioritizedPriorJ();"+quebra;
-		code += "			st.run();"+quebra;
-		code += "			st.printResult();"+quebra;
-		code += "		}"+quebra;
-		code += "	}"+quebra;
+		code += "\tprivate void setResult(String testCaseName,Result result){\n";
+		code += "\t\tSystem.out.println(\"TestCase: \" + testCaseName +\" \" + getStatus(result));\n";
+		code += "\t\trunCount += result.getRunCount();\n";
+		code += "\t\tfailureCount += result.getFailureCount();\n";
+		code += "\t}\n";
+		code += "\tprivate String getStatus(Result result){\n";
+		code += "\t\tint failureCount = result.getFailureCount();\n";
+		code += "\t\tif(failureCount > 0) return \"[FAILURE]\";\n";
+		code += "\t\telse return \"[ACCEPTED]\";\n";
+		code += "\t}\n";
+		code += "\tpublic void printResult(){\n";
+		code += "\t\tSystem.out.println(\"=================== Test Suite Prioritized - PriorJ =================\");\n";
+		code += "\t\tSystem.out.println(\"Run: \" + this.runCount);\n";
+		code += "\t\tSystem.out.println(\"Faults: \" + this.failureCount);\n";
+		code += "\t\tSystem.out.println(\"Errors: \" + this.errorCount);\n";
+		code += "\t}\n";
+		code += "\tpublic static void main(String[] args) {\n";
+		
+		if (className.isEmpty())
+            code += "\t\tPrioritizedSuite st = new PrioritizedSuite();\n";
+	    else
+	            code += "\t\t" + className + " st = new " + className + "();\n";
+	    
+	    for (String test : tests){
+	            String [] path = test.split("\\.");
+	            code += "\t\tst." + generateNameSuite(path)+"();\n";
+	    }
+		
+		code += "\t\tst.printResult();\n";
+		code += "\t}\n";
+		code += "}\n";
+		
 		return code;
 		
 	}
 	
 	private static String generateNameSuite(String[] paths){
-		String caminho = "tc";
-		for (String string : paths) {
-			caminho += string.substring(0,1).toUpperCase().concat(string.substring(1));
-		}
-		return caminho;
+		return GenerateTestSuite.generateNameSuite(paths);
 	}
 	
 	private static String generateRequestName(String suiteName, String tcName){
 		String result = suiteName+tcName;
 		return result.replaceAll("\\.", "");
 	}
+	
 	private static String getPathInstance(String[] paths){
-		String caminho = "";
-		for (int i = 0; i < paths.length-1; i++) {
-			caminho += paths[i]+".";
-		}
-		return caminho.substring(0, caminho.length()-1);
+		return GenerateTestSuite.getPathInstance(paths);
 	}
 	
+	/**
+	 * This method find a file test and locate the package declaration.
+	 * 
+	 * @param pathTests
+	 * 		test path.
+	 * @return
+	 * 		package declaration.
+	 * 
+	 * @throws Exception
+	 */
 	public static String getPackageName(String pathTests) throws Exception{
-		File dir = new File(pathTests);
-		File[] filhos = dir.listFiles();
-		File fistTestClass = null;
-		for (File file : filhos) {
-			if(file.isFile() && file.toString().contains("java")){
-				fistTestClass = file;
-				break;
-			}			
-		}
-		LogRead leitor = new LogRead(fistTestClass.getAbsolutePath().replace(".java", ""), "java");
-		String codigo = leitor.read();
-		String[] linhasCodigo = codigo.split("[\\r\\n]+");
-		String packageName = "";
-		for (String string : linhasCodigo) {
-			if(string.contains("package")){
-				String[] quebraLinha = string.split(" ");
-				if(quebraLinha.length == 2){
-					packageName = quebraLinha[1];
-					break;
-				}
-			}
-		}
-		return packageName;
+		return GenerateTestSuite.getPackageName(pathTests);
 	}
 	
 

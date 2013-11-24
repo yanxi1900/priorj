@@ -33,6 +33,7 @@ import report.GenerateTestSuite;
 import report.GenerateTestSuiteForJUnit4;
 import report.JUnitReport;
 import report.SuiteFactory;
+import report.UpdateGeneratedTestSuite;
 import system.PriorJSystem;
 import system.PriorJSystemImpl;
 import technique.RefactoringEnum;
@@ -45,16 +46,13 @@ import util.SaveFile;
 import util.PathTo;
 import util.TestResult;
 import util.WriteFile;
-
 import controller.RBAController;
 import coverage.Method;
 import coverage.Statement;
 import coverage.TestCase;
 import coverage.TestSuite;
 import coverage.ClassCode;
-
 import apfd.GenerateAPFD;
-
 import exception.CannotReadLogFileException;
 import exception.CoverageUnrealizedException;
 import exception.DirectoryNotExistException;
@@ -435,17 +433,24 @@ public class PriorJImpl implements PriorJ {
 		String packageName;
 
 		try {
-
-			packageName = GenerateTestSuite.getPackageName(system.getTotalPathTests());
 			
-			if (version == JUnitVersionEnum.JUNIT3) {
+			UpdateGeneratedTestSuite updater = new UpdateGeneratedTestSuite();
+			
+			if (!updater.existGeneratedTestSuiteCode()){
+				packageName = GenerateTestSuite.getPackageName(system.getTotalPathTests());
+			
+				if (version == JUnitVersionEnum.JUNIT3) {
 				// the empty string bellow is the suite name.
-				code = GenerateTestSuite.generate(packageName,"", tests,suiteSelectionSize);
-			} else {
-				code = GenerateTestSuiteForJUnit4.generate(packageName, tests,suiteSelectionSize);
-			}
+					code = GenerateTestSuite.generate(packageName,"", tests,suiteSelectionSize);
+				} else {
+					code = GenerateTestSuiteForJUnit4.generate(packageName,"", tests,suiteSelectionSize);
+				}
 
-			SaveFile.saveCode(FileManager.alias(technique.getId()), code);
+				SaveFile.saveCode(FileManager.alias(technique.getId()), code);
+			}
+			else{
+				updater.doUpdate();
+			}
 
 		} catch (Exception e) {
 			System.err.println("save Java Prioritized suite error: "+ e.getMessage());
