@@ -130,5 +130,39 @@ public class TechniqueEchelonAdditionalTests {
 		}
 	}
 	
+	@Test
+	public void techniqueEchelonAdditionalOCM() {
+		//Old version
+		parse = new InputParse(path + filename, "testsuite");
+		parse.runParse();
+		
+		//New vresion
+		parse = new InputParse(path + filemodified, "testsuite");
+		parse.runParse();
+		
+		List<TestCase> tests = parse.getResultAsTestCase();
+		List<String> listModified = new ArrayList<String>();
+		
+		listModified.add("pkgA.classA.methodB.91");
+		listModified.add("pkgA.classA.methodB.22");
+		listModified.add("pkgA.classA.methodB.23");
+		listModified.add("pkgA.classA.methodB.98");
+		
+		//Four mofications (One Class Modified)
+		eac = new TechniqueEchelonAdditional(listModified, tests);
+		
+		assertTrue(eac.containsBlock("pkgA.classA.methodB.91"));
+		assertTrue(eac.containsBlock("pkgA.classA.methodB.22"));
+		assertTrue(eac.containsBlock("pkgA.classA.methodB.23"));
+		assertTrue(eac.containsBlock("pkgA.classA.methodB.98"));	
+		
+		assertTrue(eac.assingWeight().get(0).equals("pkg1.SuiteA.testA"));
+		assertTrue(eac.assingWeight().get(1).equals("pkg2.SuiteB.testB"));
+		assertTrue(eac.assingWeight().get(2).equals("pkg3.SuiteC.testC"));
+		assertTrue(eac.assingWeight().get(3).equals("pkg3.SuiteC.testD"));
+		
+//		System.out.println(eac.assingWeight());
+	}
+	
 	
 }

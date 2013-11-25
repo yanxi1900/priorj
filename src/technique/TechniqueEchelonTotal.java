@@ -52,14 +52,17 @@ public class TechniqueEchelonTotal implements Technique {
 	}
 	
 	public boolean containsBlock(String value){
-		Iterator<String> itBlock = blockAffected.iterator();
-		while (itBlock.hasNext()) {
-			String statment = itBlock.next();
-			if(statment.equals(value)){
-			    return true;
-			}
-		}
-		return false;
+		return blockAffected.contains(value);
+		
+//		Iterator<String> itBlock = blockAffected.iterator();
+//		while (itBlock.hasNext()) {
+//			String statment = itBlock.next();
+//			if(statment.equals(value)){
+//				System.out.println("achei");
+//			    return true;
+//			}
+//		}
+//		return false;
 	}
 	
 	public double getPercentage(double value){
@@ -75,6 +78,7 @@ public class TechniqueEchelonTotal implements Technique {
         	String obj = itObjects.next();
         	if(containsBlock(obj)){
         		count++;
+        		//blockAffected.remove(obj);
         	}
         }
         return getPercentage(count);

@@ -29,7 +29,7 @@ import app.Console;
  */
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Console console = new Console();
 		console.run();	
 	}
