@@ -434,9 +434,9 @@ public class PriorJImpl implements PriorJ {
 
 		try {
 			
-			UpdateGeneratedTestSuite updater = new UpdateGeneratedTestSuite();
+			//UpdateGeneratedTestSuite updater = new UpdateGeneratedTestSuite();
 			
-			if (!updater.existGeneratedTestSuiteCode()){
+			//if (!updater.existGeneratedTestSuiteCode()){
 				packageName = GenerateTestSuite.getPackageName(system.getTotalPathTests());
 			
 				if (version == JUnitVersionEnum.JUNIT3) {
@@ -447,10 +447,10 @@ public class PriorJImpl implements PriorJ {
 				}
 
 				SaveFile.saveCode(FileManager.alias(technique.getId()), code);
-			}
-			else{
-				updater.doUpdate();
-			}
+			//}
+			//else{
+				//updater.doUpdate();
+			//}
 
 		} catch (Exception e) {
 			System.err.println("save Java Prioritized suite error: "+ e.getMessage());

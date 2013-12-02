@@ -242,7 +242,7 @@ public class PriorJSystemImpl implements PriorJSystem {
 	        coverage.buildReport(suites);
 	        
 	        //this method create a coverage file.
-	        coverage.buildFileConfig(suites);
+	        //coverage.buildFileConfig(suites);
 	        
     	}
     	catch(Exception ex){
