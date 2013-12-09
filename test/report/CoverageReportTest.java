@@ -20,7 +20,6 @@ package report;
 */
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +27,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import util.ReadXML;
 import coverage.TestCase;
 import coverage.TestSuite;
 
@@ -58,7 +58,16 @@ public class CoverageReportTest {
 	}
 	
 	@Test
-	public void testRemoveRepetedTestCase() {
+	public void testRemoveRepetedTestCase() throws Exception {
+		List<TestSuite> suites = ReadXML.getAllTestSuites();
+	
+		coverageReport.buildReport(suites);
+		
+		List<TestCase> tests = coverageReport.getTests();
+		
+		if(!tests.isEmpty()){
+			System.out.println(tests.size());
+		}
 		
 	}
 	
@@ -71,5 +80,13 @@ public class CoverageReportTest {
 		assertEquals("", coverageReportStr);
 	}
 	
+	
+	@Test
+	public void testCreateCoverageFileConfig() throws Exception{
+		List<TestSuite> suites = ReadXML.getAllTestSuites();
+		
+		coverageReport.buildFileConfig(suites,"xml-security");
+				
+	}
 
 }

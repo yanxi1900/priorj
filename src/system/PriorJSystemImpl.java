@@ -188,6 +188,8 @@ public class PriorJSystemImpl implements PriorJSystem {
         CopyFile.copyAll(origem, destino, true);
 
         File ori = new File(PathTo.EXTERNAL +PathTo.SEPARATOR+"lib"+PathTo.SEPARATOR);
+        
+
         File des = new File(getPathApp() + PathTo.SEPARATOR + getPathLib() + PathTo.SEPARATOR);
         CopyFile.copyAll(ori, des, true);
     }
@@ -270,6 +272,7 @@ public class PriorJSystemImpl implements PriorJSystem {
         try {
 	    	copyFiles();
 	        setPathAspectFile(version);
+	     
 	        executaAnt(getPathApp(), getPathCode(), getPathTests(), getPathLib());
 	        deleteAspectosFile();
 	        isCovered = true;

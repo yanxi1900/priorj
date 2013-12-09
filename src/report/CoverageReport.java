@@ -233,11 +233,18 @@ public class CoverageReport {
     }
     
     
-    
-    public void buildFileConfig(List<TestSuite> suites){
-		//StringBuilder fileConfig = new StringBuilder();
+    /**
+     * This method build a file with data coverage.
+     * 
+     * @param suites
+     * 		A TestSuite object.
+     * @param filename
+     * 		A name to file.
+     */
+    public void buildFileConfig(List<TestSuite> suites, String filename){
+		StringBuilder fileConfig = new StringBuilder();
 		
-		//fileConfig.append("*[SET_OF_TEST_CASE_-_TEST_SUITE_REPRESENTATION] \n\n");
+		fileConfig.append("*[SET_OF_TEST_CASE_-_TEST_SUITE_REPRESENTATION] \n\n");
 		
         List<String> testsJunit = JUnitReport.getTestNames();
 
@@ -245,45 +252,40 @@ public class CoverageReport {
         	return;
         
         for (TestSuite suite: suites){
-        //	fileConfig.append("[test_suite_name]:[");
+        	fileConfig.append("[test_suite_name]:[");
     		
         	TestSuite newSuite = new TestSuite(suite.getPackageName(),suite.getName());
             
-          //  fileConfig.append(suite.getPackageName() + "," + suite.getName() + "] \n");            
-          //  fileConfig.append("\t[test_case_name]:[");
+            fileConfig.append(suite.getPackageName() + "," + suite.getName() + "] \n");            
+            fileConfig.append("\t[test_case_name]:[");
             
             for (TestCase test: suite.getTestCases()){
                 String name = suite.toString().replace(".java","")+"."+test.getName();
                 
-            //    fileConfig.append(test.getName() + "] \n");
+                fileConfig.append(test.getName() + "] \n");
                 
                 for (ClassCode classcode: test.getClassCoverage()) {
-              //  	fileConfig.append("\t\t[class_code_name]:[");
+                	fileConfig.append("\t\t[class_code_name]:[");
                     
-                //	fileConfig.append(classcode.getPackageName() + "," + classcode.getName() + "] \n");
+                	fileConfig.append(classcode.getPackageName() + "," + classcode.getName() + "] \n");
                 	
                 	for (Method method: classcode.getMethodCoverage()) {
-                	//	fileConfig.append("\t\t\t[method_name]:[");
-                //		fileConfig.append(method.getName() + "] \n");
-                //		fileConfig.append("\t\t\t\t[statements_numbers]:[");
+                		fileConfig.append("\t\t\t[method_name]:[");
+                		fileConfig.append(method.getName() + "] \n");
+                		fileConfig.append("\t\t\t\t[statements_numbers]:[");
                 		
                 		//contador statements
                 		int count = 0;
-                
                 		for (Statement statement: method.getStatementCoverage()) {
-                	//		fileConfig.append(statement);
-                			
+                			fileConfig.append(statement);
                 			if (count < method.getStatementCoverage().size() - 1) {
-                		//		fileConfig.append(",");
+                				fileConfig.append(",");
                 				count++;
-                			}
-                			
+                			}		
                 		}
                 		
-                		//fileConfig.append("] \n");
-                		
+                		fileConfig.append("] \n");
                 	}
-                	
                 }
                 
                 if (testsJunit.contains(name)){
@@ -304,9 +306,11 @@ public class CoverageReport {
             if (!newSuite.getTestCases().isEmpty() && !newSuite.getName().equals(""))
             	suitesList.add(newSuite);
             }
-        }
+        
+        WriteFile writer = new WriteFile(PathTo.RESOURCES_PRIORITIZATION_FILES+ PathTo.SEPARATOR + filename);       
+        writer.write(fileConfig.toString());   
+	
+    }
                 
-        //WriteFile writer = new WriteFile(PathTo.RESOURCES_PRIORITIZATION_FILES+ PathTo.SEPARATOR + "SuiteConfig");       
-        //writer.write(fileConfig.toString());   
     
 }

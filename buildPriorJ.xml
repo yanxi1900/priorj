@@ -3,11 +3,13 @@
 	<property name="pathApp" value=""/>
 	<property name="pathCode" value=""/>
 	<property name="pathTest" value=""/>
+	<property name="pathLib" value=""/>
+
 	<property name="src" value="${pathApp}/${pathCode}"/>
 	<property name="tests" value="${pathApp}/${pathTest}"/>
 	<property name="build" value="${pathApp}/build"/>
 	<property name="classes.dir" value="${build}/"/>
-	<property name="lib.dir"     value="${pathApp}/lib"/>
+	<property name="lib.dir"     value="${pathApp}/${pathLib}"/>
 	<property name="report"     value="report"/>
 	<property name="order" 	    value="report/order"/>
 	<property name="suites"	    value="report/suites"/>

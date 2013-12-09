@@ -195,7 +195,7 @@ public class GenerateTestSuite {
 			code += "\t\t\tpublic void runTest(){" + newline;
 			code += "\t\t\t\ttry{" + newline;
 			code += "\t\t\t\t\t" + tcName + "();" + newline;
-			code += "\t\t\t\t} catch (Throwable e) {" + newline;
+			code += "\t\t\t\t} catch (Exception e) {" + newline;
 			code += "\t\t\t\t\te.printStackTrace();" + newline;
 			code += "\t\t\t\t}" + newline;
 			code += "\t\t\t}" + newline;

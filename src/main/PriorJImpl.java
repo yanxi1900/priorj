@@ -427,30 +427,22 @@ public class PriorJImpl implements PriorJ {
 		return apfdGenerate.calculateAPFD();
 	}
 
-	public void saveJavaPrioritizedSuite(List<String> tests,TechniquesEnum technique) {
+	public void saveJavaPrioritizedSuite(List<String> tests,  TechniquesEnum technique) {
 		String code = "";
-
+		String suiteName = FileManager.alias(technique.getId());
 		String packageName;
 
 		try {
-			
-			//UpdateGeneratedTestSuite updater = new UpdateGeneratedTestSuite();
-			
-			//if (!updater.existGeneratedTestSuiteCode()){
 				packageName = GenerateTestSuite.getPackageName(system.getTotalPathTests());
 			
 				if (version == JUnitVersionEnum.JUNIT3) {
 				// the empty string bellow is the suite name.
-					code = GenerateTestSuite.generate(packageName,"", tests,suiteSelectionSize);
+					code = GenerateTestSuite.generate(packageName,suiteName, tests,suiteSelectionSize);
 				} else {
-					code = GenerateTestSuiteForJUnit4.generate(packageName,"", tests,suiteSelectionSize);
+					code = GenerateTestSuiteForJUnit4.generate(packageName,suiteName, tests,suiteSelectionSize);
 				}
 
-				SaveFile.saveCode(FileManager.alias(technique.getId()), code);
-			//}
-			//else{
-				//updater.doUpdate();
-			//}
+				SaveFile.saveCode(suiteName, code);
 
 		} catch (Exception e) {
 			System.err.println("save Java Prioritized suite error: "+ e.getMessage());
@@ -755,7 +747,6 @@ public class PriorJImpl implements PriorJ {
 			suiteList = factory.generateSuite(suites, filenames);
 
 			return suiteList;
-			
 		} catch (Exception e) {
 			System.err.println("generate suite selection error: " + e.getMessage());
 			return new ArrayList<String>();

@@ -219,7 +219,7 @@ public class PriorJController {
     }
     
     public void setJUnitVersion(JUnitVersionEnum version){
-        //priorj.setJUnitVersion(version);
+        priorj.setJUnitVersion(version);
     	this.version = version;
     }
     

@@ -314,7 +314,7 @@ public class PriorJFacadeTest {
 		String methodName = "toString()";
 		
 		List<String> impactedMethods = facade.runRBAMoveMethod(pathApp, classOneName, classTwoName, methodName);
-		System.out.println(impactedMethods);
+		
 		assertFalse(impactedMethods.isEmpty());
 	}
 	
@@ -388,16 +388,16 @@ public class PriorJFacadeTest {
 	}
 
 	@Test
-	public void testFacadeRunJMock() throws Exception{
-		if ( facade.searchProject("jmock"))
-			facade.removeProject("jmock");
+	public void testFacadeRunAVL() throws Exception{
+		if ( facade.searchProject("avl"))
+			facade.removeProject("avl");
 		
-		facade.createProject("jmock", "junit3");
+		facade.createProject("avl", "junit3");
 		
-		facade.setPathApp("/home/samuel/CODE-APP/jmock-1.1.0");
-		facade.setPathCode("/home/samuel/CODE-APP/jmock-1.1.0/core/src");
-		facade.setPathLib("/home/samuel/CODE-APP/jmock-1.1.0/lib");
-		facade.setPathTest("/home/samuel/CODE-APP/jmock-1.1.0/core/acceptance-tests/core/tests");
+		facade.setPathApp(PathTo.APP_AVL);
+		facade.setPathCode(PathTo.APP_AVL_CODE);
+		facade.setPathLib(PathTo.APP_AVL_LIB);
+		facade.setPathTest(PathTo.APP_AVL_TEST);
 		
 		facade.addTechnique("tmc");
 		facade.addTechnique("rnd");
@@ -414,4 +414,58 @@ public class PriorJFacadeTest {
 		assertFalse(facade.generateFMeasureReport().isEmpty());
 	}
 
+	
+	@Test
+	public void testFacadeRunXMLSecurity() throws Exception{
+		if ( facade.searchProject("xml-security"))
+			facade.removeProject("xml-security");
+		
+		facade.createProject("xml-security", "junit3");
+		
+		facade.setPathApp("C:/Users/xpto/workspace/xml-security");
+		facade.setPathCode("C:/Users/xpto/workspace/xml-security/src");
+		facade.setPathLib("C:/Users/xpto/workspace/xml-security/common/libs");
+		facade.setPathTest("C:/Users/xpto/workspace/xml-security/src_unitTests/org/apache/xml/security/test");
+		
+		facade.addTechnique("tmc");
+		facade.addTechnique("rnd");
+		facade.addTechnique("tsc");
+		facade.addTechnique("amc");
+		facade.addTechnique("asc");
+		
+		facade.runInstrumentation();
+		facade.runCoverage();
+		facade.runReadLog();
+		
+		facade.runPrioritization();
+				
+		assertFalse(facade.generateFMeasureReport().isEmpty());
+	}
+	
+	@Test
+	public void testFacadeRunAppJUnit4() throws Exception{
+		if ( facade.searchProject("app"))
+			facade.removeProject("app");
+		
+		facade.createProject("app", "junit4");
+		
+		facade.setPathApp(PathTo.APP);
+		facade.setPathCode(PathTo.APP_CODE);
+		facade.setPathLib(PathTo.APP_LIB);
+		facade.setPathTest(PathTo.APP_TEST);
+		
+		facade.addTechnique("tmc");
+		facade.addTechnique("rnd");
+		facade.addTechnique("tsc");
+		facade.addTechnique("amc");
+		facade.addTechnique("asc");
+		
+		facade.runInstrumentation();
+		facade.runCoverage();
+		facade.runReadLog();
+		
+		facade.runPrioritization();
+				
+		assertFalse(facade.generateFMeasureReport().isEmpty());
+	}
 }

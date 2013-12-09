@@ -98,6 +98,12 @@ public class PriorJFacade {
 		}
 
 		controllerProject.createNewProject(name, version);
+	
+		//set version to controller priorj.
+		if(version.toLowerCase().equals("junit3"))
+			controllerPriorj.setJUnitVersion(JUnitVersionEnum.JUNIT3);
+		else if (version.toLowerCase().equals("junit4"))
+			controllerPriorj.setJUnitVersion(JUnitVersionEnum.JUNIT4);
 	}
 
 	/**

@@ -36,7 +36,7 @@ public class EmptySetOfTestCaseException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public EmptySetOfTestCaseException(){
-		super("Project Name is Empty!");
+		super("Empty Set of Test Cases!");
 	}
 	
 }

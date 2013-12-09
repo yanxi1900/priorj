@@ -166,8 +166,8 @@ public class GenerateTestSuiteForJUnit4 {
             String tcName = paths[paths.length-1];
 
              String suiteName = caminho.replaceAll("\\.", "").replace(tcName, "");
-            
-        	 code += "\tpublic void "+  generateNameSuite(paths) + "{\n";
+             
+        	 code += "\tpublic void "+  generateNameSuite(paths) + "() {\n";
              code += "\t\ttry{\n";
              code += "\t\t\tJUnitCore jc = new JUnitCore();\n";
              code += "\t\t\tResult result = null;\n";
@@ -176,10 +176,10 @@ public class GenerateTestSuiteForJUnit4 {
              String instance = getPathInstance(paths);
              String requestName = generateRequestName(suiteName, tcName);
              
-             if(!jaInstanciada.contains(suiteName)){
-                 code += "\t\t\tClass "+suiteName+" = Class.forName(\""+instance+"\");\n";
-                 jaInstanciada.add(suiteName);
-             }
+             //if(!jaInstanciada.contains(suiteName)){
+             code += "\t\t\tClass "+suiteName+" = Class.forName(\""+instance+"\");\n";
+             //    jaInstanciada.add(suiteName);
+             //}
              code += "\t\t\tRequest "+requestName+" = Request.method("+suiteName+",\""+tcName+"\");\n";
              code += "\t\t\tresult = jc.run("+requestName+");\n";
              code += "\t\t\tsetResult(\""+tcName+"\",result);\n";  
