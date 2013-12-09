@@ -116,8 +116,8 @@ public class Prioritization {
                 if (blockAffected == null) {
                     try {
                         
-                        System.out.println("path code old" + pathCodeOld);
-                        System.out.println("path code new" + pathCodeNew);
+                       // System.out.println("path code old" + pathCodeOld);
+                       // System.out.println("path code new" + pathCodeNew);
                         
                         blockAffected = checkDifference(pathCodeNew,pathCodeOld);
                         

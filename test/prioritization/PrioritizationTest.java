@@ -18,20 +18,19 @@ package prioritization;
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
+import input.InputParse;
 
-import java.util.LinkedList;
 import java.util.List;
-
-import main.PriorJ;
-import main.PriorJImpl;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import technique.TechniquesEnum;
+import util.PathTo;
 import coverage.TestCase;
+import exception.EmptySetOfTestCaseException;
 
 
 /** 
@@ -43,19 +42,20 @@ import coverage.TestCase;
 public class PrioritizationTest {
 
 	private Prioritization prioritize;
-	private TechniquesEnum technique;
 	private List<TestCase> tests;
-	
+	private String path;
+	private String filename;
 	
 	@Before
 	public void setUp(){
-		tests = new LinkedList<TestCase>();
+		path = PathTo.RESOURCES_PRIORITIZATION_FILES + PathTo.SEPARATOR;
+		filename = "xml-security.txt";
+		path += filename;
 		
-		technique = TechniquesEnum.Random;
-		
-		prioritize = new Prioritization(tests, technique.getId(), "", "");
-		
-
+		InputParse coverage = new InputParse(path, "testsuite");
+		coverage.runParse();
+	
+		tests = coverage.getResultAsTestCase();	
 	}
 	
 	@After
@@ -66,8 +66,52 @@ public class PrioritizationTest {
 	
 	@Test
 	public void testInitialization() {
-		assertNotNull(technique);
 		assertNotNull(prioritize);
 	}
+	
+	@Test
+	public void testTotalTestBeforeAndAfterPrioritizationUsingRandom() throws EmptySetOfTestCaseException{
+		
+		prioritize = new Prioritization(tests,TechniquesEnum.Random.getId() , "", "");
+		
+		prioritize.prioritize();
+		
+		List<String> result = prioritize.assignWeight();
+		
+		assertTrue(tests.size() == result.size());
+	}
+	
+	@Test
+	public void testTotalTestBeforeAndAfterPrioritizationUsingTMC() throws EmptySetOfTestCaseException{
+		prioritize = new Prioritization(tests,TechniquesEnum.TOTAL_METHOD_COVERAGE.getId() , "", "");
+		prioritize.prioritize();
+		List<String> result = prioritize.assignWeight();
+		assertTrue(tests.size() == result.size());
+	}
+	
+	@Test
+	public void testTotalTestBeforeAndAfterPrioritizationUsingTSC() throws EmptySetOfTestCaseException{
+		prioritize = new Prioritization(tests,TechniquesEnum.TOTAL_STATEMENT_COVERAGE.getId() , "", "");
+		prioritize.prioritize();
+		List<String> result = prioritize.assignWeight();
+		assertTrue(tests.size() == result.size());
+	}
+		
+	@Test
+	public void testTotalTestBeforeAndAfterPrioritizationUsingAMC() throws EmptySetOfTestCaseException{
+		prioritize = new Prioritization(tests,TechniquesEnum.ADDITIONAL_METHOD_COVERAGE.getId() , "", "");
+		prioritize.prioritize();
+		List<String> result = prioritize.assignWeight();
+		assertTrue(tests.size() == result.size());
+	}
+	
+	@Test
+	public void testTotalTestBeforeAndAfterPrioritizationUsingASC() throws EmptySetOfTestCaseException{
+		prioritize = new Prioritization(tests,TechniquesEnum.ADDITIONAL_STATEMENT_COVERAGE.getId() , "", "");
+		prioritize.prioritize();
+		List<String> result = prioritize.assignWeight();
+		assertTrue(tests.size() == result.size());
+	}
+	
 	
 }
