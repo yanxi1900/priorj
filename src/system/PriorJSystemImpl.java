@@ -69,6 +69,10 @@ public class PriorJSystemImpl implements PriorJSystem {
      * This path is the dependency libraries.
      */
     private String pathLib = "";
+    /**
+     * This path is data files to tests.
+     */
+    private String pathData = "";
    
     private List blocoAfetado;
     
@@ -93,14 +97,16 @@ public class PriorJSystemImpl implements PriorJSystem {
     * Constructor SystemImpl.
     *
     * @param pathApp  
-    * 			Path where is the application.
+    * 		Path where is the application.
     * @param pathCode 
-    * 			Path where is the source code of the application.
+    * 		Path where is the source code of the application.
     * @param pathTest 
-    * 			Path wave is the test suite.
+    * 		Path wave is the test suite.
+    * @param pathData
+    * 		Path to data files.
     */
-    public PriorJSystemImpl(String pathApp, String pathCode, String pathTest, String pathLib) {
-        this(pathApp, pathCode, pathTest, "", pathLib); 
+    public PriorJSystemImpl(String pathApp, String pathCode, String pathTest, String pathLib, String pathData) {
+        this(pathApp, pathCode, pathTest, "", pathLib, pathData); 
     }
 
    /**
@@ -117,11 +123,12 @@ public class PriorJSystemImpl implements PriorJSystem {
     * @param pathLib 
     * 			Path to the libraries used.
     */
-    public PriorJSystemImpl(String pathApp, String pathCode, String pathTest, String pathCodeNew, String pathLib) {
+    public PriorJSystemImpl(String pathApp, String pathCode, String pathTest, String pathCodeNew, String pathLib, String pathData) {
         this.pathApp = pathApp;
         this.pathCode = pathCode;
         this.pathCodeNew = pathCodeNew;
         this.pathTests = pathTest;
+        this.pathData = pathData;
         
         if (pathLib.isEmpty()) 
         	this.pathLib = "lib";
@@ -130,7 +137,6 @@ public class PriorJSystemImpl implements PriorJSystem {
         
         isCovered = false;
         isInstrumented = false;
-        
     }
     /**
      * Default construct.
@@ -142,7 +148,6 @@ public class PriorJSystemImpl implements PriorJSystem {
     public void instrumentCode(String path) throws Exception {
         InstrumentApp inst = new InstrumentApp(path, pathTests);
         inst.run();
-        
     }
     
     public List checkDifference(String pathCodeNew, String pathCodeOld) throws Exception {
@@ -223,12 +228,11 @@ public class PriorJSystemImpl implements PriorJSystem {
  
     public void deleteAspectosFile() {
         String path = getPathApp() + PathTo.SEPARATOR+ "src" + PathTo.SEPARATOR + "AspectCoverage.aj";
-        
         FileManager.deleteFile(path);
     }
     
     public void executaAnt(String pathApp, String pathCode, String pathTest, String pathLib) {
-        RunAnt run = new RunAnt(pathApp, pathCode, pathTest, pathLib);
+        RunAnt run = new RunAnt(pathApp, pathCode, pathTest, pathLib, pathData);
         run.run();
     }
     
@@ -240,9 +244,7 @@ public class PriorJSystemImpl implements PriorJSystem {
 	        List<TestSuite> suites = (List<TestSuite>) rd.read();
 	        
 	        coverage =  new CoverageReport();
-	        
 	        coverage.buildReport(suites);
-	        
 	        //this method create a coverage file.
 	        //coverage.buildFileConfig(suites);
 	        

@@ -55,7 +55,7 @@ public class RunAntTest {
 		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
 		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
-		runAnt = new RunAnt(app,code, test,lib);
+		runAnt = new RunAnt(app,code, test,lib,"");
 		
 		runAnt.run();
 	}

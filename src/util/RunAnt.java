@@ -38,6 +38,7 @@ public class RunAnt {
 	private String pathCode = "";
 	private String pathTest ="";
 	private String pathLib = "";
+	private String pathData = "";
 	
 	/**
 	 * Default Constructor.
@@ -59,13 +60,16 @@ public class RunAnt {
 	 * 		The build file name
 	 * @param pathLib
 	 * 		The libraries name
+	 * @param 
+	 * 		The path data files.
 	 */
-	public RunAnt(String pathApp, String pathCode, String pathTest, String name, String pathLib){
+	public RunAnt(String pathApp, String pathCode, String pathTest, String name, String pathLib, String pathData){
 		this.pathApp = pathApp;
 		this.pathCode = pathCode;
 		this.pathTest = pathTest;
 		this.fileName = name;
 		this.pathLib = pathLib;
+		this.pathData = pathData;
 	}
 	/**
 	 * This path run the ant.
@@ -78,12 +82,13 @@ public class RunAnt {
 	 * 		the path test
 	 * @param pathLib
 	 * 		the path libraries
+	 * @param
+	 * 		The path data files.
 	 */
-	public RunAnt(String pathApp, String pathCode, String pathTest, String pathLib){
-		this(pathApp, pathCode, pathTest,"buildPriorJ", pathLib);
+	public RunAnt(String pathApp, String pathCode, String pathTest, String pathLib, String pathData){
+		this(pathApp, pathCode, pathTest,"buildPriorJ", pathLib, pathData);
 	}
-	
-	
+		
 	/**
 	 * Run the process build.
 	 */
@@ -102,6 +107,7 @@ public class RunAnt {
 		p.setProperty("pathCode", getPathCode());
 		p.setProperty("pathTest", getPathTest());
 		p.setProperty("pathLib", getPathLib());
+		p.setProperty("pathData", getPathData());
 		p.setUserProperty("ant.file", buildFile.getAbsolutePath());
 		p.init();
 		ProjectHelper helper = ProjectHelper.getProjectHelper();
@@ -114,40 +120,24 @@ public class RunAnt {
 		return pathLib;
 	}
 
-	public void setPathLib(String pathLib) {
-		this.pathLib = pathLib;
-	}
-
 	public String getFileName() {
 		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
 	}
 
 	public String getPathApp() {
 		return pathApp;
 	}
 
-	public void setPathApp(String pathApp) {
-		this.pathApp = pathApp;
-	}
-
 	public String getPathCode() {
 		return pathCode;
-	}
-
-	public void setPathCode(String pathCode) {
-		this.pathCode = pathCode;
 	}
 
 	public String getPathTest() {
 		return pathTest;
 	}
-
-	public void setPathTest(String pathTest) {
-		this.pathTest = pathTest;
+	
+	public String getPathData(){
+		return pathData;
 	}
 
 }

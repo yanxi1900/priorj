@@ -300,7 +300,6 @@ public class PriorJFacadeTest {
 	
 	@Test
 	public void testFacadeRunRBAExtractMethod(){
-		
 		//error here
 	}
 	
@@ -427,6 +426,33 @@ public class PriorJFacadeTest {
 		facade.setPathLib("C:/Users/xpto/workspace/xml-security/common/libs");
 		facade.setPathTest("C:/Users/xpto/workspace/xml-security/src_unitTests/org/apache/xml/security/test");
 		
+		facade.addTechnique("tmc");
+		facade.addTechnique("rnd");
+		facade.addTechnique("tsc");
+		facade.addTechnique("amc");
+		facade.addTechnique("asc");
+		
+		facade.runInstrumentation();
+		facade.runCoverage();
+		facade.runReadLog();
+		
+		facade.runPrioritization();
+				
+		assertFalse(facade.generateFMeasureReport().isEmpty());
+	}
+	
+	@Test
+	public void testFacadeRunXpto() throws Exception{
+		if ( facade.searchProject("xpto"))
+			facade.removeProject("xpto");
+		
+		facade.createProject("xpto", "junit4");
+		
+		facade.setPathApp("C:/Users/xpto/workspace/xpto");
+		facade.setPathCode("C:/Users/xpto/workspace/xpto/src");
+		facade.setPathLib("");
+		facade.setPathTest("C:/Users/xpto/workspace/xpto/test");
+		facade.setPathData("C:/Users/xpto/workspace/xpto/data");
 		facade.addTechnique("tmc");
 		facade.addTechnique("rnd");
 		facade.addTechnique("tsc");

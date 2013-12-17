@@ -95,7 +95,7 @@ public class PriorJSystemTest {
 	
 	@Test
 	public void testConstructWithPaths(){
-		system = new PriorJSystemImpl("myproject", "src", "test", "");
+		system = new PriorJSystemImpl("myproject", "src", "test", "","");
 		assertEquals("myproject", system.getPathApp());
 		assertEquals("src", system.getPathCode());
 		assertEquals("lib", system.getPathLib());
@@ -106,7 +106,7 @@ public class PriorJSystemTest {
 	public void testRunInstrumentation() throws InstrumentationUnrealizedException{
 		String app = PathTo.APP;
 		
-		system = new PriorJSystemImpl(app, "code", "test", "");
+		system = new PriorJSystemImpl(app, "code", "test", "","");
 		system.runInstrumentation();
 		assertTrue(system.isInstrumented());
 	}
@@ -118,7 +118,7 @@ public class PriorJSystemTest {
 		String lib = PathTo.APP_LIB.replace(app + separator, "");
 		String test = PathTo.APP_TEST.replace(app + separator, "");
 		
-		system = new PriorJSystemImpl(app, code, test, lib);
+		system = new PriorJSystemImpl(app, code, test, lib,"");
 			
 		system.copyFiles();
 		
@@ -141,7 +141,7 @@ public class PriorJSystemTest {
 		String lib = PathTo.APP_LIB.replace(app + separator, "");
 		String test = PathTo.APP_TEST.replace(app + separator, "");
 		
-		system = new PriorJSystemImpl(app, code, test, lib);
+		system = new PriorJSystemImpl(app, code, test, lib,"");
 			
 		system.copyFiles();
 		
@@ -163,7 +163,7 @@ public class PriorJSystemTest {
 		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
 		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
-		system = new PriorJSystemImpl(app, code, test, lib);
+		system = new PriorJSystemImpl(app, code, test, lib,"");
 		system.runInstrumentation();
 		system.runCoverage(JUnitVersionEnum.JUNIT4);
 		
@@ -177,7 +177,7 @@ public class PriorJSystemTest {
 		String lib = PathTo.APP_LIB.replace(app + PathTo.SEPARATOR, "");
 		String test = PathTo.APP_TEST.replace(app + PathTo.SEPARATOR, "");
 		
-		system = new PriorJSystemImpl(app, code, test, lib);
+		system = new PriorJSystemImpl(app, code, test, lib,"");
 		system.runInstrumentation();
 		system.runCoverage(JUnitVersionEnum.JUNIT4);
 		

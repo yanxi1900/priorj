@@ -448,6 +448,10 @@ public interface PriorJ {
     * 	path code + path test
     */
 	public String getTotalPathTest();
+	
+	public String getPathData();
+	
+	public void setPathData(String pathData);
    
    /**
     * This method is used by changed blocks technique, to verify

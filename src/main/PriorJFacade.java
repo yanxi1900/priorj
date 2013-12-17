@@ -18,7 +18,6 @@ package main;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,28 +25,18 @@ import java.util.List;
 import exception.*;
 
 import java.awt.ScrollPane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
-import coverage.TestSuite;
+
+import javax.swing.JPanel;
 
 import project.JUnitVersionEnum;
 import project.PriorJProject;
-
 import technique.RefactoringEnum;
 import technique.TechniquesEnum;
-import util.FileManager;
 import util.PathTo;
-
 import controller.PriorJController;
 import controller.ProjectController;
 import controller.RBAController;
-import coverage.ClassCode;
-import coverage.Method;
-import coverage.Statement;
-import coverage.TestCase;
 
 /**
  * This is is a facade to connect GUI with controller.
@@ -260,10 +249,8 @@ public class PriorJFacade {
 	 * @param pathTest
 	 *            the path test.
 	 */
-	public void runTestCoverageReport(String pathApp, String pathCode,
-			String pathLib, String pathTest) {
-		controllerPriorj.runTestCoverageReport(pathApp, pathCode, pathLib,
-				pathTest);
+	public void runTestCoverageReport(String pathApp, String pathCode, String pathLib, String pathTest) {
+		controllerPriorj.runTestCoverageReport(pathApp, pathCode, pathLib,pathTest);
 	}
 
 	/**
@@ -377,8 +364,7 @@ public class PriorJFacade {
 	 * @throws CoverageUnrealizedException
 	 *             AspectJ errors
 	 */
-	public void runCoverage() throws CoverageUnrealizedException,
-			InstrumentationUnrealizedException {
+	public void runCoverage() throws CoverageUnrealizedException,InstrumentationUnrealizedException {
 		controllerPriorj.runCoverage();
 	}
 
@@ -388,8 +374,7 @@ public class PriorJFacade {
 	 * @throws CannotReadLogFileException
 	 *             Log file not generated.
 	 */
-	public void runReadLog() throws CannotReadLogFileException,
-			InstrumentationUnrealizedException, CoverageUnrealizedException {
+	public void runReadLog() throws CannotReadLogFileException,InstrumentationUnrealizedException, CoverageUnrealizedException {
 		controllerPriorj.runReadLog();
 	}
 
@@ -401,8 +386,7 @@ public class PriorJFacade {
 	 */
 	public void runPrioritization() throws Exception {
 		controllerPriorj.runPrioritization();
-		controllerProject.setProjectPaths(getPathApp(), getPathCode(),
-				getPathLib(), getPathTest(), getPathCodeNew());
+		controllerProject.setProjectPaths(getPathApp(), getPathCode(),getPathLib(), getPathTest(), getPathCodeNew());
 	}
 
 	/**
@@ -507,8 +491,7 @@ public class PriorJFacade {
 	 *            the percentage of selection size.
 	 * @return the suite selection.
 	 */
-	public List<String> generateSuiteSelection(String suiteName,
-			String packageName, int size) {
+	public List<String> generateSuiteSelection(String suiteName,String packageName, int size) {
 		String path = PathTo.ORDER + PathTo.SEPARATOR;
 
 		List<List<String>> suites = controllerProject
@@ -532,13 +515,11 @@ public class PriorJFacade {
 	 * @param userSuiteName
 	 *            the suite name given by user.
 	 */
-	public void saveSuiteSelection(List<String> suiteCode, String path,
-			String userSuiteName) {
+	public void saveSuiteSelection(List<String> suiteCode, String path,String userSuiteName) {
 
 		List<String> suiteNames = controllerProject.openSuitesNames();
 
-		controllerPriorj.saveSuiteSelection(path, suiteCode, suiteNames,
-				userSuiteName);
+		controllerPriorj.saveSuiteSelection(path, suiteCode, suiteNames,userSuiteName);
 
 	}
 
@@ -567,8 +548,7 @@ public class PriorJFacade {
 	}
 
 	private void setProjectPathToOpenProject() throws Exception {
-		controllerProject.setProjectPaths(getPathApp(), getPathCode(),
-				getPathLib(), getPathTest(), getPathCodeNew());
+		controllerProject.setProjectPaths(getPathApp(), getPathCode(),getPathLib(), getPathTest(), getPathCodeNew());
 
 	}
 
@@ -717,6 +697,22 @@ public class PriorJFacade {
 	public String getPathCodeNew() {
 		return controllerPriorj.getPathNew();
 	}
+	
+	public void setPathData(String pathData) throws Exception{
+		if (pathData == null)
+			throw new Exception("Invalid test path Data");
+		
+		pathData = parser(pathData);
+
+		if (!controllerPriorj.exist(pathData))
+			throw new Exception("Data path not found");
+		
+		controllerPriorj.setPathData(pathData);
+	}
+	
+	public String getPathData(){
+		return controllerPriorj.getPathData();
+	}
 
 	public boolean isInstrumented() {
 		return controllerPriorj.isInstrumented();
@@ -816,8 +812,6 @@ public class PriorJFacade {
 
 		controllerRBA.run(RefactoringEnum.EXTRAT_METHOD);
 
-		List<String> methodNames = controllerRBA.getMethods();
-
 		List<String> signatures = controllerRBA.getSignatures();
 
 		return signatures;
@@ -874,7 +868,6 @@ public class PriorJFacade {
 
 		controllerRBA.run(RefactoringEnum.PULL_UP_METHOD);
 
-		List<String> methodNames = controllerRBA.getMethods();
 		List<String> signatures = controllerRBA.getSignatures();
 
 		return signatures;
@@ -903,8 +896,6 @@ public class PriorJFacade {
 
 		controllerRBA.run(RefactoringEnum.PULL_UP_FIELD);
 
-		List<String> methodNames = controllerRBA.getMethods();
-
 		List<String> signatures = controllerRBA.getSignatures();
 
 		return signatures;
@@ -928,8 +919,6 @@ public class PriorJFacade {
 		controllerRBA.setClassName(className);
 		controllerRBA.setMethodName(methodName);
 		controllerRBA.run(RefactoringEnum.ADD_PARAMETER);
-
-		List<String> methodNames = controllerRBA.getMethods();
 
 		List<String> signatures = controllerRBA.getSignatures();
 
@@ -981,46 +970,6 @@ public class PriorJFacade {
 		return controllerPriorj.getNumberOfTechniques();
 	}
 
-	/**
-	 * This method return the field value to indicated field from opened
-	 * project.
-	 * 
-	 * @param attribute
-	 * @throws Exception
-	 */
-	public String getAttributesOpenedProject(String attribute) throws Exception {
-
-		if (attribute == null)
-			throw new Exception("Invalid Attribute Null");
-
-		if (attribute.isEmpty())
-			throw new Exception("Empty Project Attribute");
-
-		PriorJProject p = controllerProject.getOpenProject();
-
-		if (attribute.equalsIgnoreCase("name")) {
-			return p.getName();
-		} else if (attribute.equalsIgnoreCase("version")) {
-			return p.getVersion().getName();
-		} else if (attribute.equalsIgnoreCase("pathApp")) {
-			return p.getPathApp();
-		} else if (attribute.equalsIgnoreCase("pathCode")) {
-			return p.getPathCode();
-		} else if (attribute.equalsIgnoreCase("pathLib")) {
-			return p.getPathLib();
-		} else if (attribute.equalsIgnoreCase("pathTest")) {
-			return p.getPathTest();
-		} else if (attribute.equalsIgnoreCase("pathNew")) {
-			return p.getPathCodeNew();
-		} else if (attribute.equalsIgnoreCase("date")) {
-			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-			return formatDate.format(p.getDate().getTime());
-		} else {
-			throw new Exception("Nonexistent Project Attribute");
-		}
-	}
-
-	
 	public String generateFMeasureReport(){
 		return controllerPriorj.generateFMeasureReport();
 	}

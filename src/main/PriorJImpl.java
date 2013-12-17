@@ -75,7 +75,7 @@ public class PriorJImpl implements PriorJ {
 
 	private List<String> blockAffected;
 
-	private String pathApp = "", pathCode = "", pathLib = "", pathTest = "", pathCodeNew = "";
+	private String pathApp = "", pathCode = "", pathLib = "", pathTest = "", pathCodeNew = "", pathData="";
 
 	private List<TechniquesEnum> techniques;
 
@@ -116,8 +116,9 @@ public class PriorJImpl implements PriorJ {
 		pathCode = pathCode.replace(pathApp + PathTo.SEPARATOR, "");
 		pathLib = pathLib.replace(pathApp + PathTo.SEPARATOR, "");
 		pathTest = pathTest.replace(pathApp + PathTo.SEPARATOR, "");
-				
-		system = new PriorJSystemImpl(pathApp, pathCode, pathTest, pathCodeNew, pathLib);
+		pathData = pathData.replace(pathApp + PathTo.SEPARATOR,"");
+		
+		system = new PriorJSystemImpl(pathApp, pathCode, pathTest, pathCodeNew, pathLib, pathData);
 		
 		setInitialized();
 	}
@@ -484,58 +485,7 @@ public class PriorJImpl implements PriorJ {
 		return tests;
 	}
 
-	public void setPathApplication(String pathApplication) {
-		this.pathApp = pathApplication;
-	}
 
-	public String getPathApplication() {
-		return this.pathApp;
-	}
-
-	public void setPathCode(String pathCode) {
-		this.pathCode = pathCode;
-	}
-
-	public String getPathCode() {
-		return this.pathCode;
-	}
-
-	public void setPathLibraries(String pathLibraries) {
-		this.pathLib = pathLibraries;
-	}
-
-	public String getPathLibraries() {
-		return this.pathLib;
-	}
-
-	public void setPathTests(String pathTests) {
-		this.pathTest = pathTests;
-	}
-
-	public String getPathTests() {
-		return this.pathTest;
-	}
-
-	public void setPathCodeNew(String pathCodeNew) {
-		this.pathCodeNew = pathCodeNew;
-	}
-	
-	public String getPathCodeNew() {
-		return this.pathCodeNew;
-	}
-
-
-	public String getTotalPathCode(){
-		return system.getTotalPathCode();
-	}
-	
-	public String getTotalPathTest(){
-		return system.getTotalPathTests();
-	}
-	
-	public void setPrioritizationTechniques(List<TechniquesEnum> technques) {
-		this.techniques = techniques;
-	}
 
 	public void addPrioritizationTechnique(TechniquesEnum technique) throws Exception {
 		if (techniques.contains(technique))
@@ -858,10 +808,69 @@ public class PriorJImpl implements PriorJ {
 		return getPrioritizedTestPositionByTechnique(PathTo.ORDER, testCaseName, technique);
 	}
 	
-	
 	public void saveFMeasureReport(String report){
 		WriteFile w = new WriteFile("fmeasure", "txt");
 		w.write(report);
+	}
+	
+	public void setPathApplication(String pathApplication) {
+		this.pathApp = pathApplication;
+	}
+
+	public String getPathApplication() {
+		return this.pathApp;
+	}
+
+	public void setPathCode(String pathCode) {
+		this.pathCode = pathCode;
+	}
+
+	public String getPathCode() {
+		return this.pathCode;
+	}
+
+	public void setPathLibraries(String pathLibraries) {
+		this.pathLib = pathLibraries;
+	}
+
+	public String getPathLibraries() {
+		return this.pathLib;
+	}
+
+	public void setPathTests(String pathTests) {
+		this.pathTest = pathTests;
+	}
+
+	public String getPathTests() {
+		return this.pathTest;
+	}
+
+	public void setPathCodeNew(String pathCodeNew) {
+		this.pathCodeNew = pathCodeNew;
+	}
+	
+	public String getPathCodeNew() {
+		return this.pathCodeNew;
+	}
+
+	public void setPathData(String pathData){
+		this.pathData = pathData;
+	}
+	
+	public String getPathData(){
+		return this.pathData;
+	}
+
+	public String getTotalPathCode(){
+		return system.getTotalPathCode();
+	}
+	
+	public String getTotalPathTest(){
+		return system.getTotalPathTests();
+	}
+	
+	public void setPrioritizationTechniques(List<TechniquesEnum> technques) {
+		this.techniques = techniques;
 	}
 	
 }

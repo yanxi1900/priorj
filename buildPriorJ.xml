@@ -4,17 +4,21 @@
 	<property name="pathCode" value=""/>
 	<property name="pathTest" value=""/>
 	<property name="pathLib" value=""/>
-
-	<property name="src" value="${pathApp}/${pathCode}"/>
-	<property name="tests" value="${pathApp}/${pathTest}"/>
-	<property name="build" value="${pathApp}/build"/>
+	<property name="pathData" value=""/>
+	
+	<property name="src" 		 value="${pathApp}/${pathCode}"/>
+	<property name="tests" 		 value="${pathApp}/${pathTest}"/>
+	<property name="build" 		 value="${pathApp}/build"/>
 	<property name="classes.dir" value="${build}/"/>
 	<property name="lib.dir"     value="${pathApp}/${pathLib}"/>
-	<property name="report"     value="report"/>
-	<property name="order" 	    value="report/order"/>
-	<property name="suites"	    value="report/suites"/>
+	<property name="data.dir" 	 value="${pathApp}/${pathData}"/>
+	<property name="report"      value="report"/>
+	<property name="workspace"   value="workspace" />
+	<property name="order" 	     value="report/order"/>
+	<property name="suites"	     value="report/suites"/>
 	<property name="jar.dir"     value="${pathApp}/dist"/>
 	<property name="main-class"  value=""/>
+	
 
 	<path id="master-classpath">
 	    <pathelement path="${build}"/>
@@ -24,6 +28,11 @@
 		<fileset dir="${lib.dir}" includes="**/*.jar"/>
 	</path>
 	
+	<!-- Define the classpath which includes the tests resources -->
+	<path id="data.resources.path">
+		<fileset dir="${data.dir}" />
+	</path>
+		
 	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
 
 	<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
@@ -35,7 +44,9 @@
 	<target name="clean">
 		<delete dir="${build}"/>
 		<delete dir="${report}"/>
-		
+		<delete dir="${order}"/>
+		<delete dir="${suites}"/>
+		<!-- <delete dir="${workspace}" /> -->
 	</target>
 	
 	<target name="compile">
@@ -43,13 +54,22 @@
 		<mkdir dir="${report}"/>
 		<mkdir dir="${order}"/>
 		<mkdir dir="${suites}"/>
-			
+		<!-- <mkdir dir="${workspace}"/> -->
+
 		<iajc destdir="${build}" sourceroots="${pathApp}" classpathref="classpath" source="1.6">
 			<include name="**/*.java"/>
 			<classpath>
 				<pathelement location="lib/aspectjrt.jar"/>
 			</classpath>
+			<classpath refid="data.resources.path" />
 		</iajc>
+		<!--
+		<copy todir="${build}" >
+	      <fileset dir="${tests}" includes="**/*.properties" />
+	      <fileset dir="${tests}" includes="**/*.xml" />
+	      <fileset dir="${tests}" includes="**/*.zip" /> 
+	    </copy>
+		-->
 	</target>
 	
 	<target name="jar" depends="compile">
@@ -59,21 +79,22 @@
 					<attribute name="Main-Class" value="${main-class}"/>
 				</manifest>
 			</jar>
-		</target>
+	</target>
 	
 	<target name="junit" depends="jar">
 		<junit  printsummary="yes" haltonfailure="false" fork="yes">
 	        <classpath >
 	            <path refid="classpath"/>
 	            <path refid="application"/>
+	        	<path refid="data.resources.path"/>
 	        </classpath>
 	        	
 	        <batchtest fork="yes" todir="${report}">
 	            <fileset dir="${build}">
 					<include name="**/*Test.class"/>
 					
-	               	<exclude name="**/*All*.class"/>
-	               	<exclude name="**/*Suite*.class"/>
+	                <exclude name="**/*All*.class"/>
+	                <exclude name="**/*Suite*.class"/>
 	               	<exclude name="**/*Abstract*.class"/>
 	            </fileset>
 	        </batchtest>

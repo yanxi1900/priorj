@@ -63,6 +63,7 @@ public class PriorJController {
     private String path = "";
     private String pathTests="";
     private String pathLib="";
+    private String pathData = "";
     
     /**
      * The priorJ
@@ -119,6 +120,7 @@ public class PriorJController {
         priorj.setPathLibraries(pathLib);
         priorj.setPathTests(pathTests);
         priorj.setPathCodeNew(pathNew);
+        priorj.setPathData(pathData);
     }
     /**
      * Generate the APFD chart.
@@ -425,6 +427,14 @@ public class PriorJController {
 
     public void setPathLib(String pathLib) {
         this.pathLib = pathLib;
+    }
+    
+    public void setPathData(String pathData){
+    		this.pathData = pathData;
+    }
+    
+    public String getPathData(){
+    	return this.pathData;
     }
 
     public  String openCoverageReport(){
