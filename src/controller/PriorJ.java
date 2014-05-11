@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manager.Coverage;
+import technique.EmptySetOfTestCaseException;
 import technique.TechniqueCreator;
+import technique.Technique;
 
 import com.java.io.JavaIO;
 
@@ -163,4 +165,18 @@ public class PriorJ {
 		return coverage.getAllTests(suites);
 	}
 
+	/**
+	 * 
+	 * @param totalMethodCoverage
+	 * @param allTests
+	 * @return
+	 * @throws EmptySetOfTestCaseException 
+	 */
+	public List<String> prioritize(int typeOfTechnique, List<TestCase> allTests) throws EmptySetOfTestCaseException {
+		TechniqueCreator creator = new TechniqueCreator();
+		Technique technique = creator.create(typeOfTechnique);
+		return technique.prioritize(allTests);
+	}
+	
+	
 }

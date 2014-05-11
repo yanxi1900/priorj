@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import technique.EmptySetOfTestCaseException;
 import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
@@ -135,5 +136,20 @@ public class PriorJTest {
 		allSuites.get(1).add(suite2);
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
+	}
+	
+	@Test
+	public void shouldPrioritizeWithOnlyOneTechnique() throws EmptySetOfTestCaseException{
+		TestSuite suite1 = new TestSuite("org", "SuiteA");
+		suite1.addTestCase(new TestCase("testA"));
+		TestSuite suite2 = new TestSuite("org", "SuiteB");
+		suite2.addTestCase(new TestCase("testB"));
+		suite2.addTestCase(new TestCase("testC"));
+		allSuites.get(0).add(suite1);
+		allSuites.get(1).add(suite2);
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		List<TestCase> allTests = priorj.getTestCases(suites);
+		List<String> prioritized = priorj.prioritize(TechniqueCreator.TOTAL_METHOD_COVERAGE, allTests);
+		assertTrue(!prioritized.isEmpty());
 	}
 }
