@@ -149,7 +149,20 @@ public class PriorJTest {
 		allSuites.get(1).add(suite2);
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
-		List<String> prioritized = priorj.prioritize(TechniqueCreator.TOTAL_METHOD_COVERAGE, allTests);
-		assertTrue(!prioritized.isEmpty());
+		List<String> result = priorj.prioritize(TechniqueCreator.RANDOM, allTests);
+		assertTrue(!result.isEmpty());
 	}
+	
+	@Test
+	public void shouldAllowTheUserSetAnProjectInTheLocalBaseToSaveWork(){
+		priorj.setProjectName("project1");
+		assertEquals("project1", priorj.getProjectName());		
+	}
+	
+	
+//	@Test
+//	public void shouldPrioritizeWithManyTechniques(){
+//		priorj.setProjectName("project");
+//		priorj.prioritizeAll();
+//	}
 }

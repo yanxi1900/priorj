@@ -24,7 +24,8 @@ public class PriorJ {
 	private static PriorJ instance;
 	private static List<Integer> techniques;
 	
-	String localbase;
+	private String localbase;
+	private String projectName;
 	
 	public static PriorJ getInstance(){
 		if (PriorJ.instance == null){
@@ -176,6 +177,15 @@ public class PriorJ {
 		TechniqueCreator creator = new TechniqueCreator();
 		Technique technique = creator.create(typeOfTechnique);
 		return technique.prioritize(allTests);
+	}
+
+	
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	
+	public String getProjectName(){
+		return this.projectName;
 	}
 	
 	
