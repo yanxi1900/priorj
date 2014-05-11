@@ -3,9 +3,12 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import manager.Coverage;
 import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
+
+import coverage.TestSuite;
 
 /**
  * Class PriorJ priorization of JUnit Test Cases. 
@@ -88,15 +91,6 @@ public class PriorJ {
 			techniques.remove(index);
 		}
 	}
-	
-	/**
-	 * This method open the xml file in the local base.
-	 * 
-	 * @return
-	 */
-//	public List<List> readCoverageFile(String projectName){
-//		
-//	}
 
 	/**
 	 * The list of selected Techniques Types.
@@ -144,6 +138,17 @@ public class PriorJ {
 		@SuppressWarnings("unchecked")
 		List<List> coverage = (List<List>) JavaIO.getObjectFromXML(filePath);
 		return coverage;
+	}
+
+	/**
+	 * Getting a list with all suites.
+	 * 
+	 * @param allSuites
+	 * @return
+	 */
+	public List<TestSuite> getTestSuites(List<List> allSuites) {
+		Coverage coverage = new Coverage();
+		return coverage.getSuiteList(allSuites);
 	}
 
 }

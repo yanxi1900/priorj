@@ -24,10 +24,14 @@ import coverage.TestSuite;
 public class PriorJTest {
 	
 	private PriorJ priorj;
+	List<List> allSuites = new ArrayList<List>();
 	
 	@Before
 	public void setUp(){
 		priorj = PriorJ.getInstance();
+		allSuites.add(new ArrayList<TestSuite>());
+		allSuites.add(new ArrayList<TestSuite>());
+		allSuites.add(new ArrayList<TestSuite>());
 	}
 	
 	@After
@@ -96,10 +100,6 @@ public class PriorJTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldSaveCoverageDataAnyWhere(){
-		List<List> allSuites = new ArrayList<List>();
-		allSuites.add(new ArrayList<TestSuite>());
-		allSuites.add(new ArrayList<TestSuite>());
-		allSuites.add(new ArrayList<TestSuite>());
 		priorj.saveCoverageData("c:/tests/tdd/","coverage.xml", allSuites);
 		assertTrue(JavaIO.exist("c:/tests/tdd/coverage.xml"));
 	}
@@ -107,12 +107,18 @@ public class PriorJTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldOpenCoverageFile(){
-		List<List> allSuites = new ArrayList<List>();
-		allSuites.add(new ArrayList<TestSuite>());
-		allSuites.add(new ArrayList<TestSuite>());
 		priorj.saveCoverageData("c:/tests/tdd/open/","coverage.xml", allSuites);
-		
 		List<List> coverage = priorj.openCoverageData("c:/tests/tdd/open/coverage.xml");
-		assertTrue(coverage.size() == 2);
+		assertTrue(coverage.size() == 3);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldGetListOfTestSuite(){
+		allSuites.get(0).add(new TestSuite("org", "SuiteA"));
+		allSuites.get(1).add(new TestSuite("org", "SuiteB"));
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		assertTrue(suites.size()==2);
 	}
 }
