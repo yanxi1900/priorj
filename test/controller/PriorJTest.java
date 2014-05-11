@@ -18,7 +18,7 @@ public class PriorJTest {
 	
 	@Before
 	public void setUp(){
-		priorj = new PriorJ();
+		priorj = PriorJ.getInstance();
 	}
 	
 	@After
