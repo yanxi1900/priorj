@@ -1,8 +1,0 @@
-............: Prioritization Order Total Method Coverage :..............
-1 - tests.AVLTest.testInsercao()
-2 - tests.AVLTest.testAltura()
-3 - tests.AVLTest.testInsercaoCondicoesLimite()
-4 - tests.AVLTest.testPesquisa()
-5 - tests.AVLTest.testPesquisaCondicoesLimite()
-6 - tests.AVLTest.testEstadoInicial()
-
