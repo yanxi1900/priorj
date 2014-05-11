@@ -1,4 +1,7 @@
 package controller;
+
+import com.java.io.JavaIO;
+
 /**
  * Class PriorJ priorization of JUnit Test Cases. 
  *  
@@ -22,9 +25,11 @@ public class PriorJ {
 	 * Set the location where the artifacts should be saved.
 	 * 
 	 * @param localbase
+	 * @throws Exception 
 	 */
-	public void setLocalBasePath(String localbase) {
+	public void setLocalBasePath(String localbase) throws Exception {
 		this.localbase = localbase;
+		createLocalbase(localbase);
 	}
 
 	/**
@@ -34,6 +39,15 @@ public class PriorJ {
 	 */
 	public String getLocalBasePath() {
 		return localbase;
+	}
+	
+	private void createLocalbase(String path) throws Exception {
+		if (path != null && !path.isEmpty()){
+			JavaIO.createFolder(path);
+		}
+		else{
+			throw new Exception("Invalid Path!");
+		}
 	}
 
 }
