@@ -78,6 +78,27 @@ public class PriorJ {
 	}
 	
 	/**
+	 * Removing a selected technique.
+	 * 
+	 * @param typeOfTechnique
+	 */
+	public void removeTechnique(int typeOfTechnique){
+		if (techniques.contains(typeOfTechnique)){
+			int index = techniques.indexOf(typeOfTechnique);
+			techniques.remove(index);
+		}
+	}
+
+	/**
+	 * The list of selected Techniques Types.
+	 * 
+	 * @return
+	 */
+	public List<Integer> getTechniques() {
+		return techniques;
+	}
+
+	/**
 	 * Creating the local base folder.
 	 * 
 	 * @param path
@@ -91,15 +112,5 @@ public class PriorJ {
 			throw new Exception("Invalid Path!");
 		}
 	}
-
-	/**
-	 * The list of selected Techniques Types.
-	 * 
-	 * @return
-	 */
-	public List<Integer> getTechniques() {
-		return techniques;
-	}
-
 
 }

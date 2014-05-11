@@ -63,5 +63,25 @@ public class PriorJTest {
 		
 		assertTrue(priorj.getTechniques().size()==6);
 	}
-	
+
+	@Test
+	public void shouldAllowTheUserRemoveTechniques(){
+		priorj.addTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.CHANGED_BLOCKS);
+		priorj.addTechnique(TechniqueCreator.RANDOM);
+		priorj.addTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
+		
+		assertTrue(priorj.getTechniques().size()==6);
+		
+		priorj.removeTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
+		priorj.removeTechnique(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
+		priorj.removeTechnique(TechniqueCreator.CHANGED_BLOCKS);
+		priorj.removeTechnique(TechniqueCreator.RANDOM);
+		priorj.removeTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
+		priorj.removeTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
+		
+		assertTrue(priorj.getTechniques().size()==0);
+	}
 }
