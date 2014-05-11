@@ -129,8 +129,21 @@ public class PriorJ {
 	 * @param fileName
 	 * @param allSuites
 	 */
-	public void saveCoverageData(String localPath, String fileName,	List<List> allSuites) {
+	public void saveCoverageData(String localPath, String fileName,	@SuppressWarnings("rawtypes") List<List> allSuites) {
 		JavaIO.saveObjectToXML(localPath, fileName, allSuites, false);
+	}
+
+	/**
+	 * Opening the coverage file and retrieve coverage data.
+	 * 
+	 * @param filePath
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public List<List> openCoverageData(String filePath) {
+		@SuppressWarnings("unchecked")
+		List<List> coverage = (List<List>) JavaIO.getObjectFromXML(filePath);
+		return coverage;
 	}
 
 }

@@ -93,6 +93,7 @@ public class PriorJTest {
 		assertTrue(priorj.getTechniques().size()==0);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldSaveCoverageDataAnyWhere(){
 		List<List> allSuites = new ArrayList<List>();
@@ -103,8 +104,15 @@ public class PriorJTest {
 		assertTrue(JavaIO.exist("c:/tests/tdd/coverage.xml"));
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Test
-	public void shouldOpenTheCoverageFile(){
-		//List<List> coverage = priorj.openCoverageFile("c:/tests/coverage");
+	public void shouldOpenCoverageFile(){
+		List<List> allSuites = new ArrayList<List>();
+		allSuites.add(new ArrayList<TestSuite>());
+		allSuites.add(new ArrayList<TestSuite>());
+		priorj.saveCoverageData("c:/tests/tdd/open/","coverage.xml", allSuites);
+		
+		List<List> coverage = priorj.openCoverageData("c:/tests/tdd/open/coverage.xml");
+		assertTrue(coverage.size() == 2);
 	}
 }
