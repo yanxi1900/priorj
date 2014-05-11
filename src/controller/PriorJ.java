@@ -88,6 +88,15 @@ public class PriorJ {
 			techniques.remove(index);
 		}
 	}
+	
+	/**
+	 * This method open the xml file in the local base.
+	 * 
+	 * @return
+	 */
+//	public List<List> readCoverageFile(String projectName){
+//		
+//	}
 
 	/**
 	 * The list of selected Techniques Types.
@@ -111,6 +120,17 @@ public class PriorJ {
 		else{
 			throw new Exception("Invalid Path!");
 		}
+	}
+
+	/**
+	 * This method save Coverage Data to XML file.
+	 * 
+	 * @param localPath
+	 * @param fileName
+	 * @param allSuites
+	 */
+	public void saveCoverageData(String localPath, String fileName,	List<List> allSuites) {
+		JavaIO.saveObjectToXML(localPath, fileName, allSuites, false);
 	}
 
 }

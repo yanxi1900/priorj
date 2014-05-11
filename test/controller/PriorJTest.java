@@ -2,6 +2,9 @@ package controller;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +12,8 @@ import org.junit.Test;
 import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
+
+import coverage.TestSuite;
 
 /**
  * Testing the PriorJ Class.
@@ -80,8 +85,26 @@ public class PriorJTest {
 		priorj.removeTechnique(TechniqueCreator.CHANGED_BLOCKS);
 		priorj.removeTechnique(TechniqueCreator.RANDOM);
 		priorj.removeTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
+		
+		assertTrue(priorj.getTechniques().get(0)==TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
+		
 		priorj.removeTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
 		
 		assertTrue(priorj.getTechniques().size()==0);
+	}
+	
+	@Test
+	public void shouldSaveCoverageDataAnyWhere(){
+		List<List> allSuites = new ArrayList<List>();
+		allSuites.add(new ArrayList<TestSuite>());
+		allSuites.add(new ArrayList<TestSuite>());
+		allSuites.add(new ArrayList<TestSuite>());
+		priorj.saveCoverageData("c:/tests/tdd/","coverage.xml", allSuites);
+		assertTrue(JavaIO.exist("c:/tests/tdd/coverage.xml"));
+	}
+	
+	@Test
+	public void shouldOpenTheCoverageFile(){
+		//List<List> coverage = priorj.openCoverageFile("c:/tests/coverage");
 	}
 }
