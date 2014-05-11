@@ -8,6 +8,7 @@ import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
 
+import coverage.TestCase;
 import coverage.TestSuite;
 
 /**
@@ -141,7 +142,7 @@ public class PriorJ {
 	}
 
 	/**
-	 * Getting a list with all suites.
+	 * Getting a list with all  Test Suites.
 	 * 
 	 * @param allSuites
 	 * @return
@@ -149,6 +150,17 @@ public class PriorJ {
 	public List<TestSuite> getTestSuites(List<List> allSuites) {
 		Coverage coverage = new Coverage();
 		return coverage.getSuiteList(allSuites);
+	}
+
+	/**
+	 * Getting a list with all Test Cases.
+	 * 
+	 * @param suites
+	 * @return
+	 */
+	public List<TestCase> getTestCases(List<TestSuite> suites) {
+		Coverage coverage = new Coverage();
+		return coverage.getAllTests(suites);
 	}
 
 }

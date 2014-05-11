@@ -13,6 +13,7 @@ import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
 
+import coverage.TestCase;
 import coverage.TestSuite;
 
 /**
@@ -120,5 +121,19 @@ public class PriorJTest {
 		allSuites.get(1).add(new TestSuite("org", "SuiteB"));
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		assertTrue(suites.size()==2);
+	}
+	
+	@SuppressWarnings({ "unchecked", "unused" })
+	@Test
+	public void shouldGetListOfAllTestCases(){
+		TestSuite suite1 = new TestSuite("org", "SuiteA");
+		suite1.addTestCase(new TestCase("testA"));
+		TestSuite suite2 = new TestSuite("org", "SuiteB");
+		suite2.addTestCase(new TestCase("testB"));
+		suite2.addTestCase(new TestCase("testC"));
+		allSuites.get(0).add(suite1);
+		allSuites.get(1).add(suite2);
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		List<TestCase> allTests = priorj.getTestCases(suites);
 	}
 }
