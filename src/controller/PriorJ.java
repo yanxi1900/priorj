@@ -24,13 +24,18 @@ public class PriorJ {
 	private static PriorJ instance;
 	private static List<Integer> techniques;
 	
-	private String localbase = "";
-	private String projectFolderName = "";
-
+	private static String localbase;
+	private static String projectFolder;
+	private static String versionFolder;
+	
+	private final String slash = JavaIO.SEPARATOR;
 	
 	public static PriorJ getInstance(){
 		if (PriorJ.instance == null){
 			techniques = new ArrayList<Integer>();
+			localbase = "";
+			projectFolder = "";
+			versionFolder = "";
 			PriorJ.instance = new PriorJ();
 		}
 		return PriorJ.instance;
@@ -158,7 +163,7 @@ public class PriorJ {
 	
 	
 	public String getProjectFolderName(){
-		return this.projectFolderName;
+		return this.projectFolder;
 	}
 	
 	
@@ -186,8 +191,37 @@ public class PriorJ {
 	public void createProjectFolder(String folderName) throws Exception{
 		if(localbase.isEmpty())
 			throw new Exception("Set local base path!");
-		this.projectFolderName = folderName;
-		JavaIO.createFolder(localbase+JavaIO.SEPARATOR+folderName);
+		
+		this.projectFolder = folderName;
+		JavaIO.createFolder(localbase+slash+folderName);
+	}
+
+	/**
+	 * Create a sub folder to save prioritized version to same project.
+	 * 
+	 * @param projectFolder
+	 * @param versionFolder
+	 * @throws Exception 
+	 */
+	public void createFolderVersion(String projectFolder, String versionFolder) throws Exception {
+		if (localbase.isEmpty())
+			throw new Exception("Set local base path!");
+		
+		if ( validate(projectFolder) && validate(versionFolder)){
+			this.projectFolder = projectFolder;
+			this.versionFolder  = versionFolder;
+			JavaIO.createFolder(localbase+slash+projectFolder+slash+versionFolder);
+		}
 	}
 	
+	
+	/**
+	 * Basic validation to a system path!
+	 * 
+	 * @param path
+	 * @return
+	 */
+	private boolean validate(String path){
+		return path != null && !path.isEmpty();
+	}
 }

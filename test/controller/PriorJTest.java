@@ -26,6 +26,7 @@ import coverage.TestSuite;
 public class PriorJTest {
 	
 	private PriorJ priorj;
+	
 	@SuppressWarnings("rawtypes")
 	List<List> allSuites = new ArrayList<List>();
 	
@@ -155,19 +156,31 @@ public class PriorJTest {
 	}
 	
 	@Test
-	public void shouldAllowTheUserSetAnProjectInTheLocalBaseToSaveWork() throws Exception{
+	public void shouldAllowTheUserGetCurrentProjectName() throws Exception{
 		priorj.createProjectFolder("project1");
 		assertEquals("project1", priorj.getProjectFolderName());		
 	}
 	
 	@Test
-	public void shouldCreateFolderProjectInLocalBaseWhenSetValue() throws Exception{
+	public void shouldCreateFolderProjectInLocalBase() throws Exception{
 		priorj.createLocalbase("c:/tests/tdd/");
 		priorj.createProjectFolder("project1");
 		assertTrue(JavaIO.exist("c:/tests/tdd/project1"));
 	}
 	
+//	@Test (expected = Exception.class)
+//	public void shouldThrowExceptionWhenTryCreateProjectFolderWithoutLocalbase() throws Exception{
+//		priorj.createProjectFolder("my_project_yvi");
+//		assertTrue(priorj.getLocalBasePath().isEmpty());
+//	}
 	
+	
+	@Test
+	public void shouldCreateProjectSubVersion() throws Exception{
+		priorj.createLocalbase("c:/tests/");
+		priorj.createFolderVersion("my_project", "my_version");
+		assertTrue(JavaIO.exist("c:/tests/my_project/my_version"));
+	}
 	
 //	@Test
 //	public void shouldPrioritizeWithManyTechniques(){
