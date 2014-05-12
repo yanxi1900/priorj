@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manager.Coverage;
+import report.GenerateExecutionOrderReport;
+import report.GenerateTestSuite;
 import technique.EmptySetOfTestCaseException;
-import technique.TechniqueCreator;
 import technique.Technique;
+import technique.TechniqueCreator;
 
 import com.java.io.JavaIO;
 
@@ -26,6 +28,7 @@ public class PriorJ {
 	
 	private static String localbase;
 	private static String projectFolder;
+	@SuppressWarnings("unused")
 	private static String versionFolder;
 	
 	private final String slash = JavaIO.SEPARATOR;
@@ -161,7 +164,28 @@ public class PriorJ {
 		return technique.prioritize(allTests);
 	}
 	
+	/**
+	 * This method prioritize with many techniques simultaneously.
+	 * @throws Exception 
+	 * 
+	 */
+	public void prioritizeAll(List<TestCase> allTests) throws Exception {
+		//List<TestCase> tests = openCoverageReport().getTestCases();
+		for (Integer typeOfTechnique : techniques){
+			//getting the suite names
+			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
+			//prioritize the tests.
+			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
+			//saving the produced artifacts
+			//String order = createOrder(typeOfTechnique, prioritizedList);
+			//saveOrder(acronyms, order);
+			//String suite = createSuite(acronyms, prioritizedList);
+			//saveSuite(acronyms, suite);
+		}
+	}
 	
+	
+	@SuppressWarnings("static-access")
 	public String getProjectFolderName(){
 		return this.projectFolder;
 	}
@@ -173,6 +197,7 @@ public class PriorJ {
 	 * @param path
 	 * @throws Exception
 	 */
+	@SuppressWarnings("static-access")
 	public void createLocalbase(String path) throws Exception {
 		if (path != null && !path.isEmpty()){
 			this.localbase = path;
@@ -188,6 +213,7 @@ public class PriorJ {
 	 * 
 	 * @throws Exception
 	 */
+	@SuppressWarnings("static-access")
 	public void createProjectFolder(String folderName) throws Exception{
 		if(localbase.isEmpty())
 			throw new Exception("Set local base path!");
@@ -203,6 +229,7 @@ public class PriorJ {
 	 * @param versionFolder
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("static-access")
 	public void createFolderVersion(String projectFolder, String versionFolder) throws Exception {
 		if (localbase.isEmpty())
 			throw new Exception("Set local base path!");
@@ -224,4 +251,46 @@ public class PriorJ {
 	private boolean validate(String path){
 		return path != null && !path.isEmpty();
 	}
+
+	
+	/**
+	 * This method create a prioritized test suite from a list of tests.
+	 * 
+	 * @param suiteName
+	 *  the suite name
+	 * @param tests
+	 *  the prioritized test order
+	 * @return
+	 *  the suite code
+	 * @throws Exception 
+	 */
+	public String createSuite(String suiteName, List<String> tests) throws Exception{
+		return GenerateTestSuite.generate("tests", suiteName, tests);
+	}
+	
+	/**
+	 * Create the order report.
+	 * 
+	 * @param listTests
+	 *   a list of prioritized tests names.
+	 *   
+	 * @return
+	 *  the order report.
+	 *  
+	 * @throws Exception 
+	 */
+	public String createOrderReport(int typeOfTechnique, List<String> listTests) throws Exception {
+		return GenerateExecutionOrderReport.create(typeOfTechnique,listTests);
+	}
+
+	/**
+	 * This method save 
+	 * @param string
+	 * @param report
+	 */
+	public void save(String filename, String content) {
+		JavaIO.createTextFile(localbase+slash+projectFolder+ slash +versionFolder, filename, content, false);
+	}
+	
+	
 }

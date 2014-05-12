@@ -2,7 +2,9 @@ package controller;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -182,9 +184,62 @@ public class PriorJTest {
 		assertTrue(JavaIO.exist("c:/tests/my_project/my_version"));
 	}
 	
-//	@Test
-//	public void shouldPrioritizeWithManyTechniques(){
-//		priorj.setProjectName("project");
-//		priorj.prioritizeAll();
-//	}
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldPrioritizeWithManyTechniques() throws Exception{
+		TestSuite suite1 = new TestSuite("org", "SuiteA");
+		suite1.addTestCase(new TestCase("testA"));
+		TestSuite suite2 = new TestSuite("org", "SuiteB");
+		suite2.addTestCase(new TestCase("testB"));
+		suite2.addTestCase(new TestCase("testC"));
+		allSuites.get(0).add(suite1);
+		allSuites.get(1).add(suite2);
+		
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		List<TestCase> allTests = priorj.getTestCases(suites);
+		
+		priorj.createLocalbase("c:/tests");
+		priorj.createFolderVersion("new-project", "one-version");
+		priorj.prioritizeAll(allTests);
+	}
+	
+	@Test
+	public void shouldCreateOrderReport() throws Exception {
+		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
+		assertTrue(report.contains("1 - testY"));
+		assertTrue(report.contains("2 - testD"));
+		assertTrue(report.contains("3 - testB"));
+		assertTrue(report.contains("4 - testX"));
+	}
+	
+	@Test   
+	public void shouldCreateSuite() throws Exception {
+		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+		String suiteName = TechniqueCreator.acronyms(TechniqueCreator.CHANGED_BLOCKS);
+		String suitecode = priorj.createSuite(suiteName, results);
+		assertTrue(suitecode.contains("class CB"));
+	}
+	
+	@Test
+	public void shouldSavePrioritizationOrder() throws Exception{
+		priorj.createLocalbase("c:/tests");
+		priorj.createFolderVersion("Open-half-One", "priorVersion1");
+		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+		String report = priorj.createOrderReport(TechniqueCreator.RANDOM, results);
+		priorj.save("RND.txt", report);	
+		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/RND.txt"));
+	}
+	
+
+	@Test
+	public void shouldSaveSuites() throws Exception{
+		priorj.createLocalbase("c:/tests");
+		priorj.createFolderVersion("Open-half-One", "priorVersion1");
+		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+		String suitecode = priorj.createSuite("MySuite", results);
+		priorj.save("MySuite.java",suitecode);	
+		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/MySuite.java"));
+	}
+	
 }
