@@ -24,8 +24,9 @@ public class PriorJ {
 	private static PriorJ instance;
 	private static List<Integer> techniques;
 	
-	private String localbase;
-	private String projectName;
+	private String localbase = "";
+	private String projectFolderName = "";
+
 	
 	public static PriorJ getInstance(){
 		if (PriorJ.instance == null){
@@ -33,17 +34,6 @@ public class PriorJ {
 			PriorJ.instance = new PriorJ();
 		}
 		return PriorJ.instance;
-	}
-	
-	/**
-	 * Set the location where the artifacts should be saved.
-	 * 
-	 * @param localbase
-	 * @throws Exception 
-	 */
-	public void setLocalBasePath(String localbase) throws Exception {
-		this.localbase = localbase;
-		createLocalbase(localbase);
 	}
 
 	/**
@@ -105,20 +95,7 @@ public class PriorJ {
 		return techniques;
 	}
 
-	/**
-	 * Creating the local base folder.
-	 * 
-	 * @param path
-	 * @throws Exception
-	 */
-	private void createLocalbase(String path) throws Exception {
-		if (path != null && !path.isEmpty()){
-			JavaIO.createFolder(path);
-		}
-		else{
-			throw new Exception("Invalid Path!");
-		}
-	}
+	
 
 	/**
 	 * This method save Coverage Data to XML file.
@@ -150,7 +127,7 @@ public class PriorJ {
 	 * @param allSuites
 	 * @return
 	 */
-	public List<TestSuite> getTestSuites(List<List> allSuites) {
+	public List<TestSuite> getTestSuites(@SuppressWarnings("rawtypes") List<List> allSuites) {
 		Coverage coverage = new Coverage();
 		return coverage.getSuiteList(allSuites);
 	}
@@ -178,15 +155,39 @@ public class PriorJ {
 		Technique technique = creator.create(typeOfTechnique);
 		return technique.prioritize(allTests);
 	}
-
 	
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	
+	public String getProjectFolderName(){
+		return this.projectFolderName;
 	}
 	
-	public String getProjectName(){
-		return this.projectName;
+	
+	/**
+	 * Creating the local base folder.
+	 * 
+	 * @param path
+	 * @throws Exception
+	 */
+	public void createLocalbase(String path) throws Exception {
+		if (path != null && !path.isEmpty()){
+			this.localbase = path;
+			JavaIO.createFolder(path);
+		}
+		else{
+			throw new Exception("Invalid Path!");
+		}
 	}
 	
+	/**
+	 * This method create a project folder inside the local base.
+	 * 
+	 * @throws Exception
+	 */
+	public void createProjectFolder(String folderName) throws Exception{
+		if(localbase.isEmpty())
+			throw new Exception("Set local base path!");
+		this.projectFolderName = folderName;
+		JavaIO.createFolder(localbase+JavaIO.SEPARATOR+folderName);
+	}
 	
 }

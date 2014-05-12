@@ -26,6 +26,7 @@ import coverage.TestSuite;
 public class PriorJTest {
 	
 	private PriorJ priorj;
+	@SuppressWarnings("rawtypes")
 	List<List> allSuites = new ArrayList<List>();
 	
 	@Before
@@ -43,24 +44,24 @@ public class PriorJTest {
 	
 	@Test
 	public void shouldAllowSetLocalBasePath() throws Exception{
-		priorj.setLocalBasePath("c:/file");
+		priorj.createLocalbase("c:/file");
 		assertEquals("c:/file", priorj.getLocalBasePath());
 	}
 
 	@Test
 	public void shouldCreateFolderInLocalBase() throws Exception{
-		priorj.setLocalBasePath("c:/tests/coverage/");
+		priorj.createLocalbase("c:/tests/coverage/");
 		assertTrue(JavaIO.exist("c:/tests/coverage/"));
 	}
 	
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionWithEmptyPath() throws Exception{
-		priorj.setLocalBasePath("");
+		priorj.createLocalbase("");
 	}
 	
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionWithValueNull() throws Exception{
-		priorj.setLocalBasePath(null);
+		priorj.createLocalbase(null);
 	}
 	
 	@Test
@@ -99,7 +100,6 @@ public class PriorJTest {
 		assertTrue(priorj.getTechniques().size()==0);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Test
 	public void shouldSaveCoverageDataAnyWhere(){
 		priorj.saveCoverageData("c:/tests/tdd/","coverage.xml", allSuites);
@@ -138,6 +138,7 @@ public class PriorJTest {
 		List<TestCase> allTests = priorj.getTestCases(suites);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldPrioritizeWithOnlyOneTechnique() throws EmptySetOfTestCaseException{
 		TestSuite suite1 = new TestSuite("org", "SuiteA");
@@ -154,10 +155,18 @@ public class PriorJTest {
 	}
 	
 	@Test
-	public void shouldAllowTheUserSetAnProjectInTheLocalBaseToSaveWork(){
-		priorj.setProjectName("project1");
-		assertEquals("project1", priorj.getProjectName());		
+	public void shouldAllowTheUserSetAnProjectInTheLocalBaseToSaveWork() throws Exception{
+		priorj.createProjectFolder("project1");
+		assertEquals("project1", priorj.getProjectFolderName());		
 	}
+	
+	@Test
+	public void shouldCreateFolderProjectInLocalBaseWhenSetValue() throws Exception{
+		priorj.createLocalbase("c:/tests/tdd/");
+		priorj.createProjectFolder("project1");
+		assertTrue(JavaIO.exist("c:/tests/tdd/project1"));
+	}
+	
 	
 	
 //	@Test
