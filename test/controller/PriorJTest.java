@@ -282,6 +282,17 @@ public class PriorJTest {
 		assertTrue(!coverageReport.isEmpty());
 	}
 	
+	@Test 
+	public void shouldSaveCoverageReport() throws Exception{
+		initSampleSuiteList();
+		priorj.createLocalbase("c:/tests/");
+		priorj.createFolderVersion("generate", "reports");
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		String coverageReport = priorj.createCoverageReport(suites);
+		priorj.save("coverageReport.txt",coverageReport);
+		assertTrue(JavaIO.exist("c:/tests/generate/reports/coverageReport.txt"));
+	}
+	
 	/**
 	 * Init the sample example to real suite.
 	 */
