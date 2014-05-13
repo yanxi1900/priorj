@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manager.Coverage;
+import report.GenerateCoverageReport;
 import report.GenerateExecutionOrderReport;
 import report.GenerateTestSuite;
 import technique.EmptySetOfTestCaseException;
@@ -28,7 +29,6 @@ public class PriorJ {
 	
 	private static String localbase;
 	private static String projectFolder;
-	@SuppressWarnings("unused")
 	private static String versionFolder;
 	
 	private final String slash = JavaIO.SEPARATOR;
@@ -177,10 +177,10 @@ public class PriorJ {
 			//prioritize the tests.
 			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
 			//saving the produced artifacts
-			//String order = createOrder(typeOfTechnique, prioritizedList);
-			//saveOrder(acronyms, order);
-			//String suite = createSuite(acronyms, prioritizedList);
-			//saveSuite(acronyms, suite);
+			String order = createOrderReport(typeOfTechnique, prioritizedList);
+			save(acronyms+".txt", order);
+			String suite = createSuite(acronyms, prioritizedList);
+			save(acronyms+".java", suite);
 		}
 	}
 	
@@ -290,6 +290,17 @@ public class PriorJ {
 	 */
 	public void save(String filename, String content) {
 		JavaIO.createTextFile(localbase+slash+projectFolder+ slash +versionFolder, filename, content, false);
+	}
+
+	/**
+	 * Create a coverage report.
+	 *  
+	 * @param suites
+	 * @return
+	 */
+	public String createCoverageReport(List<TestSuite> suites) {
+		GenerateCoverageReport textReport = new GenerateCoverageReport(suites);
+		return textReport.generateCoverageReport();
 	}
 	
 	
