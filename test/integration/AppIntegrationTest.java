@@ -54,10 +54,8 @@ public class AppIntegrationTest {
 		deleteCoverageFile();
 		writeCoverageData();
 		List<List> allSuites = DataManager.openCoverageData(filePath);
-		System.out.println(allSuites.size());
-		//assertTrue(allSuites.size()==3);
+		assertTrue(allSuites.size()==3);
 	}
-
 
 	@Test
 	public void shouldSaveCoverageDataAnyWhere(){
@@ -73,12 +71,6 @@ public class AppIntegrationTest {
 		List<List> coverage = DataManager.openCoverageData(filePath);
 		assertTrue(coverage.size() == 3);
 	}
-
-	private void deleteCoverageFile() {
-		if(JavaIO.exist(filePath)){
-			JavaIO.deleteFile(filePath);
-		}
-	}	
 
 	@Test
 	public void shouldSavePrioritizationOrder() throws Exception{
@@ -116,5 +108,9 @@ public class AppIntegrationTest {
 		repository.finishCommit();
 	}
 
-	
+	private void deleteCoverageFile() {
+		if(JavaIO.exist(filePath)){
+			JavaIO.deleteFile(filePath);
+		}
+	}	
 }
