@@ -47,29 +47,7 @@ public class PriorJTest {
 	public void tearDown(){
 		priorj = null;
 	}
-	
-	@Test
-	public void shouldAllowSetLocalBasePath() throws Exception{
-		priorj.createLocalbase("c:/file");
-		assertEquals("c:/file", priorj.getLocalBasePath());
-	}
-
-	@Test
-	public void shouldCreateFolderInLocalBase() throws Exception{
-		priorj.createLocalbase("c:/tests/coverage/");
-		assertTrue(JavaIO.exist("c:/tests/coverage/"));
-	}
-	
-	@Test(expected = Exception.class)
-	public void shouldThrowExceptionWithEmptyPath() throws Exception{
-		priorj.createLocalbase("");
-	}
-	
-	@Test(expected = Exception.class)
-	public void shouldThrowExceptionWithValueNull() throws Exception{
-		priorj.createLocalbase(null);
-	}
-	
+		
 	@Test
 	public void shoudAllowTheUserAddTechniques(){
 		priorj.addTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
@@ -106,19 +84,7 @@ public class PriorJTest {
 		assertTrue(priorj.getTechniques().size()==0);
 	}
 	
-	@Test
-	public void shouldSaveCoverageDataAnyWhere(){
-		priorj.saveCoverageData("c:/tests/tdd/","coverage.xml", allSuites);
-		assertTrue(JavaIO.exist("c:/tests/tdd/coverage.xml"));
-	}
 	
-	@SuppressWarnings("rawtypes")
-	@Test
-	public void shouldOpenCoverageFile(){
-		priorj.saveCoverageData("c:/tests/tdd/open/","coverage.xml", allSuites);
-		List<List> coverage = priorj.openCoverageData("c:/tests/tdd/open/coverage.xml");
-		assertTrue(coverage.size() == 3);
-	}
 	
 
 	@SuppressWarnings("unchecked")
@@ -161,35 +127,7 @@ public class PriorJTest {
 		
 		assertTrue(!result.isEmpty());
 	}
-	
-	@Test
-	public void shouldAllowTheUserGetCurrentProjectName() throws Exception{
-		priorj.createProjectFolder("project1");
-		assertEquals("project1", priorj.getProjectFolderName());		
-	}
-	
-	@Test
-	public void shouldCreateFolderProjectInLocalBase() throws Exception{
-		priorj.createLocalbase("c:/tests/tdd/");
-		priorj.createProjectFolder("project1");
-		assertTrue(JavaIO.exist("c:/tests/tdd/project1"));
-	}
-	
-//	@Test (expected = Exception.class)
-//	public void shouldThrowExceptionWhenTryCreateProjectFolderWithoutLocalbase() throws Exception{
-//		priorj.createProjectFolder("my_project_yvi");
-//		assertTrue(priorj.getLocalBasePath().isEmpty());
-//	}
-	
-	
-	@Test
-	public void shouldCreateProjectSubVersion() throws Exception{
-		priorj.createLocalbase("c:/tests/");
-		priorj.createFolderVersion("my_project", "my_version");
-		assertTrue(JavaIO.exist("c:/tests/my_project/my_version"));
-	}
-	
-	
+			
 	@Test
 	public void shouldCreateOrderReport() throws Exception {
 		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
@@ -208,28 +146,6 @@ public class PriorJTest {
 		assertTrue(suitecode.contains("class CB"));
 	}
 	
-	@Test
-	public void shouldSavePrioritizationOrder() throws Exception{
-		priorj.createLocalbase("c:/tests");
-		priorj.createFolderVersion("Open-half-One", "priorVersion1");
-		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-		String report = priorj.createOrderReport(TechniqueCreator.RANDOM, results);
-		priorj.save("RND.txt", report);	
-		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/RND.txt"));
-	}
-	
-
-	@Test
-	public void shouldSaveSuites() throws Exception{
-		priorj.createLocalbase("c:/tests");
-		priorj.createFolderVersion("Open-half-One", "priorVersion1");
-		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-		String nome = TechniqueCreator.acronyms(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
-		System.out.println(nome);
-		String suitecode = priorj.createSuite(nome, results);
-		priorj.save(nome+".java",suitecode);	
-		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/"+nome+".java"));
-	}
 	
 	@Test
 	public void shouldPrioritizeWithManyTechniques() throws Exception{
@@ -240,8 +156,8 @@ public class PriorJTest {
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
 		
-		priorj.createLocalbase("c:/tests");
-		priorj.createFolderVersion("techniquesAll", "priorOne");
+		DataManager.createLocalbase("c:/tests");
+		DataManager.createFolderVersion("techniquesAll", "priorOne");
 		
 		priorj.addTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
 		priorj.addTechnique(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
@@ -282,17 +198,7 @@ public class PriorJTest {
 		assertTrue(!coverageReport.isEmpty());
 	}
 	
-	@Test 
-	public void shouldSaveCoverageReport() throws Exception{
-		initSampleSuiteList();
-		priorj.createLocalbase("c:/tests/");
-		priorj.createFolderVersion("generate", "reports");
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
-		String coverageReport = priorj.createCoverageReport(suites);
-		priorj.save("coverageReport.txt",coverageReport);
-		assertTrue(JavaIO.exist("c:/tests/generate/reports/coverageReport.txt"));
-	}
-	
+
 	/**
 	 * Init the sample example to real suite.
 	 */

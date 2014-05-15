@@ -28,7 +28,6 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 import org.junit.runner.Result;
 
-import util.PathTo;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -42,7 +41,7 @@ import junit.framework.TestResult;
  */
 public class GenerateTestSuiteForJUnit4 {
 	
-	static String newline = PathTo.NEWLINE;
+	private String newline = System.getProperty("line.separator");
 	
 	/**
 	 * This method do a header to Test Suite.
