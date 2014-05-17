@@ -10,7 +10,8 @@ import controller.DataManagerTest;
 import controller.PriorJTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DataManagerTest.class,
+@SuiteClasses({ 
+	DataManagerTest.class,
 	PriorJTest.class,
 	AppIntegrationTest.class
 })

@@ -57,4 +57,20 @@ public class DataManagerTest {
 		assertEquals("project1", DataManager.getProjectFolderName());		
 	}
 	
+	@Test
+	public void shouldGenerateTheCurrentPath() throws Exception{
+		DataManager.createLocalbase("c:/tests");
+		DataManager.createProjectFolder("current");
+		DataManager.createFolderVersion("current", "folder1");
+		assertEquals("c:/tests\\current\\folder1", DataManager.getCurrentPath());
+	}
+	
+	@Test
+	public void shouldGetProjectVersion() throws Exception{
+		DataManager.createLocalbase("c:/tests");
+		DataManager.createProjectFolder("current");
+		DataManager.createFolderVersion("current", "folder1");
+		assertEquals("folder1", DataManager.getProjectVersion());
+	}
+	
 }

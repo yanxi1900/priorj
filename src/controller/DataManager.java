@@ -57,6 +57,15 @@ public class DataManager {
 	}
 	
 	/**
+	 * Opening the coverage file and retrieve coverage data in the current local.
+	 */
+	@SuppressWarnings("rawtypes")
+	public static List<List> openCoverageData(){
+		String path = DataManager.getCurrentPath()+slash+"coveragePriorJ.xml";
+		return openCoverageData(path);
+	}
+	
+	/**
 	 * Create a sub folder to save prioritized version to same project.
 	 * 
 	 * @param projectFolder
@@ -69,7 +78,7 @@ public class DataManager {
 		if ( validate(projectFolder) && validate(versionFolder)){
 			DataManager.projectFolder = projectFolder;
 			DataManager.versionFolder  = versionFolder;
-			JavaIO.createFolder(DataManager.localbase+slash+projectFolder+slash+versionFolder);
+			JavaIO.createFolder(DataManager.getCurrentPath());
 		}
 	}
 	
@@ -82,13 +91,25 @@ public class DataManager {
 	public static void createProjectFolder(String folderName) throws Exception{
 		if(DataManager.localbase.isEmpty())
 			throw new Exception("Set local base path!");
-		
 		DataManager.projectFolder = folderName;
 		JavaIO.createFolder(DataManager.localbase+slash+folderName);
 	}
-	
+	/**
+	 * Get the project name.
+	 * 
+	 * @return
+	 */
 	public static String getProjectFolderName(){
 		return DataManager.projectFolder;
+	}
+	
+	/**
+	 * Return the version name.
+	 * 
+	 * @return
+	 */
+	public static String getProjectVersion(){
+		return DataManager.versionFolder;
 	}
 	
 	/**
@@ -116,10 +137,21 @@ public class DataManager {
 	 * @param report
 	 */
 	public static void save(String filename, String content) {
-		JavaIO.createTextFile(DataManager.localbase+slash+DataManager.projectFolder+ slash +DataManager.versionFolder, filename, content, false);
+		JavaIO.createTextFile(DataManager.getCurrentPath(), filename, content, false);
 	}
 
 	public static String openFile(String filePath) {
 		return JavaIO.openTextFile(filePath);
+	}
+	
+	/**
+	 * This method build a current path where data are saved.
+	 * 
+	 * 
+	 * @return
+	 *   localBase/project/version/
+	 */
+	public static String getCurrentPath(){
+		return DataManager.localbase + slash + DataManager.projectFolder + slash + DataManager.versionFolder;
 	}
 }
