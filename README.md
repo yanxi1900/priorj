@@ -1,4 +1,4 @@
 priorj
 ======
 
-Test Case Prioritization
+Test Case Prioritization | [Dowload here] (https://github.com/samueltcsantos/priorj/releases)
