@@ -189,7 +189,6 @@ public class PriorJTest {
 		}
 	}
 
-	
 	@Test
 	public void shouldCreateCoverageReport(){
 		initSampleSuiteList();
@@ -198,7 +197,69 @@ public class PriorJTest {
 		assertTrue(!coverageReport.isEmpty());
 	}
 	
-
+	@Test 
+	public void shouldInstrumentationCodeInPathLocation() throws Exception{
+		String code = "public class C1 {\n";
+		code +="\tpublic void m(int x){\n";
+	    code += "\t\tif(x>1){\n";
+		code += "\t\t\tx= x+1;\n";
+		code += "\t\t}\n";
+		code += "\t}\n";
+		code += "}\n";
+		
+		DataManager.createLocalbase("c:/tests");
+		DataManager.createFolderVersion("instrument", "java1");
+		DataManager.save("C1.java",code);
+		
+		priorj.instrument("c:/tests/instrument/java1/");
+		String codeOpened = DataManager.openFile("c:/tests/instrument/java1/C1.java");
+		assertTrue(!code.equals(codeOpened));
+		assertTrue(codeOpened.contains("watchPriorJApp = watchPriorJApp"));
+	}
+	
+	@Test
+	public void shouldCheckDifferencesApp() throws Exception {
+		DataManager.createLocalbase("c:/tests");
+				
+		String code = "package pkg;";
+		code += "public class C2 {\n";
+		code +="\tpublic C2(){\n";
+		code +="\tint x=0;\n";
+		code += "\t}\n";
+		code +="\tpublic void m(int x){\n";
+	    code += "\t\tif(x>1){\n";
+		code += "\t\t\tx= x+1;\n";
+		code += "\t\t}\n";
+		code += "\t}\n";
+		code += "}\n";
+		
+		DataManager.createFolderVersion("diffs1", "pkg");
+		DataManager.save("C2.java",code);
+		
+		priorj.instrument("c:/tests/diffs1/");
+		
+		code = "package pkg;";
+		code += "public class C2 {\n";
+		code +="\tpublic C2(){\n";
+		code +="\tint x = 0;\n";
+		code += "\t}\n";
+		code +="\tpublic void m(int x){\n";
+	    code += "\t\tif(x>1){\n";
+		code += "\t\t\tx= x+2;\n"; //modification here
+		code += "\t\tint copy =x;\n";
+		code += "\t\t}\n";
+		code += "\t}\n";
+		code += "}\n";
+		
+		DataManager.createFolderVersion("diffs2", "pkg");
+		DataManager.save("C2.java",code);
+		priorj.instrument("c:/tests/diffs2/");
+		
+		List<String> diff = priorj.checkDifference("c:/tests/diffs1", "c:/tests/diffs2");
+		//System.out.println(diff);
+		assertTrue(diff.size()==3);
+	}
+	
 	/**
 	 * Init the sample example to real suite.
 	 */
@@ -231,4 +292,5 @@ public class PriorJTest {
 		allSuites.get(1).add(suite2);
 	}
 
+		
 }

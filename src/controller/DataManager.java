@@ -118,4 +118,8 @@ public class DataManager {
 	public static void save(String filename, String content) {
 		JavaIO.createTextFile(DataManager.localbase+slash+DataManager.projectFolder+ slash +DataManager.versionFolder, filename, content, false);
 	}
+
+	public static String openFile(String filePath) {
+		return JavaIO.openTextFile(filePath);
+	}
 }

@@ -10,7 +10,8 @@ import report.GenerateTestSuite;
 import technique.EmptySetOfTestCaseException;
 import technique.Technique;
 import technique.TechniqueCreator;
-
+import core.DifferenceApp;
+import core.InstrumentApp;
 import coverage.TestCase;
 import coverage.TestSuite;
 
@@ -179,7 +180,33 @@ public class PriorJ {
 		return textReport.generateCoverageReport();
 	}
 	
+	/**
+	 * This method instrument a Folder and sub folders.
+	 * 
+	 * @param string
+	 * @throws Exception 
+	 */
+	public void instrument(String filePath) throws Exception {
+		 InstrumentApp inst = new InstrumentApp(filePath);
+	     inst.run();
+	}
+	
+	/**
+	 * Check differences between two versions.
+	 * 
+	 * @param pathCodeNew
+	 * @param pathCodeOld
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> checkDifference(String pathCodeNew, String pathCodeOld) throws Exception {
+        DifferenceApp diff = new DifferenceApp (pathCodeOld, pathCodeNew);
+        diff.run();
+        List<String> differences = diff.getListDiff();
+        return differences;
+	}
+
 	public static void main(String[] args) {
 		System.out.println("PrioJ");
-	}
+	}	
 }
