@@ -8,9 +8,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
 
 import technique.TechniqueCreator;
 
@@ -18,16 +15,15 @@ import com.java.io.JavaIO;
 
 import controller.DataManager;
 import controller.PriorJ;
-import controller.PriorJTest;
 import dao.Repository;
 
 /**
- * First Integration Test using DataManager and PriorJ.
+ * Testing integration between PriorJ and DataManager
  * 
  * @author Samuel T. C. Santos
- *
+ * 
  */
-public class AppIntegrationTest {
+public class DataManagerIntegrationTest {
 	
 	Repository repository;
 	PriorJ priorj;
@@ -53,6 +49,7 @@ public class AppIntegrationTest {
 	public void repositoryShouldWriteDataToCoverageFile(){
 		deleteCoverageFile();
 		writeCoverageData();
+		@SuppressWarnings("rawtypes")
 		List<List> allSuites = DataManager.openCoverageData(filePath);
 		assertTrue(allSuites.size()==3);
 	}
@@ -112,5 +109,5 @@ public class AppIntegrationTest {
 		if(JavaIO.exist(filePath)){
 			JavaIO.deleteFile(filePath);
 		}
-	}	
+	}
 }

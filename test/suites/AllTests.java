@@ -1,6 +1,6 @@
 package suites;
 
-import integration.AppIntegrationTest;
+import integration.PriorJIntegrationTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -13,7 +13,7 @@ import controller.PriorJTest;
 @SuiteClasses({ 
 	DataManagerTest.class,
 	PriorJTest.class,
-	AppIntegrationTest.class
+	PriorJIntegrationTest.class
 })
 public class AllTests {
 
