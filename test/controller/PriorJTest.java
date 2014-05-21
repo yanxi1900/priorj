@@ -290,7 +290,5 @@ public class PriorJTest {
 		
 		allSuites.get(0).add(suite1);
 		allSuites.get(1).add(suite2);
-	}
-
-		
+	}		
 }
