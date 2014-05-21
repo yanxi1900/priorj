@@ -15,7 +15,7 @@ public class TechniqueCreator {
 	public static final int ADDITIONAL_METHOD_COVERAGE = 2;
 	public static final int ADDITIONAL_STATEMENT_COVERAGE = 3;
 	public static final int RANDOM = 4;
-	public static final int CHANGED_BLOCKS = 6;
+	public static final int CHANGED_BLOCKS = 5;
 	
 	/**
 	 * Create a instance of a technique type.
@@ -38,6 +38,9 @@ public class TechniqueCreator {
 		}
 		else if (typeOfTechnique == TechniqueCreator.RANDOM){
 			return new TechniqueRandom();
+		}
+		else if (typeOfTechnique == TechniqueCreator.CHANGED_BLOCKS){
+			return new TechniqueEchelonTotal();
 		}
 		else{
 			throw new IllegalArgumentException("Type of Technique Invalid.");

@@ -177,10 +177,10 @@ public class PriorJ {
 			//prioritize the tests.
 			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
 			//saving the produced artifacts
-			//String order = createOrder(typeOfTechnique, prioritizedList);
-			//saveOrder(acronyms, order);
-			//String suite = createSuite(acronyms, prioritizedList);
-			//saveSuite(acronyms, suite);
+			String order = createOrderReport(typeOfTechnique, prioritizedList);
+			save(acronyms+".txt", order);
+			String suite = createSuite(acronyms, prioritizedList);
+			save(acronyms+".java", suite);
 		}
 	}
 	

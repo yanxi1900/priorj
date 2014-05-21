@@ -139,6 +139,7 @@ public class PriorJTest {
 		allSuites.get(1).add(suite2);
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
+		assertEquals("[testA, testB, testC]", allTests.toString());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -154,6 +155,7 @@ public class PriorJTest {
 		List<TestSuite> suites = priorj.getTestSuites(allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
 		List<String> result = priorj.prioritize(TechniqueCreator.RANDOM, allTests);
+		
 		assertTrue(!result.isEmpty());
 	}
 	
@@ -184,24 +186,6 @@ public class PriorJTest {
 		assertTrue(JavaIO.exist("c:/tests/my_project/my_version"));
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void shouldPrioritizeWithManyTechniques() throws Exception{
-		TestSuite suite1 = new TestSuite("org", "SuiteA");
-		suite1.addTestCase(new TestCase("testA"));
-		TestSuite suite2 = new TestSuite("org", "SuiteB");
-		suite2.addTestCase(new TestCase("testB"));
-		suite2.addTestCase(new TestCase("testC"));
-		allSuites.get(0).add(suite1);
-		allSuites.get(1).add(suite2);
-		
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
-		List<TestCase> allTests = priorj.getTestCases(suites);
-		
-		priorj.createLocalbase("c:/tests");
-		priorj.createFolderVersion("new-project", "one-version");
-		priorj.prioritizeAll(allTests);
-	}
 	
 	@Test
 	public void shouldCreateOrderReport() throws Exception {
@@ -237,9 +221,72 @@ public class PriorJTest {
 		priorj.createLocalbase("c:/tests");
 		priorj.createFolderVersion("Open-half-One", "priorVersion1");
 		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-		String suitecode = priorj.createSuite("MySuite", results);
-		priorj.save("MySuite.java",suitecode);	
-		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/MySuite.java"));
+		String nome = TechniqueCreator.acronyms(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
+		System.out.println(nome);
+		String suitecode = priorj.createSuite(nome, results);
+		priorj.save(nome+".java",suitecode);	
+		assertTrue(JavaIO.exist("c:/tests/Open-half-One/priorVersion1/"+nome+".java"));
+	}
+	
+	@Test
+	public void shouldPrioritizeWithManyTechniques() throws Exception{
+		TestSuite suite1 = new TestSuite("org", "SuiteA");
+		
+		TestCase tcA = new TestCase("com.SuiteA.testA");
+		tcA.setSignature("com.suiteA.testA");
+		suite1.addTestCase(tcA);
+		
+		TestSuite suite2 = new TestSuite("org", "suiteB");
+		
+		TestCase tcB = new TestCase("com.suiteB.testB");
+		tcB.setSignature("com.suiteB.testB");
+		suite2.addTestCase(tcB);
+		
+		TestCase tcC = new TestCase("com.suiteB.testC");
+		tcC.setSignature("com.suiteC.testC");
+		suite2.addTestCase(tcC);
+		
+		allSuites.get(0).add(suite1);
+		allSuites.get(1).add(suite2);
+		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		List<TestCase> allTests = priorj.getTestCases(suites);
+		
+		priorj.createLocalbase("c:/tests");
+		priorj.createFolderVersion("techniquesAll", "priorOne");
+		
+		priorj.addTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.RANDOM);
+		priorj.addTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
+		priorj.addTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
+		//priorj.addTechnique(TechniqueCreator.CHANGED_BLOCKS);
+		
+		priorj.prioritizeAll(allTests);
+		
+		List<String> files = new ArrayList<String>();
+		
+		files.add("AMC.java");
+		files.add("AMC.txt");
+		files.add("ASC.java");
+		files.add("ASC.txt");
+		files.add("TMC.java");
+		files.add("TMC.txt");
+		files.add("TSC.java");
+		files.add("TSC.txt");
+		files.add("RND.java");
+		files.add("RND.txt");
+//		files.add("CB.java");
+//		files.add("CB.txt");
+		
+		for (String filename : files){
+			assertTrue(JavaIO.exist("c:/tests/techniquesAll/priorOne/"+filename));
+		}
+	}
+
+	
+	@Test
+	public void shouldCreateCoverageReport(){
+		String coverageReport = priorj.createCoverageReport();
 	}
 	
 }
