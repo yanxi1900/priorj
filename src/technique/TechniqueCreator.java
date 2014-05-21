@@ -1,7 +1,5 @@
 package technique;
 
-import java.util.Random;
-
 /**
  * Applied the Method Factory Pattern.
  * 

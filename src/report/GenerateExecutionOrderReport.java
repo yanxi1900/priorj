@@ -21,7 +21,6 @@ package report;
 import java.util.List;
 
 import technique.TechniqueCreator;
-import util.PathTo;
 
 /**
  * This class generate an execution order report to a specific technique.
@@ -32,13 +31,15 @@ import util.PathTo;
  */
 public class GenerateExecutionOrderReport {
 	
+	private static final String newline = System.getProperty("line.separator");
+	
 	public static String create(int typeOfTechnique, List<String> tests){
             StringBuilder builder = new StringBuilder();
             
             builder.append("............: Prioritization Order ");
             builder.append(TechniqueCreator.acronyms(typeOfTechnique));
             builder.append(" :..............");
-            builder.append(PathTo.NEWLINE);
+            builder.append(newline);
             
             int number = 0;
             for (String test : tests) {
@@ -47,7 +48,7 @@ public class GenerateExecutionOrderReport {
                     builder.append(" - ");
                     builder.append(test);
                     builder.append("()");
-                    builder.append(PathTo.NEWLINE);
+                    builder.append(newline);
             }
             
             return builder.toString();

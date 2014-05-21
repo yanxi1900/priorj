@@ -1,4 +1,4 @@
 priorj
 ======
 
-JUnit Test Case Prioritization Tool - SPLab UFCG.
+Test Case Prioritization | [Dowload here] (https://github.com/samueltcsantos/priorj/releases)

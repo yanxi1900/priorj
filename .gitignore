@@ -8,6 +8,7 @@
 .gradle
 bin/
 tmp/
+report/
 target/
 *.tmp
 *.bak
