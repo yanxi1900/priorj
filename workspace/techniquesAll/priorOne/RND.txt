@@ -1,0 +1,4 @@
+............: Prioritization Order RND :..............
+1 - com.suiteC.testC()
+2 - com.suiteA.testA()
+3 - com.suiteB.testB()

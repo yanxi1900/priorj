@@ -1,0 +1,4 @@
+............: Prioritization Order AMC :..............
+1 - com.suiteA.testA()
+2 - com.suiteC.testC()
+3 - com.suiteB.testB()

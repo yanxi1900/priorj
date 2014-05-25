@@ -27,7 +27,7 @@ import dao.Repository;
  * @author Samuel T. C. Santos
  *
  */
-public class AppIntegrationTest {
+public class PriorJIntegrationTest {
 	
 	Repository repository;
 	PriorJ priorj;
