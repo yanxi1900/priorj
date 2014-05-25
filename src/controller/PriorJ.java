@@ -223,7 +223,7 @@ public class PriorJ {
 	}	
 	
 	public static void main(String[] args) {
-		System.out.println("PrioJ");
+		System.out.println("PriorJ");
 	}
 
 }
