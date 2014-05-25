@@ -1,4 +1,0 @@
-............: Prioritization Order CB :..............
-1 - com.suiteA.testA()
-2 - com.suiteB.testB()
-3 - com.suiteC.testC()

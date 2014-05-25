@@ -1,4 +1,0 @@
-............: Prioritization Order ASC :..............
-1 - com.suiteB.testB()
-2 - com.suiteC.testC()
-3 - com.suiteA.testA()
