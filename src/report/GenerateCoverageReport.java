@@ -89,126 +89,75 @@ public class GenerateCoverageReport {
           		builder.append("\tcoverage.push({\n");
           		builder.append("\t\ttestsuite  : '"+suiteName+"',\n");
           		builder.append("\t\ttestcase   : '"+testcase.getName()+"',\n");
+          		builder.append("\t\tclasses    : "+getCountUniqueClassCoverage(testcase)+",\n");
+          		builder.append("\t\tmethods    : "+getCountUniqueMethodCoverage(testcase)+",\n");
+          		builder.append("\t\tstatements : "+getCountUniqueStatementCoverage(testcase));
+          		builder.append("\n\t});\n");
           	}
           }
           
           builder.append("}\n\n");
           
-            
-//            int count = 0;
-//
-//            for (TestSuite suite : suites) {
-//                String suiteName = suite.toString();
-//                for (TestCase tc : suite.getTestCases()) {
-//
-//                    String newTest = suiteName.replace(".java", ".") + tc.getName();
-//
-//                    count++;
-//                    builder.append(" ");
-//                    builder.append(String.valueOf(count));
-//                    builder.append(" - ");
-//                    builder.append(newTest);
-//                    builder.append("()");
-//                    builder.append(newline);
-//
-//
-//                    double percent = percentValue(getCountUniqueClassCoverage(tc), classes.size());
-//                    builder.append(" CC = " );
-//                    builder.append(String.valueOf(getCountUniqueClassCoverage(tc)));
-//                    builder.append("\t\t");
-//                    builder.append("Coverage (");
-//                    builder.append(String.valueOf(percent));
-//
-//                    builder.append( "%)");
-//                    builder.append(newline);
-//
-//                    percent = percentValue(getCountUniqueMethodCoverage(tc), methods.size());
-//
-//                    builder.append(" MC = " );
-//                    builder.append(getCountUniqueMethodCoverage(tc));
-//                    builder.append("\t\t");
-//                    builder.append("Coverage (");
-//                    builder.append(String.valueOf(percent));
-//
-//                    builder.append("%)");
-//                    builder.append(newline);
-//
-//                    percent = percentValue(getCountUniqueStatementCoverage(tc), statements.size());
-//
-//                    builder.append(" SC = " );
-//                    builder.append(getCountUniqueStatementCoverage(tc));
-//                    builder.append("\t\t");
-//                    builder.append("Coverage (");
-//                    builder.append( String.valueOf(percent));
-//                    builder.append("%)");
-//                    builder.append(newline);
-//                    builder.append(newline);
-//                }
-//        }
+          builder.append("function fillTable(){\n");
+          builder.append("\t$('#myTable').append('<thead>');\n");
+          builder.append("\tvar header = '<tr>';\n");
+          builder.append("\theader += cellHeader('Test Suites (' + coverageGlobal.suites +')');\n");
+          builder.append("\theader += cellHeader('Test Cases (' + coverageGlobal.testcases + ')');\n");
+          builder.append("\theader += cellHeader('Classes (' + coverageGlobal.classes + ')');\n");
+          builder.append("\theader += cellHeader('Methods (' + coverageGlobal.methods + ')');\n");
+          builder.append("\theader += cellHeader('Statements (' + coverageGlobal.statements+')');\n");
+          builder.append("\theader += '</tr>';\n");
+          builder.append("\t$('#myTable').append(header);\n");
+	
+          builder.append("\t$('#myTable').append('</thead>');\n");
+          builder.append("\t$('#myTable').append('<tbody>');\n");
+	      	
+          builder.append("\tfor (var i=0; i < coverage.length; i++){\n");
+          builder.append("\t\tvar row = '<tr>';");
+          builder.append("\t\trow+= cellBody(coverage[i].testsuite);\n");
+          builder.append("\t\trow+= cellBody(coverage[i].testcase);\n");
+  		
+          builder.append("\t\tvar value = coverage[i].classes;\n");
+          builder.append("\t\tvar total = coverageGlobal.classes;\n");
+          builder.append("\t\tvar percent = percentage(value,total);\n");
+          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
+  		
+          builder.append("\t\tvalue = coverage[i].methods;\n");
+          builder.append("\t\ttotal = coverageGlobal.methods;\n");
+          builder.append("\t\tpercent = percentage(value, total);\n");
+          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
+  		
+          builder.append("\t\tvalue = coverage[i].statements;\n");
+          builder.append("\t\ttotal = coverageGlobal.statements;\n");
+          builder.append("\t\tpercent = percentage(value, total);\n");
+          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
+          builder.append("\t\trow += '</tr>';\n");
+          builder.append("\t\t$('#myTable').append(row);\n");
+          
+          builder.append("\t}\n");
+          builder.append("\t$('#myTable').append('</tbody>');\n");
+          builder.append("}\n\n");
+                  
+          builder.append("function cellHeader(title){\n");
+          builder.append("\t\treturn '<th>' +title +'</th>';\n");
+          builder.append("}\n\n");
+		
+          builder.append("function cellBody(content){\n");
+          builder.append("\treturn '<td>' +content +'</td>';\n");
+          builder.append("}\n\n");
+		
+          builder.append("function percentage(value, total){\n");
+          builder.append("\tvar percent = value * 100 / total;\n");
+          builder.append("\treturn percent.toFixed(2);\n");
+          builder.append("}\n\n");
+		
+          builder.append("function getSuiteSize(){\n");
+          builder.append("\treturn coverage.length;\n");
+          builder.append("}\n");
 
-        
-        return builder.toString();          
+          return builder.toString();          
 	}
 	
-    /**
-    * Calculate the percentage of the value.
-    * @param valor
-    * @param total
-    * @return the percentage.
-    */
-   private double percentValue(int valor, int total) {
-	  return valor * 100 / total;
-   }
-        
-	private String getCabecalho(){
-            StringBuilder builder = new StringBuilder();
-            
-            StringBuilder line = new StringBuilder();
-            
-            for (int i=0; i<130; i++)
-                line.append(".");
-            
-            int totalClasses = classes.size();
-            int totalMethods = methods.size();
-            int totalStatements = statements.size();
-
-            builder.append(".................................:   PriorJ - Coverage Report");
-            builder.append("  :.......................................");
-            builder.append(newline);
-            builder.append("	             Name Test Suite: ");
-            builder.append(this.suites.get(0).getName());
-            
-            builder.append(newline);
-            
-            builder.append("	        Number of test cases: ");
-            builder.append(String.valueOf(this.testCases.size()));
-            
-            builder.append(newline);
-
-            builder.append(line.toString());
-            builder.append(newline);
-            
-            builder.append("CC = Classes Covered \t");
-            builder.append("|MC = Methods Covered \t");
-            
-            builder.append("|SC = Statements Covered" );
-            builder.append(newline);
-            
-            builder.append("Number of Classes = ");
-            builder.append(String.valueOf(totalClasses));
-            builder.append("\t|Number of Methods = ");
-            builder.append(String.valueOf(totalMethods));
-            builder.append("\t|Number of Statements = ");
-            builder.append(String.valueOf(totalStatements));
-            
-            builder.append(newline);
-            
-            builder.append(line.toString());
-            
-            builder.append(newline);
-            
-            return builder.toString();
-	}
 	
 	private void addAllTestCases(){
 		if(this.testCases.size() != 0) return;
