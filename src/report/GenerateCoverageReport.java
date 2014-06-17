@@ -27,7 +27,6 @@ import coverage.Statement;
 import coverage.TestCase;
 import coverage.TestSuite;
 
-
 /**
  * This class generate a simple coverage report.
  * 
@@ -66,67 +65,87 @@ public class GenerateCoverageReport {
      */
 	public String generateCoverageReport(){
             addAllTestCases();
-            
-            StringBuilder line = new StringBuilder();
-            
-            for (int i=0; i<130; i++)
-                line.append(".");
-            
             StringBuilder builder = new StringBuilder();
-            builder.append(getCabecalho());
+            
+            builder.append("var coverage = [];\n\n");
+            builder.append("var coverageGlobal = {\n");
+            builder.append("\tsuites: "+suites.size()+",\n");
+            builder.append("\ttestcases: "+testCases.size()+",\n");
+            builder.append("\tclasses: "+classes.size()+",\n");
+            builder.append("\tmethods: "+methods.size()+",\n");
+            builder.append("\tstatements: "+statements.size());
+            builder.append("\n};\n\n");
+            
+            builder.append("$(function(){\n");
+            builder.append("\tloadData();\n");
+            builder.append("\tfillTable();\n");
+            builder.append("});\n\n");
+            
+            builder.append("function loadData(){\n");
+            
+          for (TestSuite suite : suites) {
+        	String suiteName = suite.toString();
+          	for (TestCase testcase : suite.getTestCases()) {
+          		builder.append("\tcoverage.push({\n");
+          		builder.append("\t\ttestsuite  : '"+suiteName+"',\n");
+          		builder.append("\t\ttestcase   : '"+testcase.getName()+"',\n");
+          	}
+          }
+          
+          builder.append("}\n\n");
+          
+            
+//            int count = 0;
+//
+//            for (TestSuite suite : suites) {
+//                String suiteName = suite.toString();
+//                for (TestCase tc : suite.getTestCases()) {
+//
+//                    String newTest = suiteName.replace(".java", ".") + tc.getName();
+//
+//                    count++;
+//                    builder.append(" ");
+//                    builder.append(String.valueOf(count));
+//                    builder.append(" - ");
+//                    builder.append(newTest);
+//                    builder.append("()");
+//                    builder.append(newline);
+//
+//
+//                    double percent = percentValue(getCountUniqueClassCoverage(tc), classes.size());
+//                    builder.append(" CC = " );
+//                    builder.append(String.valueOf(getCountUniqueClassCoverage(tc)));
+//                    builder.append("\t\t");
+//                    builder.append("Coverage (");
+//                    builder.append(String.valueOf(percent));
+//
+//                    builder.append( "%)");
+//                    builder.append(newline);
+//
+//                    percent = percentValue(getCountUniqueMethodCoverage(tc), methods.size());
+//
+//                    builder.append(" MC = " );
+//                    builder.append(getCountUniqueMethodCoverage(tc));
+//                    builder.append("\t\t");
+//                    builder.append("Coverage (");
+//                    builder.append(String.valueOf(percent));
+//
+//                    builder.append("%)");
+//                    builder.append(newline);
+//
+//                    percent = percentValue(getCountUniqueStatementCoverage(tc), statements.size());
+//
+//                    builder.append(" SC = " );
+//                    builder.append(getCountUniqueStatementCoverage(tc));
+//                    builder.append("\t\t");
+//                    builder.append("Coverage (");
+//                    builder.append( String.valueOf(percent));
+//                    builder.append("%)");
+//                    builder.append(newline);
+//                    builder.append(newline);
+//                }
+//        }
 
-            int count = 0;
-
-            for (TestSuite suite : suites) {
-                String suiteName = suite.toString();
-                for (TestCase tc : suite.getTestCases()) {
-
-                    String newTest = suiteName.replace(".java", ".") + tc.getName();
-
-                    count++;
-                    builder.append(" ");
-                    builder.append(String.valueOf(count));
-                    builder.append(" - ");
-                    builder.append(newTest);
-                    builder.append("()");
-                    builder.append(newline);
-
-
-                    double percent = percentValue(getCountUniqueClassCoverage(tc), classes.size());
-                    builder.append(" CC = " );
-                    builder.append(String.valueOf(getCountUniqueClassCoverage(tc)));
-                    builder.append("\t\t");
-                    builder.append("Coverage (");
-                    builder.append(String.valueOf(percent));
-
-                    builder.append( "%)");
-                    builder.append(newline);
-
-                    percent = percentValue(getCountUniqueMethodCoverage(tc), methods.size());
-
-                    builder.append(" MC = " );
-                    builder.append(getCountUniqueMethodCoverage(tc));
-                    builder.append("\t\t");
-                    builder.append("Coverage (");
-                    builder.append(String.valueOf(percent));
-
-                    builder.append("%)");
-                    builder.append(newline);
-
-                    percent = percentValue(getCountUniqueStatementCoverage(tc), statements.size());
-
-                    builder.append(" SC = " );
-                    builder.append(getCountUniqueStatementCoverage(tc));
-                    builder.append("\t\t");
-                    builder.append("Coverage (");
-                    builder.append( String.valueOf(percent));
-                    builder.append("%)");
-                    builder.append(newline);
-                    builder.append(newline);
-                }
-        }
-
-        builder.append(line.toString());
         
         return builder.toString();          
 	}
