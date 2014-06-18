@@ -131,15 +131,15 @@ public class PriorJTest {
 		assertTrue(!result.isEmpty());
 	}
 			
-	@Test
-	public void shouldCreateOrderReport() throws Exception {
-		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
-		assertTrue(report.contains("1 - testY"));
-		assertTrue(report.contains("2 - testD"));
-		assertTrue(report.contains("3 - testB"));
-		assertTrue(report.contains("4 - testX"));
-	}
+//	@Test
+//	public void shouldCreateOrderReport() throws Exception {
+//		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+//		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
+//		assertTrue(report.contains("1 - testY"));
+//		assertTrue(report.contains("2 - testD"));
+//		assertTrue(report.contains("3 - testB"));
+//		assertTrue(report.contains("4 - testX"));
+//	}
 	
 	@Test   
 	public void shouldCreateSuite() throws Exception {
@@ -176,17 +176,17 @@ public class PriorJTest {
 		List<String> files = new ArrayList<String>();
 		
 		files.add("AMC.java");
-		files.add("AMC.txt");
+		files.add("AMC.js");
 		files.add("ASC.java");
-		files.add("ASC.txt");
+		files.add("ASC.js");
 		files.add("TMC.java");
-		files.add("TMC.txt");
+		files.add("TMC.js");
 		files.add("TSC.java");
-		files.add("TSC.txt");
+		files.add("TSC.js");
 		files.add("RND.java");
-		files.add("RND.txt");
+		files.add("RND.js");
 		files.add("CB.java");
-		files.add("CB.txt");
+		files.add("CB.js");
 		
 		for (String filename : files){
 			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne" +slash+filename));
