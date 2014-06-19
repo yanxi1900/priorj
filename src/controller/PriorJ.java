@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.java.io.JavaIO;
+
 import manager.Coverage;
 import report.GenerateCoverageReport;
 import report.GenerateExecutionOrderReport;
@@ -133,10 +135,12 @@ public class PriorJ {
 	
 	/**
 	 * This method prioritize with many techniques simultaneously.
+	 * 
 	 * @throws Exception 
 	 * 
 	 */
 	public void prioritizeAll(List<TestCase> allTests) throws Exception {
+		String slash = JavaIO.SEPARATOR;
 		for (Integer typeOfTechnique : techniques){
 			//getting the suite names
 			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
@@ -144,12 +148,11 @@ public class PriorJ {
 			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
 			//saving the produced artifacts
 			String order = createOrderReport(typeOfTechnique, prioritizedList);
-			DataManager.save(acronyms+".js", order);
+			DataManager.save(acronyms+".js","report"+slash+"js", order);
 			String suite = createSuite(acronyms, prioritizedList);
 			DataManager.save(acronyms+".java", suite);
 		}
 	}
-	
 	
 	/**
 	 * This method create a prioritized test suite from a list of tests.
