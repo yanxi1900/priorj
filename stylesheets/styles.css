@@ -304,6 +304,10 @@ a.buttons {
 	height: 30px;
 }
 
+
+a.github-black {
+  background: url(../images/octocat-black.png) no-repeat 1px;
+}
 a.github {
 	background: url(../images/octocat-small.png) no-repeat 1px;
 }

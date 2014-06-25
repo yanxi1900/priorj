@@ -21,46 +21,95 @@
 
         <ul>
           <li class="download"><a class="buttons" href="https://github.com/samueltcsantos/priorj/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/samueltcsantos/priorj/tarball/master">Download TAR</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/samueltcsantos/priorj/tarball/master">Download Plugin</a></li>
           <li><a class="buttons github" href="https://github.com/samueltcsantos/priorj">View On GitHub</a></li>
         </ul>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/samueltcsantos">samueltcsantos</a></p>
+        <p class="header">This project is maintained by <a class="header name" href="http://splab.computacao.ufcg.edu.br/">SPLab</a></p>
 
 
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to PriorJ.</h3>
+        <h2>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to PriorJ Project! </h2>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>ProrJ is a tool which has as goal allow the automation of the main prioritization techniques for the Java/JUnit world. As secondary features PriorJ also give to the tester/developer artifacts which can guide the choosing of the best prioritization technique according to the development characteristics. </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+
+<p>In summary, PriorJ has the following functionalities: </p>
+<ul>
+  <li>Instrumentation and test coverage analysis for Java source code;</li>
+  <li>Automation of the main prioritization techniques using the JUnit framework;</li>
+  <li>Generation of automatic mechanisms for execution of prioritized suites;</li>
+  <li>Selection of test cases according with restrictions defined by the user;</li>
+  <li>An environment for evaluation/comparison of prioritization techniques;</li>
+  <li>Storage and recovery of historical data.</li>
+  <li>Plugin for Eclipse IDE</li>
+</ul>
+<h3>
+<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Prioritization Techniques</h3>
+
+<p>Until the present moment the PriorJ tool implements and deals with six prioritization techniques. In the sequence, we briefly present them and their prioritization processes:</p>
+
+<ul>
+  <li>
+    <strong>Total Statement Coverage (TSC):</strong> This technique schedules test cases based on the number of statements that each one covers.
+  </li>
+  <li>
+    <strong>Total Method Coverage (TMC):</strong> Similar to the TSC, differing by using the number of covered methods instead of covered statements as ordering criteria.
+  </li>
+  <li>
+    <strong>Additional Statement Coverage (ASC):</strong> The first test case is the one which covers more statements. The next test case to be chosen is the one which covers more statements that were not covered yet by the previously chosen test cases. This process is repeated until the prioritized test suite is complete.
+  </li>
+  <li>
+    <strong>Additional Method Coverage (AMC):</strong> Technique similar to the AMC, differing from ASC by using the coverage of methods as ordering criteria, instead of statement coverage. 
+  <li>
+    <strong>Random (RD): </strong>Technique in which the test cases order in the prioritized test suite is defined randomly. 
+  </li>
+  <li>
+   <strong> Changed Blocks</strong> (proposed by <em>Srivastava</em> and <em>Thiagarajan</em>): This technique firstly identifies the changed blocks between the two versions (by binary analysis) and schedule the test cases according to how much of the changed block each test covers.
+  </li>
+</ul>
 
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Related modules</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>This project consists of other projects, divided into modules.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul>
+  <li>
+    <strong>
+      <a href="https://github.com/samueltcsantos/coverage" target="_blank">Coverage</a>
+    </strong> - PriorJ API for coverage
+  </li>
+  <li>
+    <strong>
+      <a href="https://github.com/samueltcsantos/core" target="_blank">Core</a>
+    </strong>
+     - Module to check for differences between versions of the same project.
+   </li>
+  <li>
+    <strong>
+      <a href="https://github.com/samueltcsantos/javaio" target="_blank">JavaIO
+      </a>
+     </strong> - Module for Input/Output Services.</li>
+  <li>
+    <strong><a href="https://github.com/samueltcsantos/priorjplugin" target="_blank">Eclipse Plugin</a>
+    </strong> - Plugin to allow use of the tool within the Eclipse IDE
+  </li>
+  <li><strong><a href="https://github.com/samueltcsantos/apfd" target="_blank">Report</a></strong> - Module for generating reports and APFD charts using JavaScript and Bootstrap.</li>
+</ul>
 
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Contributed to this project: Patricia Machado (<a href="#" class="user-mention">@PatricaMachado</a>), Everton Leandro (<a href="#" class="user-mention">@EvertonLeandro</a>). In 2012, Julio Rocha, 2013 (<a href="https://github.com/igormeira" class="user-mention">@IgorMeira</a>) and Samuel Santos (<a href="https://github.com/samueltcsantos" class="user-mention">@samueltcsantos</a>).</p>
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Check out the documentation at <a href="https://github.com/samueltcsantos/priorjplugin/wiki">wiki</a> or contact <a href="mailto:thiagsamuel@gmail.com">patricia@computacao.ufcg.edu.br</a>, <a href="mailto:thiagsamuel@gmail.com">everton@copin.ufcg.edu.br</a> or <a href="mailto:thiagsamuel@gmail.com">samuel.santos@ccc.ufcg.edu.br</a>.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
