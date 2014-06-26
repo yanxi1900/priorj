@@ -49,5 +49,9 @@ public class IntegrationResource {
 		
 		allSuites.get(0).add(suite1);
 		allSuites.get(1).add(suite2);
-	}		
+	}
+	
+	public static List<List> getSuites(){
+		return allSuites;
+	}
 }
