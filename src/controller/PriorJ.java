@@ -148,7 +148,7 @@ public class PriorJ {
 			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
 			//saving the produced artifacts
 			String order = createOrderReport(typeOfTechnique, prioritizedList);
-			DataManager.save(acronyms+".js","report"+slash+"js", order);
+			DataManager.save(acronyms+".js","js", order);
 			String suite = createSuite(acronyms, prioritizedList);
 			DataManager.save(acronyms+".java", suite);
 		}

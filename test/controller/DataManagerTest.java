@@ -93,8 +93,8 @@ public class DataManagerTest {
 		DataManager.createLocalbase(localbase);
 		DataManager.createProjectFolder("current");
 		DataManager.createFolderVersion("current", "folder1");
-		DataManager.save("tests.js", "report"+slash+"js", "js file");
-		String path = DataManager.getCurrentPath()+slash+"report"+slash+"js"+slash+"tests.js";
+		DataManager.save("tests.js","js", "js oooo file");
+		String path = DataManager.getCurrentPath()+slash+"js"+slash+"tests.js";
 		assertTrue(JavaIO.exist(path));
 	}
 	
