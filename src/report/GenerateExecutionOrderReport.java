@@ -48,9 +48,9 @@ public class GenerateExecutionOrderReport {
             builder.append("function getOrder"+name+"(){\n");
             builder.append("\treturn "+name.toLowerCase()+"Tests;\n");
             builder.append("}\n\n");
-            builder.append("function get"+name+"Position(testName){\n");
-            builder.append("\treturn "+name.toLowerCase()+"Tests[testName];\n");
-            builder.append("}\n");
+            //builder.append("function get"+name+"Position(testName){\n");
+            //builder.append("\treturn "+name.toLowerCase()+"Tests[testName];\n");
+            //builder.append("}\n");
             return builder.toString();
 	}
 
