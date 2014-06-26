@@ -3,7 +3,7 @@ package report;
 /*
 * PriorJ: JUnit Test Case Prioritization.
 * 
-* Copyright (C) 2012-2013  Samuel T. C. Santos
+* Copyright (C) 2012-2014  SPLab
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,26 +31,26 @@ import technique.TechniqueCreator;
  */
 public class GenerateExecutionOrderReport {
 	
-	private static final String newline = System.getProperty("line.separator");
+	private static String name;
 	
 	public static String create(int typeOfTechnique, List<String> tests){
             StringBuilder builder = new StringBuilder();
-            
-            builder.append("............: Prioritization Order ");
-            builder.append(TechniqueCreator.acronyms(typeOfTechnique));
-            builder.append(" :..............");
-            builder.append(newline);
-            
-            int number = 0;
-            for (String test : tests) {
-                    number ++;
-                    builder.append(String.valueOf(number));
-                    builder.append(" - ");
-                    builder.append(test);
-                    builder.append("()");
-                    builder.append(newline);
+            name = TechniqueCreator.acronyms(typeOfTechnique);
+            builder.append("var " +name.toLowerCase()+"Tests = new Array();\n");
+            builder.append("\n$(function(){\n");
+            builder.append("\tloadList"+name+"();\n");
+            builder.append("});\n\n");
+            builder.append("function loadList"+name+"(){\n");
+            for (int i=0; i<tests.size(); i++){
+            	builder.append("\t"+name.toLowerCase()+"Tests['"+tests.get(i)+"'] = "+(i+1)+";\n");
             }
-            
+            builder.append("}\n\n");
+            builder.append("function getOrder"+name+"(){\n");
+            builder.append("\treturn "+name.toLowerCase()+"Tests;\n");
+            builder.append("}\n\n");
+            builder.append("function get"+name+"Position(testName){\n");
+            builder.append("\treturn "+name.toLowerCase()+"Tests[testName];\n");
+            builder.append("}\n");
             return builder.toString();
 	}
 

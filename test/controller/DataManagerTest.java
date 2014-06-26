@@ -3,6 +3,7 @@ package controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.java.io.JavaIO;
@@ -15,16 +16,30 @@ import com.java.io.JavaIO;
  */
 public class DataManagerTest {
 	
+	
+	private String localbase;
+	private String slash = JavaIO.SEPARATOR;
+	
+	@Before
+	public void setUp(){
+		if (JavaIO.isWindows()){
+			localbase = "c:/file";
+		}
+		else{
+			localbase = JavaIO.USER_DIR+JavaIO.SEPARATOR+"base";
+		}
+	}
+	
 	@Test
 	public void shouldAllowSetLocalBasePath() throws Exception{
-		DataManager.createLocalbase("c:/file");
-		assertEquals("c:/file", DataManager.getLocalBasePath());
+		DataManager.createLocalbase(localbase);
+		assertEquals(localbase, DataManager.getLocalBasePath());
 	}
 
 	@Test
 	public void shouldCreateFolderInLocalBase() throws Exception{
-		DataManager.createLocalbase("c:/tests/coverage/");
-		assertTrue(JavaIO.exist("c:/tests/coverage/"));
+		DataManager.createLocalbase(localbase);
+		assertTrue(JavaIO.exist(localbase));
 	}
 	
 	@Test(expected = Exception.class)
@@ -39,16 +54,16 @@ public class DataManagerTest {
 
 	@Test
 	public void shouldCreateProjectSubVersion() throws Exception{
-		DataManager.createLocalbase("c:/tests/");
-		DataManager.createFolderVersion("my_project", "my_version");
-		assertTrue(JavaIO.exist("c:/tests/my_project/my_version"));
+		DataManager.createLocalbase(localbase);
+		DataManager.createFolderVersion("p1", "my_version");
+		assertTrue(JavaIO.exist(localbase+slash+"p1"+slash+"my_version"));
 	}
 	
 	@Test
 	public void shouldCreateFolderProjectInLocalBase() throws Exception{
-		DataManager.createLocalbase("c:/tests/tdd/");
+		DataManager.createLocalbase(localbase);
 		DataManager.createProjectFolder("project1");
-		assertTrue(JavaIO.exist("c:/tests/tdd/project1"));
+		assertTrue(JavaIO.exist(localbase+slash+"project1"));
 	}
 	
 	@Test
@@ -59,18 +74,43 @@ public class DataManagerTest {
 	
 	@Test
 	public void shouldGenerateTheCurrentPath() throws Exception{
-		DataManager.createLocalbase("c:/tests");
+		DataManager.createLocalbase(localbase);
 		DataManager.createProjectFolder("current");
 		DataManager.createFolderVersion("current", "folder1");
-		assertEquals("c:/tests\\current\\folder1", DataManager.getCurrentPath());
+		assertEquals(localbase+slash+"current"+slash+"folder1", DataManager.getCurrentPath());
 	}
 	
 	@Test
 	public void shouldGetProjectVersion() throws Exception{
-		DataManager.createLocalbase("c:/tests");
+		DataManager.createLocalbase(localbase);
 		DataManager.createProjectFolder("current");
 		DataManager.createFolderVersion("current", "folder1");
 		assertEquals("folder1", DataManager.getProjectVersion());
 	}
 	
+	@Test
+	public void shouldToSaveInSubFolder() throws Exception {
+		DataManager.createLocalbase(localbase);
+		DataManager.createProjectFolder("current");
+		DataManager.createFolderVersion("current", "folder1");
+		DataManager.save("tests.js", "report"+slash+"js", "js file");
+		String path = DataManager.getCurrentPath()+slash+"report"+slash+"js"+slash+"tests.js";
+		assertTrue(JavaIO.exist(path));
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,10 +2,13 @@ package controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import integration.IntegrationResource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Resources;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,21 +34,24 @@ import coverage.TestSuite;
 public class PriorJTest {
 	
 	private PriorJ priorj;
+	private String localbase="";
+	private String slash = "";
 	
-	@SuppressWarnings("rawtypes")
-	List<List> allSuites = new ArrayList<List>();
 	
 	@Before
 	public void setUp(){
 		priorj = PriorJ.getInstance();
-		allSuites.add(new ArrayList<TestSuite>());
-		allSuites.add(new ArrayList<TestSuite>());
-		allSuites.add(new ArrayList<TestSuite>());
+		slash = JavaIO.SEPARATOR;
+		localbase = JavaIO.USER_DIR + slash + "workspace" + slash;
+		IntegrationResource.allSuites.add(new ArrayList<TestSuite>());
+		IntegrationResource.allSuites.add(new ArrayList<TestSuite>());
+		IntegrationResource.allSuites.add(new ArrayList<TestSuite>());
 	}
 	
 	@After
 	public void tearDown(){
 		priorj = null;
+		IntegrationResource.allSuites.clear();
 	}
 		
 	@Test
@@ -76,11 +82,8 @@ public class PriorJTest {
 		priorj.removeTechnique(TechniqueCreator.CHANGED_BLOCKS);
 		priorj.removeTechnique(TechniqueCreator.RANDOM);
 		priorj.removeTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
-		
 		assertTrue(priorj.getTechniques().get(0)==TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
-		
 		priorj.removeTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
-		
 		assertTrue(priorj.getTechniques().size()==0);
 	}
 	
@@ -90,9 +93,9 @@ public class PriorJTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldGetListOfTestSuite(){
-		allSuites.get(0).add(new TestSuite("org", "SuiteA"));
-		allSuites.get(1).add(new TestSuite("org", "SuiteB"));
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		IntegrationResource.allSuites.get(0).add(new TestSuite("org", "SuiteA"));
+		IntegrationResource.allSuites.get(1).add(new TestSuite("org", "SuiteB"));
+		List<TestSuite> suites = priorj.getTestSuites(IntegrationResource.allSuites);
 		assertTrue(suites.size()==2);
 	}
 	
@@ -104,9 +107,9 @@ public class PriorJTest {
 		TestSuite suite2 = new TestSuite("org", "SuiteB");
 		suite2.addTestCase(new TestCase("testB"));
 		suite2.addTestCase(new TestCase("testC"));
-		allSuites.get(0).add(suite1);
-		allSuites.get(1).add(suite2);
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		IntegrationResource.allSuites.get(0).add(suite1);
+		IntegrationResource.allSuites.get(1).add(suite2);
+		List<TestSuite> suites = priorj.getTestSuites(IntegrationResource.allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
 		assertEquals("[testA, testB, testC]", allTests.toString());
 	}
@@ -119,24 +122,24 @@ public class PriorJTest {
 		TestSuite suite2 = new TestSuite("org", "SuiteB");
 		suite2.addTestCase(new TestCase("testB"));
 		suite2.addTestCase(new TestCase("testC"));
-		allSuites.get(0).add(suite1);
-		allSuites.get(1).add(suite2);
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		IntegrationResource.allSuites.get(0).add(suite1);
+		IntegrationResource.allSuites.get(1).add(suite2);
+		List<TestSuite> suites = priorj.getTestSuites(IntegrationResource.allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
 		List<String> result = priorj.prioritize(TechniqueCreator.RANDOM, allTests);
 		
 		assertTrue(!result.isEmpty());
 	}
 			
-	@Test
-	public void shouldCreateOrderReport() throws Exception {
-		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
-		assertTrue(report.contains("1 - testY"));
-		assertTrue(report.contains("2 - testD"));
-		assertTrue(report.contains("3 - testB"));
-		assertTrue(report.contains("4 - testX"));
-	}
+//	@Test
+//	public void shouldCreateOrderReport() throws Exception {
+//		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
+//		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
+//		assertTrue(report.contains("1 - testY"));
+//		assertTrue(report.contains("2 - testD"));
+//		assertTrue(report.contains("3 - testB"));
+//		assertTrue(report.contains("4 - testX"));
+//	}
 	
 	@Test   
 	public void shouldCreateSuite() throws Exception {
@@ -152,47 +155,48 @@ public class PriorJTest {
 		if (priorj.getTechniques().size()>0){
 			priorj.getTechniques().clear();
 		}
-		initSampleSuiteList();
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		IntegrationResource.initSampleSuiteList();
+		List<TestSuite> suites = priorj.getTestSuites(IntegrationResource.allSuites);
 		List<TestCase> allTests = priorj.getTestCases(suites);
 		
-		DataManager.createLocalbase("c:/tests");
+		DataManager.createLocalbase(localbase);
 		DataManager.createFolderVersion("techniquesAll", "priorOne");
 		
 		priorj.addTechnique(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE);
 		priorj.addTechnique(TechniqueCreator.ADDITIONAL_STATEMENT_COVERAGE);
 		priorj.addTechnique(TechniqueCreator.RANDOM);
 		priorj.addTechnique(TechniqueCreator.TOTAL_METHOD_COVERAGE);
-		priorj.addTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE);
-		//waiting 
-		//priorj.addTechnique(TechniqueCreator.CHANGED_BLOCKS);
+		priorj.addTechnique(TechniqueCreator.TOTAL_STATEMENT_COVERAGE); 
+		
+		priorj.addTechnique(TechniqueCreator.CHANGED_BLOCKS);
+		priorj.setAffectedBlocks(Arrays.asList("com.SuiteA.testA"));
 		
 		priorj.prioritizeAll(allTests);
 		
 		List<String> files = new ArrayList<String>();
 		
 		files.add("AMC.java");
-		files.add("AMC.txt");
+		files.add("AMC.js");
 		files.add("ASC.java");
-		files.add("ASC.txt");
+		files.add("ASC.js");
 		files.add("TMC.java");
-		files.add("TMC.txt");
+		files.add("TMC.js");
 		files.add("TSC.java");
-		files.add("TSC.txt");
+		files.add("TSC.js");
 		files.add("RND.java");
-		files.add("RND.txt");
-//		files.add("CB.java");
-//		files.add("CB.txt");
+		files.add("RND.js");
+		files.add("CB.java");
+		files.add("CB.js");
 		
 		for (String filename : files){
-			assertTrue(JavaIO.exist("c:/tests/techniquesAll/priorOne/"+filename));
+			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne" +slash+filename));
 		}
 	}
 
 	@Test
 	public void shouldCreateCoverageReport(){
-		initSampleSuiteList();
-		List<TestSuite> suites = priorj.getTestSuites(allSuites);
+		IntegrationResource.initSampleSuiteList();
+		List<TestSuite> suites = priorj.getTestSuites(IntegrationResource.allSuites);
 		String coverageReport = priorj.createCoverageReport(suites);
 		assertTrue(!coverageReport.isEmpty());
 	}
@@ -255,40 +259,9 @@ public class PriorJTest {
 		DataManager.save("C2.java",code);
 		priorj.instrument("c:/tests/diffs2/");
 		
-		List<String> diff = priorj.checkDifference("c:/tests/diffs1", "c:/tests/diffs2");
+		List<String> diff = priorj.checkDifference("c:/tests/diffs1/pkg/C2.java", "c:/tests/diffs2/pkg/C2.java");
 		//System.out.println(diff);
-		assertTrue(diff.size()==3);
+		assertTrue(diff.size()==2);
 	}
 	
-	/**
-	 * Init the sample example to real suite.
-	 */
-	@SuppressWarnings("unchecked")
-	private void initSampleSuiteList() {
-		TestSuite suite1 = new TestSuite("org", "SuiteA");
-		
-		TestCase tcA = new TestCase("com.SuiteA.testA");
-		tcA.setSignature("com.suiteA.testA");
-		ClassCode cc = new ClassCode("org","ClsA");
-		Method m1 = new Method("method1");
-		m1.addStatement(new Statement("5"));
-		cc.addMethod(m1);
-		tcA.addClassCoverage(cc);
-		suite1.addTestCase(tcA);
-		
-		TestSuite suite2 = new TestSuite("org", "suiteB");
-		
-		TestCase tcB = new TestCase("com.suiteB.testB");
-		tcB.addClassCoverage(cc);
-		tcB.setSignature("com.suiteB.testB");
-		suite2.addTestCase(tcB);
-		
-		TestCase tcC = new TestCase("com.suiteB.testC");
-		tcC.setSignature("com.suiteC.testC");
-		tcC.addClassCoverage(cc);
-		suite2.addTestCase(tcC);
-		
-		allSuites.get(0).add(suite1);
-		allSuites.get(1).add(suite2);
-	}		
 }

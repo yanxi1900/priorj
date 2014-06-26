@@ -139,6 +139,15 @@ public class DataManager {
 	public static void save(String filename, String content) {
 		JavaIO.createTextFile(DataManager.getCurrentPath(), filename, content, false);
 	}
+	/**
+	 * Saving in a sub directory
+	 * @param filename
+	 * @param folder
+	 * @param content
+	 */
+	public static void save(String filename, String folder, String content){
+		JavaIO.createTextFile(DataManager.getCurrentPath()+slash+folder, filename, content, false);
+	}
 
 	public static String openFile(String filePath) {
 		return JavaIO.openTextFile(filePath);

@@ -10,6 +10,7 @@ bin/
 tmp/
 report/
 target/
+workspace/
 *.tmp
 *.bak
 *.swp

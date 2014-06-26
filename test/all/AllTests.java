@@ -1,4 +1,4 @@
-package suites;
+package all;
 
 import integration.PriorJIntegrationTest;
 
