@@ -173,22 +173,26 @@ public class PriorJTest {
 		
 		priorj.prioritizeAll(allTests);
 		
-		List<String> files = new ArrayList<String>();
+		List<String> filesJs = new ArrayList<String>();
+		List<String> filesJv = new ArrayList<String>();
 		
-		files.add("AMC.java");
-		files.add("AMC.js");
-		files.add("ASC.java");
-		files.add("ASC.js");
-		files.add("TMC.java");
-		files.add("TMC.js");
-		files.add("TSC.java");
-		files.add("TSC.js");
-		files.add("RND.java");
-		files.add("RND.js");
-		files.add("CB.java");
-		files.add("CB.js");
+		filesJv.add("AMC.java");
+		filesJs.add("AMC.js");
+		filesJv.add("ASC.java");
+		filesJs.add("ASC.js");
+		filesJv.add("TMC.java");
+		filesJs.add("TMC.js");
+		filesJv.add("TSC.java");
+		filesJs.add("TSC.js");
+		filesJv.add("RND.java");
+		filesJs.add("RND.js");
+		filesJv.add("CB.java");
+		filesJs.add("CB.js");
 		
-		for (String filename : files){
+		for (String filename : filesJs){
+			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne"+slash+"js" +slash+filename));
+		}
+		for (String filename : filesJv){
 			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne" +slash+filename));
 		}
 	}
