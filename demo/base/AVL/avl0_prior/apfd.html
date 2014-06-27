@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+		<title>APFD</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+       body{
+           margin-top: 20px;
+       }
+    </style>
+     <link rel="icon" type="image/x-icon" href="fonts/favicon.png" />
+     <!-- Loading all scripts -->
+      <script src="js/jquery.js"></script>
+      <script src="js/highcharts.js"></script>
+      <script src="js/exporting.js"></script>
+      <script src="js/chart.js"></script>
+      <script src="js/failures.js"></script>
+      <script src="js/util.js"></script>
+      <script src="js/AMC.js"></script>
+      <script src="js/ASC.js"></script>
+      <script src="js/CB.js"></script>
+      <script src="js/RND.js"></script>
+      <script src="js/TMC.js"></script>
+      <script src="js/TSC.js"></script>
+      <script src="js/apfd.js"></script>
+      <script src="js/helper.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/main.js"></script>
+
+	</head>
+	<body>
+	  <div class="container">
+	       <div class="row-fluid">
+            <div class="col-md-12">
+              <ul class="nav nav-tabs">
+                <li><a href="report.html">Coverage Report</a></li>
+                <li><a href="orders.html">Execution Order</a></li>
+                <li><a href="arbor/graphtrace.html">Graph</a></li>
+                <li class="active"><a href="#">APFD</a></li>
+                <li><a href="storage.html">Storage</a></li>
+              </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Average Percente of Faults Detected</h4>
+                    </div>
+
+                  <div id="container" style="min-width: 310px; height: 350px; max-width: 800px; margin: 0 auto">
+                </div>
+            </div>
+          </div>
+        <div class="row-fluid">
+            <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+        
+              <div class="row-fluid">
+                    <div class="col-md-4">
+                        <h4>Faults</h4>
+                        <ul id="faultList" class="list-group">
+
+                        </ul>
+                        <p>
+                          <a id="addFault" class="btn btn-default" href="#">Add &raquo;</a>
+                          <a id="removeFault" class="btn btn-default" href="#">Remove&raquo;</a>
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Failures</h4>
+                        <ul id="testList" class="list-group">
+
+                        </ul>
+                        <p><a  id="addEntry" class="btn btn-default" href="#">Insert &raquo;</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Fault List</h4>
+                         <ul id="entryList" class="list-group">
+
+                         </ul>
+
+                        <p>
+                          <a id="computeAPFD" class="btn btn-default" href="#">Calculate &raquo;</a>
+                          <a id="openChart" class="btn btn-default" href="#">Chart &raquo;</a>
+                        </p>
+                        
+                    </div>
+                  </div>
+              </div>
+              <div  class="panel-footer"><p>Copyright &copy; SPLab 2014</p></div>
+            </div>
+            </div>
+        </div>
+
+  	  </div> <!-- /container -->
+  	 
+	</body>
+</html>

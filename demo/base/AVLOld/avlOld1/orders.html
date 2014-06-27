@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Execution Orders</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/TMC.js"></script>
+		<script src="js/AMC.js"></script>
+		<script src="js/ASC.js"></script>
+		<script src="js/RND.js"></script>
+		<script src="js/TSC.js"></script>
+		<script src="js/CB.js"></script>
+		<script src="js/panel.js"></script>
+		<script src="js/order.js"></script>
+	    <link href="css/panel.css" rel="stylesheet">
+	    <link href="css/bootstrap.css" rel="stylesheet">
+	    <link rel="icon" type="image/x-icon" href="fonts/favicon.png" />
+	</head>
+	<body>
+		 <div class="container">
+			 <div class="row-fluid">
+		 		<div class="col-md-12">
+				 	 <ul class="nav nav-tabs">
+		                <li><a href="report.html">Coverage Report</a></li>
+		                <li class="active"><a href="#">Execution Order</a></li>
+		                <li><a href="arbor/graphtrace.html">Graph</a></li>
+		                <li><a href="apfd.html">APFD</a></li>
+		                <li><a href="storage.html">Storage</a></li>
+		              </ul>
+            		<div class="well">
+            			<div class="panel-heading">
+                        	<h4>Execution Order Report</h4>
+                    	</div>
+             			<div  class="panel-body">
+             		 		<div class="row-fluid">
+	             				<!-- right column -->
+	             				<div class="col-md-6">
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+	             				 			<h3 class="panel-title">Total Statement Coverage</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                      
+				                    	</div>
+	             				 		<div class="panel-body">
+	             		 					<ul id="tscList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				</div> 		
+	             		 		<!-- right column -->
+	             		 		<div class="col-md-6">
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+				                        	<h3 class="panel-title">Total Method Coverage</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                    	</div>
+										<div class="panel-body">
+	               		 					<ul id="tmcList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				</div><!-- end right column -->
+							</div> <!-- end row-fluid -->
+
+             		 		<div class="row-fluid">
+	             				<!-- right column -->
+	             				<div class="col-md-6">
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+				                        	<h3 class="panel-title">Additional Statement Coverage</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                    	</div>
+	             				 		<div class="panel-body">
+	             		 					<ul id="ascList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				</div> 		
+	             		 		<!-- right column -->
+	             		 		<div class="col-md-6">
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+				                        	<h3 class="panel-title">Additional Method Coverage</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                    	</div>
+										<div class="panel-body">
+	               		 					<ul id="amcList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				</div><!-- end right column -->
+							</div> <!-- end row-fluid -->
+
+             		 		<div class="row-fluid">
+	             				<!-- right column -->
+	             				<div class="col-md-6">
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+				                        	<h3 class="panel-title">Random</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                    	</div>
+	             				 		<div class="panel-body">
+	             		 					<ul id="rndList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				</div> 		
+	             		 		<!-- right column -->
+	             		 		<div class="col-md-6">
+	             		 		
+	             				 	<div class="panel panel-default">
+	             				 		<div class="panel-heading">
+				                        	<h3 class="panel-title">Changed Block</h3>
+				                        	<span class="pull-right clickable"><i class="glyphicon glyphicon-minus"></i></span>
+				                    	</div>
+													<div class="panel-body">
+	               		 					<ul id="cbList" class="list-group">
+	
+	                        				</ul>
+	             		 				</div>
+	             				 	</div>
+	             				 	
+	             				</div><!-- end right column -->
+							</div> <!-- end row-fluid -->
+
+							             				
+             		 	</div> <!--  end-panel-body -->
+        			</div>
+        			
+        		</div> <!-- end-col-md-12 -->
+        		
+        	</div> <!-- end-row-fluid -->
+		 </div> <!--  end-container -->
+	</body>
+</html>
+
