@@ -1,10 +1,9 @@
 package report;
 
-
 /*
  * PriorJ: JUnit Test Case Prioritization.
  * 
- * Copyright (C) 2012-2013  Samuel T. C. Santos, Julio Henrique Rocha.
+ * Copyright (C) 2012-2013  SPLab
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +18,9 @@ package report;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
-import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 /**
  * This class generate a Test Suite for JUnit 4.
@@ -81,52 +77,6 @@ public class GenerateTestSuite {
 	}
 
 	/**
-	 * Create a test suite with package name, class name and a list of test case.
-	 * 
-	 * @param packageName
-	 * 		The package name.
-	 * @param className
-	 * 		The class name.
-	 * @param tests
-	 * 		A list of test cases
-	 * @param percentSize
-	 * 		A value to suite size.
-	 * @return
-	 */
-	public static String generate(String packageName, String className, List<String> tests, int percentSize) {
-
-		List<String> l = extractSubList(tests, percentSize);
-
-		return newGenerate(packageName, className, l);
-	}
-
-	/**
-	 * This method extract a sub list from a list.
-	 * 
-	 * @param tests
-	 * 		The list
-	 * @param percentSize
-	 * 		The sub list size 
-	 * @return
-	 * 		A sub list.
-	 */
-	public static List<String> extractSubList(List<String> tests, int percentSize) {
-		
-		int size = tests.size();
-		
-		if (size > 0){
-			int index = (int) (size * percentSize / 100.0);
-
-			List<String> subList = tests.subList(0, index);
-			
-			return subList;
-		}
-		else{
-			return new ArrayList<String>();
-		}
-	}
-
-	/**
 	 * This method generate a test suite with package name, suite name, and a list of tests.
 	 * 
 	 * @param packageName
@@ -148,7 +98,7 @@ public class GenerateTestSuite {
 			caminho = caminho.replace(".java", "");
 			String[] paths = caminho.split("\\.");
 			String tcName = paths[paths.length - 1];
-			String suiteName = generateNameSuite(paths);
+			//String suiteName = generateNameSuite(paths);
 			String instance = getPathInstance(paths);
 			code += "\t\tTestCase " + generateNameSuite(paths) + " = null;" + newline;
 			code += "\t\t" + generateNameSuite(paths) + " = new "+ instance + "(){" + newline;
@@ -173,7 +123,6 @@ public class GenerateTestSuite {
 		
 		String code = getHeader(packageName);
 		code += getSuiteBodyTop(className);
-		//code += "\tpublic void run(){" + newline;
 	
 		for (String string : tests) {
 			String caminho = (String) string;
@@ -280,10 +229,6 @@ public class GenerateTestSuite {
 		for (int i = 0; i < paths.length - 1; i++) {
 			caminho += paths[i] + ".";
 		}
-
 		return caminho.isEmpty() ? "" : caminho.substring(0, caminho.length() - 1) ; 
 	}
-
-
-
 }

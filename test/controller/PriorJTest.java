@@ -130,16 +130,6 @@ public class PriorJTest {
 		
 		assertTrue(!result.isEmpty());
 	}
-			
-//	@Test
-//	public void shouldCreateOrderReport() throws Exception {
-//		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-//		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
-//		assertTrue(report.contains("1 - testY"));
-//		assertTrue(report.contains("2 - testD"));
-//		assertTrue(report.contains("3 - testB"));
-//		assertTrue(report.contains("4 - testX"));
-//	}
 	
 	@Test   
 	public void shouldCreateSuite() throws Exception {

@@ -114,10 +114,7 @@ public class PriorJ {
 	
 	
 	/**
-	 * Getting an selection.
-	 * 
-	 * 6  --- 100
-	 * x  ---  50
+	 * Getting an selection (fraction) to generate the suite.
 	 * 
 	 * @param suiteSize
 	 * @param allTests
