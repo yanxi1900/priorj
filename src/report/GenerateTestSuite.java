@@ -119,39 +119,39 @@ public class GenerateTestSuite {
 		return code;
 	}
 	
-	public static String newGenerate(String packageName, String className, List<String> tests) {
-		
-		String code = getHeader(packageName);
-		code += getSuiteBodyTop(className);
-	
-		for (String string : tests) {
-			String caminho = (String) string;
-			caminho = caminho.replace(".java", "");
-			String[] paths = caminho.split("\\.");
-			String tcName = paths[paths.length - 1];
-			String suiteName = generateNameSuite(paths);
-			String instance = getPathInstance(paths);
-			
-			code += "\tpublic void " +suiteName+"(){"+ newline;
-			
-			code += "\t\tTestCase " + generateNameSuite(paths) + " = null;" + newline;
-			code += "\t\t" + generateNameSuite(paths) + " = new "+ instance + "(){" + newline;
-			code += "\t\t\tpublic void runTest(){" + newline;
-			code += "\t\t\t\ttry{" + newline;
-			code += "\t\t\t\t\t" + tcName + "();" + newline;
-			code += "\t\t\t\t} catch (Exception e) {" + newline;
-			code += "\t\t\t\t\te.printStackTrace();" + newline;
-			code += "\t\t\t\t}" + newline;
-			code += "\t\t\t}" + newline;
-			code += "\t\t};" + newline;
-			code += "\t\tsetResult(\"" + tcName + "\","+ generateNameSuite(paths) + ".run());" + newline;
-			code += "\t}" + newline;
-			
-		}
-		code += getFinalSuite(className,tests);
-		
-		return code;
-	}
+//	public static String newGenerate(String packageName, String className, List<String> tests) {
+//		
+//		String code = getHeader(packageName);
+//		code += getSuiteBodyTop(className);
+//	
+//		for (String string : tests) {
+//			String caminho = (String) string;
+//			caminho = caminho.replace(".java", "");
+//			String[] paths = caminho.split("\\.");
+//			String tcName = paths[paths.length - 1];
+//			String suiteName = generateNameSuite(paths);
+//			String instance = getPathInstance(paths);
+//			
+//			code += "\tpublic void " +suiteName+"(){"+ newline;
+//			
+//			code += "\t\tTestCase " + generateNameSuite(paths) + " = null;" + newline;
+//			code += "\t\t" + generateNameSuite(paths) + " = new "+ instance + "(){" + newline;
+//			code += "\t\t\tpublic void runTest(){" + newline;
+//			code += "\t\t\t\ttry{" + newline;
+//			code += "\t\t\t\t\t" + tcName + "();" + newline;
+//			code += "\t\t\t\t} catch (Exception e) {" + newline;
+//			code += "\t\t\t\t\te.printStackTrace();" + newline;
+//			code += "\t\t\t\t}" + newline;
+//			code += "\t\t\t}" + newline;
+//			code += "\t\t};" + newline;
+//			code += "\t\tsetResult(\"" + tcName + "\","+ generateNameSuite(paths) + ".run());" + newline;
+//			code += "\t}" + newline;
+//			
+//		}
+//		code += getFinalSuite(className,tests);
+//		
+//		return code;
+//	}
 	
 	
 	/**
