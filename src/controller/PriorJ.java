@@ -111,6 +111,23 @@ public class PriorJ {
 		Coverage coverage = new Coverage();
 		return coverage.getAllTests(suites);
 	}
+	
+	
+	/**
+	 * Getting an selection.
+	 * 
+	 * 6  --- 100
+	 * x  ---  50
+	 * 
+	 * @param suiteSize
+	 * @param allTests
+	 * @return
+	 */
+	public List<String> getSelection(int suiteSize, List<String> allTests){
+		int total = allTests.size();
+		int selectedSize  = total * suiteSize/100; 
+		return allTests.subList(0, selectedSize);
+	}
 
 	/**
 	 * 
@@ -132,7 +149,32 @@ public class PriorJ {
 			return technique.prioritize(allTests);
 		}
 	}
-	
+	/**
+	 * 
+	 * 
+	 * @param suiteSize
+	 * 
+	 * @param typeOfTechnique
+	 * @param allTests
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<String> prioritizeAll(int suiteSize, List<TestCase> allTests) throws Exception{
+		List<String> prioritizedList = new ArrayList<String>();
+		for (Integer typeOfTechnique : techniques){
+			//getting the suite names
+			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
+			//prioritize the tests.
+			prioritizedList = prioritize(typeOfTechnique, allTests);
+			prioritizedList = getSelection(suiteSize, prioritizedList);
+			//saving the produced artifacts
+			String order = createOrderReport(typeOfTechnique, prioritizedList);
+			DataManager.save(acronyms+".js","js", order);
+			String suite = createSuite(acronyms, prioritizedList);
+			DataManager.save(acronyms+".java", suite);
+		}
+		return prioritizedList;
+	}
 	/**
 	 * This method prioritize with many techniques simultaneously.
 	 * 
@@ -140,7 +182,6 @@ public class PriorJ {
 	 * 
 	 */
 	public void prioritizeAll(List<TestCase> allTests) throws Exception {
-		String slash = JavaIO.SEPARATOR;
 		for (Integer typeOfTechnique : techniques){
 			//getting the suite names
 			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
@@ -221,6 +262,11 @@ public class PriorJ {
         return affected;
 	}
 
+	
+	/**
+	 * 
+	 * @param blocks
+	 */
 	public void setAffectedBlocks(List<String> blocks) {
 		this.affectedBlocks = blocks;
 	}	

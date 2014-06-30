@@ -268,4 +268,11 @@ public class PriorJTest {
 		assertTrue(diff.size()==2);
 	}
 	
+	@Test
+	public void shouldSelectionSuiteFractions(){
+		List<String> list = Arrays.asList("a", "b", "c", "d", "e", "f");
+		List<String> selection =priorj.getSelection(50, list);
+		assertTrue(selection.size()==3);
+	}
+	
 }
