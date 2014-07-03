@@ -9,6 +9,7 @@ import manager.Coverage;
 import report.GenerateCoverageReport;
 import report.GenerateExecutionOrderReport;
 import report.GenerateTestSuite;
+import report.GenerateTestSuiteForJUnit4;
 import technique.EmptySetOfTestCaseException;
 import technique.Technique;
 import technique.TechniqueCreator;
@@ -30,12 +31,14 @@ public class PriorJ {
 	private static PriorJ instance;
 	private static List<Integer> techniques;
 	private static List<String> affectedBlocks;
+	private static boolean junitFrameworkVersion4;
 	
 	public static PriorJ getInstance(){
 		if (PriorJ.instance == null){
 			techniques = new ArrayList<Integer>();
 			affectedBlocks = new ArrayList<String>();
 			PriorJ.instance = new PriorJ();
+			junitFrameworkVersion4 = false;
 		}
 		return PriorJ.instance;
 	}
@@ -204,9 +207,27 @@ public class PriorJ {
 	 * @throws Exception 
 	 */
 	public String createSuite(String suiteName, List<String> tests) throws Exception{
-		return GenerateTestSuite.generate("tests", suiteName, tests);
+		if (isJUnit4()){
+			return GenerateTestSuiteForJUnit4.generate("tests", suiteName, tests);
+		}
+		else{
+			return GenerateTestSuite.generate("tests", suiteName, tests);
+		}
 	}
 	
+	private boolean isJUnit4() {
+		return junitFrameworkVersion4;
+	}
+	/**
+	 * Set the JUnit Framework version as 4.x
+	 * 
+	 * @param option
+	 * 		true if the Framework version is 4.x
+	 * 		if the Framework version is 3.x set false;
+	 */
+	public void setJUnitFrameworkVersion4(boolean option){
+		junitFrameworkVersion4 = true;
+	}
 	/**
 	 * Create the order report.
 	 * 
