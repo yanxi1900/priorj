@@ -206,9 +206,5 @@ public class GenerateCoverageReport {
 		}
 		return count;
 	}
-	
-	public static void main(String[] args) {
 
-     // String a =  "<tr class=\\"'success\\"' id="'+coverage[i].testcase+'">'
-	}
 }
