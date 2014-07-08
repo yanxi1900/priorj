@@ -30,8 +30,8 @@ import coverage.TestSuite;
 /**
  * This class generate a simple coverage report.
  * 
- * @author Samuel T. C. dos Santos
- * @verion 1.0
+ * @author Samuel T. C. Santos
+ * @version 1.0
  * 
  */
 public class GenerateCoverageReport {
@@ -41,8 +41,7 @@ public class GenerateCoverageReport {
 	private List<String> classes;
 	private List<String> methods;
 	private List<String> statements;
-	private String newline = System.getProperty("line.separator");
-    
+	
     /**
      * Constructor.
      * 
@@ -69,7 +68,7 @@ public class GenerateCoverageReport {
             
             builder.append("var coverage = [];\n\n");
             builder.append("var coverageGlobal = {\n");
-            builder.append("\tsuites: "+suites.size()+",\n");
+            builder.append("\tsuites: "+ getCountUniqueSuites() +",\n");
             builder.append("\ttestcases: "+testCases.size()+",\n");
             builder.append("\tclasses: "+classes.size()+",\n");
             builder.append("\tmethods: "+methods.size()+",\n");
@@ -98,67 +97,36 @@ public class GenerateCoverageReport {
           
           builder.append("}\n\n");
           
-          builder.append("function fillTable(){\n");
-          builder.append("\t$('#myTable').append('<thead>');\n");
-          builder.append("\tvar header = '<tr>';\n");
-          builder.append("\theader += cellHeader('Test Suites (' + coverageGlobal.suites +')');\n");
-          builder.append("\theader += cellHeader('Test Cases (' + coverageGlobal.testcases + ')');\n");
-          builder.append("\theader += cellHeader('Classes (' + coverageGlobal.classes + ')');\n");
-          builder.append("\theader += cellHeader('Methods (' + coverageGlobal.methods + ')');\n");
-          builder.append("\theader += cellHeader('Statements (' + coverageGlobal.statements+')');\n");
-          builder.append("\theader += '</tr>';\n");
-          builder.append("\t$('#myTable').append(header);\n");
-	
-          builder.append("\t$('#myTable').append('</thead>');\n");
-          builder.append("\t$('#myTable').append('<tbody>');\n");
-	      	
-          builder.append("\tfor (var i=0; i < coverage.length; i++){\n");
-          builder.append("\t\tvar row = '<tr>';");
-          builder.append("\t\trow+= cellBody(coverage[i].testsuite);\n");
-          builder.append("\t\trow+= cellBody(coverage[i].testcase);\n");
-  		
-          builder.append("\t\tvar value = coverage[i].classes;\n");
-          builder.append("\t\tvar total = coverageGlobal.classes;\n");
-          builder.append("\t\tvar percent = percentage(value,total);\n");
-          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
-  		
-          builder.append("\t\tvalue = coverage[i].methods;\n");
-          builder.append("\t\ttotal = coverageGlobal.methods;\n");
-          builder.append("\t\tpercent = percentage(value, total);\n");
-          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
-  		
-          builder.append("\t\tvalue = coverage[i].statements;\n");
-          builder.append("\t\ttotal = coverageGlobal.statements;\n");
-          builder.append("\t\tpercent = percentage(value, total);\n");
-          builder.append("\t\trow+= cellBody(value + ' (' + percent +'%)');\n");
-          builder.append("\t\trow += '</tr>';\n");
-          builder.append("\t\t$('#myTable').append(row);\n");
           
-          builder.append("\t}\n");
-          builder.append("\t$('#myTable').append('</tbody>');\n");
-          builder.append("}\n\n");
-                  
-          builder.append("function cellHeader(title){\n");
-          builder.append("\t\treturn '<th>' +title +'</th>';\n");
-          builder.append("}\n\n");
-		
-          builder.append("function cellBody(content){\n");
-          builder.append("\treturn '<td>' +content +'</td>';\n");
-          builder.append("}\n\n");
-		
-          builder.append("function percentage(value, total){\n");
-          builder.append("\tvar percent = value * 100 / total;\n");
-          builder.append("\treturn percent.toFixed(2);\n");
-          builder.append("}\n\n");
-		
-          builder.append("function getSuiteSize(){\n");
-          builder.append("\treturn coverage.length;\n");
-          builder.append("}\n");
+          builder.append("\tfunction getCoverageReportData(){\n");
+          builder.append("\t\treturn coverage;\n");
+          builder.append("\t}\n\n");
 
+          builder.append("\tfunction getCoverageGlobalData(){\n");
+          builder.append("\t\treturn coverageGlobal;\n");
+          builder.append("\t}\n\n");
+        	
           return builder.toString();          
 	}
 	
-	
+	/**
+	 * Counting Unique Suites.
+	 * 
+	 * @return
+	 */
+	private int getCountUniqueSuites(){
+		List<String> found = new ArrayList<String>();
+		for (TestSuite suite : suites){
+			if(!found.contains(suite.getName())){
+				found.add(suite.getName());
+			}
+		}
+		return found.size();
+	}
+	/**
+	 * Adding all test cases.
+	 * 
+	 */
 	private void addAllTestCases(){
 		if(this.testCases.size() != 0) return;
 		for (TestSuite suite : suites) {
@@ -237,5 +205,10 @@ public class GenerateCoverageReport {
 			}
 		}
 		return count;
+	}
+	
+	public static void main(String[] args) {
+
+     // String a =  "<tr class=\\"'success\\"' id="'+coverage[i].testcase+'">'
 	}
 }
