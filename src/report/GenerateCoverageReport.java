@@ -77,7 +77,6 @@ public class GenerateCoverageReport {
             
             builder.append("$(function(){\n");
             builder.append("\tloadData();\n");
-            builder.append("\tfillTable();\n");
             builder.append("});\n\n");
             
             builder.append("function loadData(){\n");
