@@ -1,3 +1,13 @@
+com.edu.ufcg.splab.priorj
+com.edu.ufcg.splab.priorj.controllers
+com.edu.ufcg.splab.priorj.core
+com.edu.ufcg.splab.priorj.views
+com.java.io
 controller
+core
+coverage
+dao
+main
+manager
 report
 technique
