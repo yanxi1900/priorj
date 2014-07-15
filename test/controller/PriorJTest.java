@@ -209,7 +209,7 @@ public class PriorJTest {
 		DataManager.createFolderVersion("instrument", "java1");
 		DataManager.save("C1.java",code);
 		
-		priorj.instrument("c:/tests/instrument/java1/");
+		priorj.instrument("c:/tests/instrument/java1/", "C1.java", false);
 		String codeOpened = DataManager.openFile("c:/tests/instrument/java1/C1.java");
 		assertTrue(!code.equals(codeOpened));
 		assertTrue(codeOpened.contains("watchPriorJApp = watchPriorJApp"));
@@ -234,7 +234,7 @@ public class PriorJTest {
 		DataManager.createFolderVersion("diffs1", "pkg");
 		DataManager.save("C2.java",code);
 		
-		priorj.instrument("c:/tests/diffs1/");
+		priorj.instrument("c:/tests/diffs1/","C2.java",false);
 		
 		code = "package pkg;";
 		code += "public class C2 {\n";
@@ -251,7 +251,7 @@ public class PriorJTest {
 		
 		DataManager.createFolderVersion("diffs2", "pkg");
 		DataManager.save("C2.java",code);
-		priorj.instrument("c:/tests/diffs2/");
+		priorj.instrument("c:/tests/diffs2/", "C2.java",false);
 		
 		List<String> diff = priorj.checkDifference("c:/tests/diffs1/pkg/C2.java", "c:/tests/diffs2/pkg/C2.java");
 		//System.out.println(diff);

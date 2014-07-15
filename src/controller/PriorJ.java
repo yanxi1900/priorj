@@ -17,6 +17,7 @@ import technique.TechniqueEchelonTotal;
 import core.Difference;
 import core.DifferenceApp;
 import core.InstrumentApp;
+import core.InstrumentClass;
 import coverage.TestCase;
 import coverage.TestSuite;
 
@@ -255,14 +256,20 @@ public class PriorJ {
 	}
 	
 	/**
-	 * This method instrument a Folder and sub folders.
+	 * This method instrument a class.
 	 * 
-	 * @param string
+	 * @param filePath
+	 *  the path to the java file.
+	 * @param file
+	 *  the java file name.
+	 * @param isTest
+	 *  true or false indicating if the file is a test file.
+	 *  
 	 * @throws Exception 
 	 */
-	public void instrument(String filePath) throws Exception {
-		 InstrumentApp inst = new InstrumentApp(filePath);
-	     inst.run();
+	public void instrument(String filePath, String file, boolean isTest) throws Exception {
+		 InstrumentClass inst = new InstrumentClass(filePath, file, isTest);
+	     inst.instrumentationRun();
 	}
 	
 	/**
