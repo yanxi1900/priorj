@@ -297,7 +297,7 @@ public class PriorJ {
 	}	
 	
 	public static void main(String[] args) {
-		System.out.println("PriorJ");
+		System.out.println("PriorJ version 1.0.6");
 	}
 
 }
