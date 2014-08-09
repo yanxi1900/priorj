@@ -188,10 +188,12 @@ public class GenerateTestSuiteForJUnit4 {
 	    else
 	            code += "\t\t" + className + " st = new " + className + "();\n";
 	    
-	    for (String test : tests){
-	            String [] path = test.split("\\.");
-	            code += "\t\tst." + generateNameSuite(path)+"();\n";
-	    }
+//	    for (String test : tests){
+//	            String [] path = test.split("\\.");
+//	            code += "\t\tst." + generateNameSuite(path)+"();\n";
+//	    }
+		
+	    code += "\t\tst.run();\n";
 		
 		code += "\t\tst.printResult();\n";
 		code += "\t}\n";
