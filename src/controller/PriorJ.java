@@ -9,6 +9,7 @@ import manager.Coverage;
 import report.GenerateCoverageReport;
 import report.GenerateExecutionOrderReport;
 import report.GenerateTestSuite;
+import report.GenerateTestSuiteForJUnit4;
 import technique.EmptySetOfTestCaseException;
 import technique.Technique;
 import technique.TechniqueCreator;
@@ -16,6 +17,7 @@ import technique.TechniqueEchelonTotal;
 import core.Difference;
 import core.DifferenceApp;
 import core.InstrumentApp;
+import core.InstrumentClass;
 import coverage.TestCase;
 import coverage.TestSuite;
 
@@ -30,12 +32,14 @@ public class PriorJ {
 	private static PriorJ instance;
 	private static List<Integer> techniques;
 	private static List<String> affectedBlocks;
+	private static boolean junitFrameworkVersion4;
 	
 	public static PriorJ getInstance(){
 		if (PriorJ.instance == null){
 			techniques = new ArrayList<Integer>();
 			affectedBlocks = new ArrayList<String>();
 			PriorJ.instance = new PriorJ();
+			junitFrameworkVersion4 = false;
 		}
 		return PriorJ.instance;
 	}
@@ -111,6 +115,20 @@ public class PriorJ {
 		Coverage coverage = new Coverage();
 		return coverage.getAllTests(suites);
 	}
+	
+	
+	/**
+	 * Getting an selection (fraction) to generate the suite.
+	 * 
+	 * @param suiteSize
+	 * @param allTests
+	 * @return
+	 */
+	public List<String> getSelection(int suiteSize, List<String> allTests){
+		int total = allTests.size();
+		int selectedSize  = total * suiteSize/100; 
+		return allTests.subList(0, selectedSize);
+	}
 
 	/**
 	 * 
@@ -132,7 +150,32 @@ public class PriorJ {
 			return technique.prioritize(allTests);
 		}
 	}
-	
+	/**
+	 * 
+	 * 
+	 * @param suiteSize
+	 * 
+	 * @param typeOfTechnique
+	 * @param allTests
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<String> prioritizeAll(int suiteSize, List<TestCase> allTests) throws Exception{
+		List<String> prioritizedList = new ArrayList<String>();
+		for (Integer typeOfTechnique : techniques){
+			//getting the suite names
+			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
+			//prioritize the tests.
+			prioritizedList = prioritize(typeOfTechnique, allTests);
+			prioritizedList = getSelection(suiteSize, prioritizedList);
+			//saving the produced artifacts
+			String order = createOrderReport(typeOfTechnique, prioritizedList);
+			DataManager.save(acronyms+".js","js", order);
+			String suite = createSuite(acronyms, prioritizedList);
+			DataManager.save(acronyms+".java", suite);
+		}
+		return prioritizedList;
+	}
 	/**
 	 * This method prioritize with many techniques simultaneously.
 	 * 
@@ -140,7 +183,6 @@ public class PriorJ {
 	 * 
 	 */
 	public void prioritizeAll(List<TestCase> allTests) throws Exception {
-		String slash = JavaIO.SEPARATOR;
 		for (Integer typeOfTechnique : techniques){
 			//getting the suite names
 			String acronyms = TechniqueCreator.acronyms(typeOfTechnique);
@@ -148,7 +190,7 @@ public class PriorJ {
 			List<String> prioritizedList = prioritize(typeOfTechnique, allTests);
 			//saving the produced artifacts
 			String order = createOrderReport(typeOfTechnique, prioritizedList);
-			DataManager.save(acronyms+".js","report"+slash+"js", order);
+			DataManager.save(acronyms+".js","js", order);
 			String suite = createSuite(acronyms, prioritizedList);
 			DataManager.save(acronyms+".java", suite);
 		}
@@ -166,9 +208,27 @@ public class PriorJ {
 	 * @throws Exception 
 	 */
 	public String createSuite(String suiteName, List<String> tests) throws Exception{
-		return GenerateTestSuite.generate("tests", suiteName, tests);
+		if (isJUnit4()){
+			return GenerateTestSuiteForJUnit4.generate("tests", suiteName, tests);
+		}
+		else{
+			return GenerateTestSuite.generate("tests", suiteName, tests);
+		}
 	}
 	
+	private boolean isJUnit4() {
+		return junitFrameworkVersion4;
+	}
+	/**
+	 * Set the JUnit Framework version as 4.x
+	 * 
+	 * @param option
+	 * 		true if the Framework version is 4.x
+	 * 		if the Framework version is 3.x set false;
+	 */
+	public void setJUnitFrameworkVersion4(boolean option){
+		junitFrameworkVersion4 = true;
+	}
 	/**
 	 * Create the order report.
 	 * 
@@ -196,14 +256,20 @@ public class PriorJ {
 	}
 	
 	/**
-	 * This method instrument a Folder and sub folders.
+	 * This method instrument a class.
 	 * 
-	 * @param string
+	 * @param filePath
+	 *  the path to the java file.
+	 * @param file
+	 *  the java file name.
+	 * @param isTest
+	 *  true or false indicating if the file is a test file.
+	 *  
 	 * @throws Exception 
 	 */
-	public void instrument(String filePath) throws Exception {
-		 InstrumentApp inst = new InstrumentApp(filePath);
-	     inst.run();
+	public void instrument(String filePath, String file, boolean isTest) throws Exception {
+		 InstrumentClass inst = new InstrumentClass(filePath, file, isTest);
+	     inst.instrumentationRun();
 	}
 	
 	/**
@@ -221,6 +287,11 @@ public class PriorJ {
         return affected;
 	}
 
+	
+	/**
+	 * 
+	 * @param blocks
+	 */
 	public void setAffectedBlocks(List<String> blocks) {
 		this.affectedBlocks = blocks;
 	}	

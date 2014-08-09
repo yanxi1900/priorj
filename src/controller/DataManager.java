@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.util.List;
 
 import com.java.io.JavaIO;
@@ -163,4 +164,38 @@ public class DataManager {
 	public static String getCurrentPath(){
 		return DataManager.localbase + slash + DataManager.projectFolder + slash + DataManager.versionFolder;
 	}
+	
+	public static String traceRoutesFromBase(){
+		StringBuilder trace= new StringBuilder();
+		trace.append("var links = [];\n\n");
+		String base = getLocalBasePath();
+		File dir = new File(base);
+		File [] files = dir.listFiles(); 
+		for (File f : files){
+			if (f.isDirectory()){
+				File [] subDirs = f.listFiles();
+				String line = "[";
+				for (int i=0 ; i<subDirs.length; i++){
+					if (subDirs[i].isDirectory()){
+						line += "'"+subDirs[i].getName()+"'";
+					}
+					if (i<subDirs.length-1){
+						line += ", ";
+					}
+				}
+				line += "]";
+				trace.append("links.push({\n");
+				trace.append("\tname : '"+f.getName()+"',\n");
+				trace.append("\tversions : "+ line+"\n");
+				trace.append("});\n\n");
+				
+			}
+		}
+		return trace.toString();
+	}
+	
+//	public static void main(String[] args) throws Exception {
+//		DataManager.createLocalbase("C:/Users/xpto/base");
+//		System.out.println(DataManager.traceRoutesFromBase());
+//	}
 }

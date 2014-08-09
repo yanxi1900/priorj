@@ -16,5 +16,5 @@ import controller.PriorJTest;
 	PriorJIntegrationTest.class
 })
 public class AllTests {
-
+	
 }

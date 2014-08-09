@@ -8,7 +8,6 @@
 .gradle
 bin/
 tmp/
-report/
 target/
 workspace/
 *.tmp

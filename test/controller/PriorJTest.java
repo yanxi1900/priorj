@@ -130,16 +130,6 @@ public class PriorJTest {
 		
 		assertTrue(!result.isEmpty());
 	}
-			
-//	@Test
-//	public void shouldCreateOrderReport() throws Exception {
-//		List<String> results = Arrays.asList("testY", "testD", "testB", "testX");
-//		String report = priorj.createOrderReport(TechniqueCreator.ADDITIONAL_METHOD_COVERAGE, results);
-//		assertTrue(report.contains("1 - testY"));
-//		assertTrue(report.contains("2 - testD"));
-//		assertTrue(report.contains("3 - testB"));
-//		assertTrue(report.contains("4 - testX"));
-//	}
 	
 	@Test   
 	public void shouldCreateSuite() throws Exception {
@@ -173,22 +163,26 @@ public class PriorJTest {
 		
 		priorj.prioritizeAll(allTests);
 		
-		List<String> files = new ArrayList<String>();
+		List<String> filesJs = new ArrayList<String>();
+		List<String> filesJv = new ArrayList<String>();
 		
-		files.add("AMC.java");
-		files.add("AMC.js");
-		files.add("ASC.java");
-		files.add("ASC.js");
-		files.add("TMC.java");
-		files.add("TMC.js");
-		files.add("TSC.java");
-		files.add("TSC.js");
-		files.add("RND.java");
-		files.add("RND.js");
-		files.add("CB.java");
-		files.add("CB.js");
+		filesJv.add("AMC.java");
+		filesJs.add("AMC.js");
+		filesJv.add("ASC.java");
+		filesJs.add("ASC.js");
+		filesJv.add("TMC.java");
+		filesJs.add("TMC.js");
+		filesJv.add("TSC.java");
+		filesJs.add("TSC.js");
+		filesJv.add("RND.java");
+		filesJs.add("RND.js");
+		filesJv.add("CB.java");
+		filesJs.add("CB.js");
 		
-		for (String filename : files){
+		for (String filename : filesJs){
+			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne"+slash+"js" +slash+filename));
+		}
+		for (String filename : filesJv){
 			assertTrue(JavaIO.exist(localbase+"techniquesAll"+slash+"priorOne" +slash+filename));
 		}
 	}
@@ -215,7 +209,7 @@ public class PriorJTest {
 		DataManager.createFolderVersion("instrument", "java1");
 		DataManager.save("C1.java",code);
 		
-		priorj.instrument("c:/tests/instrument/java1/");
+		priorj.instrument("c:/tests/instrument/java1/", "C1.java", false);
 		String codeOpened = DataManager.openFile("c:/tests/instrument/java1/C1.java");
 		assertTrue(!code.equals(codeOpened));
 		assertTrue(codeOpened.contains("watchPriorJApp = watchPriorJApp"));
@@ -240,7 +234,7 @@ public class PriorJTest {
 		DataManager.createFolderVersion("diffs1", "pkg");
 		DataManager.save("C2.java",code);
 		
-		priorj.instrument("c:/tests/diffs1/");
+		priorj.instrument("c:/tests/diffs1/","C2.java",false);
 		
 		code = "package pkg;";
 		code += "public class C2 {\n";
@@ -257,11 +251,18 @@ public class PriorJTest {
 		
 		DataManager.createFolderVersion("diffs2", "pkg");
 		DataManager.save("C2.java",code);
-		priorj.instrument("c:/tests/diffs2/");
+		priorj.instrument("c:/tests/diffs2/", "C2.java",false);
 		
 		List<String> diff = priorj.checkDifference("c:/tests/diffs1/pkg/C2.java", "c:/tests/diffs2/pkg/C2.java");
 		//System.out.println(diff);
 		assertTrue(diff.size()==2);
+	}
+	
+	@Test
+	public void shouldSelectionSuiteFractions(){
+		List<String> list = Arrays.asList("a", "b", "c", "d", "e", "f");
+		List<String> selection =priorj.getSelection(50, list);
+		assertTrue(selection.size()==3);
 	}
 	
 }
